@@ -1,10 +1,10 @@
 import React from "react";
-import { Icons } from './assets/icons'
+import { Icons } from './assets/icons';
 import './App.scss';
 
 function App() {
   return (
-    <div className="App">
+    <div className="app">
       <header className="app-header">
         <Icons.AppLogo className="app-logo"/>
         <p>
