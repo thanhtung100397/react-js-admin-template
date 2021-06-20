@@ -1,7 +1,10 @@
-import React from "react";
+import React from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { icons, Icons } from './assets/icons';
+import { BrowserRouter } from 'react-router-dom';
+import AppRoutes from './AppRoutes';
+import { icons } from './assets/icons';
 import { images } from './assets/images';
+import AppLoading from './components/loading/AppLoading';
 import './App.scss';
 
 const appMeta = (
@@ -20,25 +23,16 @@ const appMeta = (
   </Helmet>
 )
 
-function App() {
+const App = (props) => {
   return (
     <HelmetProvider>
+      {appMeta}
       <div className="app">
-        {appMeta}
-        <header className="app-header">
-          <Icons.AppLogo className="app-logo"/>
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="app-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <BrowserRouter>
+          <React.Suspense fallback={<AppLoading/>}>
+            <AppRoutes/>
+          </React.Suspense>
+        </BrowserRouter>
       </div>
     </HelmetProvider>
   );
