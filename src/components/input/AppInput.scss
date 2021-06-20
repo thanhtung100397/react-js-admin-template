@@ -1,0 +1,79 @@
+@import '../../colors';
+@import '../../dimens';
+
+.app-input {
+  display: flex;
+
+  @media screen and (max-width: $mobile-device-max-width) {
+    flex-direction: column !important;
+
+    .input-label {
+      width: 100% !important;
+      flex-basis: auto !important;
+    }
+  }
+
+  .input-label {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+
+  .input-container {
+    .input-validate-message {
+      font-size: 12px;
+    }
+  }
+}
+
+.app-input-success {
+  .ant-input {
+    border-color: $success;
+
+    &:focus {
+      border-color: $success;
+      border-right-width: 1px !important;
+      outline: 0;
+      box-shadow: 0 0 0 2px $success-shadow;
+    }
+  }
+
+  .input-validate-message {
+    color: $success;
+  }
+}
+
+.app-input-warning {
+  .ant-input {
+    border-color: $warning;
+
+    &:focus {
+      border-color: $warning;
+      border-right-width: 1px !important;
+      outline: 0;
+      box-shadow: 0 0 0 2px $warning-shadow;
+    }
+  }
+
+  .input-validate-message {
+    color: $warning;
+  }
+}
+
+.app-input-error {
+  .ant-input {
+    border-color: $error;
+
+    &:focus {
+      border-color: $error;
+      border-right-width: 1px !important;
+      outline: 0;
+      box-shadow: 0 0 0 2px $error-shadow;
+    }
+  }
+
+  .input-validate-message {
+    color: $error;
+  }
+}
