@@ -1,8 +1,8 @@
 import React from 'react';
 import { baseProps, fromBaseProps } from '../base';
 import PropTypes from 'prop-types';
-import check from 'check-types';
 import { LoadingOutlined } from '@ant-design/icons';
+import { TypeChecker } from '../../utils/helpers';
 import './AppSpinner.scss';
 
 const propTypes = {
@@ -24,7 +24,7 @@ const defaultProps = {
 
 const AppSpinner = (props) => {
   const renderIndicator = (indicator) => {
-    if (check.string(indicator)) {
+    if (TypeChecker.isString(indicator)) {
       indicator = <img src={indicator} alt="" style={{width: props.width, height: props.height}}/>;
     }
     return (
