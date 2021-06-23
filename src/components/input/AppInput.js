@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef, useImperativeHandle, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { baseProps, fromBaseProps } from '../base';
 import { Input } from 'antd';
 import { ValidateStatus } from '../../constants/constants';
+import { TypeChecker, Generator } from '../../utils/helpers';
 import './AppInput.scss';
 
 const LayoutDirection = {
@@ -87,7 +88,8 @@ const renderValidateMessage = (validateMessage) => {
   }
 };
 
-const AppInput = (props) => {
+const AppInput = forwardRef((props, ref) => {
+  const [componentId] = useState(() => Generator.uniqueId('AppInput_'));
   const [validationInfo, setValidationInfo] = useState(() => ({
     status: props.validateStatus,
     message: props.validateMessage
@@ -99,6 +101,23 @@ const AppInput = (props) => {
       message: props.validateMessage
     });
   }, [props.validateStatus, props.validateMessage]);
+
+  let onRefChanged = useCallback((newRef) => {
+    if (!ref) {
+      return;
+    }
+    if (TypeChecker.isFunction(ref)) {
+      ref(newRef, componentId);
+    }
+    ref.current = newRef;
+  }, [ref, componentId]);
+
+  useImperativeHandle(onRefChanged, () => ({
+    _componentId: componentId,
+    validate: () => {
+      console.log('INPUT VALIDATED');
+    }
+  }), [componentId]);
 
   const className = classNames(
     'app-input',
@@ -113,15 +132,15 @@ const AppInput = (props) => {
 
   const inputStyle = {
     flexDirection: props.layoutDirection
-  }
+  };
 
   return (
-    <div {...fromBaseProps({ className: className, style: inputStyle }, props)}>
+    <div {...fromBaseProps({className: className, style: inputStyle}, props)}>
       {renderInputLabel(props.label, props.labelCol, isLayoutVertical)}
       {renderInputContainer(props.value, props.inputCol, isLayoutVertical, props.validateMessage)}
     </div>
-  )
-};
+  );
+});
 
 AppInput.propTypes = propTypes;
 

@@ -12,3 +12,7 @@ export const TypeChecker = {
   isError: (value) => _.isError(value),
   isElement: (value) => _.isElement(value),
 }
+
+export const Generator = {
+  uniqueId: (prefix) => _.uniqueId(prefix)
+}
