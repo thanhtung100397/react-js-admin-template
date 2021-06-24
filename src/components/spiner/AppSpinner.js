@@ -1,7 +1,8 @@
 import React from 'react';
 import { baseProps, fromBaseProps } from '../base';
 import PropTypes from 'prop-types';
-import { LoadingOutlined } from '@ant-design/icons';
+import classNames from 'classnames';
+import { Loading3QuartersOutlined } from '@ant-design/icons';
 import { TypeChecker } from '../../utils/helpers';
 import './AppSpinner.scss';
 
@@ -13,26 +14,26 @@ const propTypes = {
 };
 
 const defaultProps = {
-  indicator: (
-    <div className="default-indicator">
-      <LoadingOutlined/>
-    </div>
-  ),
   width: 64,
   height: 64
 };
 
+let defaultIndicator = <Loading3QuartersOutlined/>;
+
 const AppSpinner = (props) => {
   const renderIndicator = (indicator) => {
-    if (TypeChecker.isString(indicator)) {
+    if (!props.indicator) {
+      indicator = defaultIndicator;
+    } else if (TypeChecker.isString(indicator)) {
       indicator = <img src={indicator} alt="" style={{width: props.width, height: props.height}}/>;
     }
     return (
-      <div className="indicator" style={{width: props.width, height: props.height}}>
+      <div className={classNames('indicator', { 'default-fill': !props.indicator })}
+           style={{width: props.width, height: props.height}}>
         {indicator}
       </div>
     )
-  }
+  };
 
   return (
     <div {...fromBaseProps({ className: 'app-spinner' }, props)}>
