@@ -3,13 +3,23 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { baseProps, fromBaseProps } from '../base';
 import { Input } from 'antd';
+import AppSpinner from '../spiner/AppSpinner';
+import { CheckCircleTwoTone, WarningTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 import { ValidateStatus } from '../../constants/constants';
 import { TypeChecker, Generator } from '../../utils/helpers';
+import colors from '../../colors.module.scss';
 import './AppInput.scss';
 
 const LayoutDirection = {
   HORIZONTAL: 'horizontal',
   VERTICAL: 'vertical'
+};
+
+const ValidateStatusIcons = {
+  [ValidateStatus.SUCCESS]: <CheckCircleTwoTone twoToneColor={colors.success}/>,
+  [ValidateStatus.WARNING]: <WarningTwoTone twoToneColor={colors.warning}/>,
+  [ValidateStatus.ERROR]: <CloseCircleTwoTone twoToneColor={colors.error}/>,
+  [ValidateStatus.VALIDATING]: <AppSpinner width={14} height={14}/>,
 };
 
 const propTypes = {
@@ -65,14 +75,29 @@ const renderInputLabel = (label, labelCol, verticalLayout) => {
   }
 };
 
-const renderInputContainer = (inputValue, inputCol, verticalLayout, validateMessage) => {
+const renderValidateIcon = (validateStatus) => {
+  if (!ValidateStatusIcons[validateStatus]) {
+    return;
+  }
   return (
-    <div className="input-container"
+    <div className="validate-icon">
+      {ValidateStatusIcons[validateStatus]}
+    </div>
+  );
+};
+
+const renderInputContainer = (inputValue, inputCol, verticalLayout, validateStatus, validateMessage) => {
+  return (
+    <div className={classNames('input-container',
+                              {
+                                'has-validate-icon': validateStatus && ValidateStatusIcons[validateStatus]
+                              })}
          style={!verticalLayout && inputCol && {
            flex: inputCol.span,
            width: inputCol.width
          }}>
       <Input value={inputValue}/>
+      {renderValidateIcon(validateStatus)}
       {renderValidateMessage(validateMessage)}
     </div>
   );
@@ -137,7 +162,7 @@ const AppInput = forwardRef((props, ref) => {
   return (
     <div {...fromBaseProps({className: className, style: inputStyle}, props)}>
       {renderInputLabel(props.label, props.labelCol, isLayoutVertical)}
-      {renderInputContainer(props.value, props.inputCol, isLayoutVertical, props.validateMessage)}
+      {renderInputContainer(props.value, props.inputCol, isLayoutVertical, props.validateStatus, props.validateMessage)}
     </div>
   );
 });
