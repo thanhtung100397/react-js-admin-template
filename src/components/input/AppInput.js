@@ -39,17 +39,9 @@ const propTypes = {
   validateStatus: PropTypes.oneOf(Object.keys(ValidateStatus).map((key) => ValidateStatus[key])),
   validateMessage: PropTypes.node,
   validateRules: PropTypes.arrayOf(PropTypes.exact({
-    valueMatch: PropTypes.arrayOf(PropTypes.any),
-    length: PropTypes.number,
-    max: PropTypes.number,
-    min: PropTypes.number,
-    pattern: PropTypes.string,
-    required: PropTypes.bool,
-    typeMatch: PropTypes.string,
-
     transform: PropTypes.func,
     trigger: PropTypes.func,
-
+    validate: PropTypes.func,
     message: PropTypes.node
   }))
 };

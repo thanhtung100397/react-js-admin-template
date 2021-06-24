@@ -1,3 +1,15 @@
 {
-
+  "ID_VALUE_REQUIRED_VALIDATION": "Giá trị bắt buộc là {value}",
+  "ID_ONE_OF_VALUES_VALIDATION": "Giá trị bắt buộc nằm trong {values}",
+  "ID_TYPE_REQUIRED_VALIDATION": "Kiểu dữ liệu bắt buộc là {type}",
+  "ID_ONE_OF_TYPES_VALIDATION": "Kiểu dữ liệu bắt buộc nằm trong {values}",
+  "ID_LENGTH_VALIDATION": "Độ dài bắt buộc là {length}",
+  "ID_MAX_VALUE_VALIDATION": "Giá trị tối đa là {max}",
+  "ID_MAX_LENGTH_VALIDATION": "Độ dài tối đa là {max}",
+  "ID_MIN_VALUE_VALIDATION": "Giá trị tối thiểu là {min}",
+  "ID_MIN_LENGTH_VALIDATION": "Độ dài tối thiểu là {min}",
+  "ID_PATTERN_VALIDATION": "Giá trị không khớp pattern {pattern}",
+  "ID_EMAIL_VALIDATION": "Email không hợp lệ",
+  "ID_PHONE_VALIDATION": "Số điện thoại không hợp lệ",
+  "ID_REQUIRED_VALIDATION": "Giá trị bắt buộc"
 }

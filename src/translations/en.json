@@ -1,3 +1,15 @@
 {
-
+  "ID_VALUE_REQUIRED_VALIDATION": "Input must be {value}",
+  "ID_ONE_OF_VALUES_VALIDATION": "Input must be one of {values}",
+  "ID_TYPE_REQUIRED_VALIDATION": "Input data type must be {type}",
+  "ID_ONE_OF_TYPES_VALIDATION": "Input data type must be on of {types}",
+  "ID_LENGTH_VALIDATION": "Input length must be {length} ",
+  "ID_MAX_VALUE_VALIDATION": "Input max value must be {max}",
+  "ID_MAX_LENGTH_VALIDATION": "Input max length must be {max}",
+  "ID_MIN_VALUE_VALIDATION": "Input min value must be {min}",
+  "ID_MIN_LENGTH_VALIDATION": "Input min length must be {min}",
+  "ID_PATTERN_VALIDATION": "Input not match pattern {pattern}",
+  "ID_EMAIL_VALIDATION": "Input is not valid email",
+  "ID_PHONE_VALIDATION": "Input is not valid phone number",
+  "ID_REQUIRED_VALIDATION": "Input required"
 }

@@ -14,9 +14,43 @@ export const TypeChecker = {
   isEmpty: (value) => _.isEmpty(value), // Checks if value is an empty object, collection, map, or set.
   isError: (value) => _.isError(value),
   isElement: (value) => _.isElement(value),
-  isUnset: (value) => _.isNull(value) || _.isUndefined(value)
+  isUnset: (value) => _.isNull(value) || _.isUndefined(value),
+  isType: (value, type) => {
+    let checker = TypeChecker[`is${_.capitalize(type)}`];
+    return checker? checker(value) : false;
+  }
 }
 
 export const Generator = {
   uniqueId: (prefix) => _.uniqueId(prefix)
+}
+
+export const getLength = (value) => {
+  if (TypeChecker.isArray(value) || TypeChecker.isString(value)) {
+    return value.length;
+  } else if (TypeChecker.isSet(value) || TypeChecker.isMap(value)) {
+    return value.size();
+  } else if (TypeChecker.isNumber(value)) {
+    return value.toString.length;
+  }
+}
+
+export const oneOf = (value, values) => {
+  if (TypeChecker.isArray(values)) {
+    return values.includes(value);
+  } else if (TypeChecker.isSet(values)) {
+    return values.has(value);
+  }
+}
+
+export const printToString = (value) => {
+  if (TypeChecker.isNumber(value)) {
+    return value;
+  } else if (TypeChecker.isString(value)) {
+    return `'${value}'`;
+  } else if (TypeChecker.isArray(value) || TypeChecker.isSet(value)) {
+    return `[${value.join(', ')}]`;
+  } else {
+    return value.toString;
+  }
 }
