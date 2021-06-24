@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import { icons } from './assets/icons';
 import { images } from './assets/images';
+import TranslationProvider from './translations/provider/TranslationsProvider';
 import AppLoading from './components/loading/AppLoading';
 import './App.scss';
 
@@ -25,16 +26,18 @@ const appMeta = (
 
 const App = (props) => {
   return (
-    <HelmetProvider>
-      {appMeta}
-      <div className="app">
-        <BrowserRouter>
-          <React.Suspense fallback={<AppLoading/>}>
-            <AppRoutes/>
-          </React.Suspense>
-        </BrowserRouter>
-      </div>
-    </HelmetProvider>
+    <TranslationProvider>
+      <HelmetProvider>
+        {appMeta}
+        <div className="app">
+          <BrowserRouter>
+            <React.Suspense fallback={<AppLoading/>}>
+              <AppRoutes/>
+            </React.Suspense>
+          </BrowserRouter>
+        </div>
+      </HelmetProvider>
+    </TranslationProvider>
   );
 }
 
