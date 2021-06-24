@@ -1,6 +1,6 @@
 @import 'antd/dist/antd.css';
-@import './colors';
-@import './dimens';
+@import 'colors.module';
+@import 'dimens.module';
 
 body {
   margin: 0;
