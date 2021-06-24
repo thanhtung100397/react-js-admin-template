@@ -42,7 +42,7 @@ const propTypes = {
     transform: PropTypes.func,
     trigger: PropTypes.func,
     validate: PropTypes.func,
-    message: PropTypes.node
+    message: PropTypes.oneOfType([PropTypes.node, PropTypes.func])
   }))
 };
 
