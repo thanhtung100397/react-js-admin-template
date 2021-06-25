@@ -38,11 +38,11 @@ export const ValidationRule = {
     message: <FormattedMessage id="ID_PATTERN_VALIDATION" values={{pattern: printToString(pattern)}}/>,
     validate: (value) => value && value.toString().match(pattern)
   }),
-  EMAIL: (email) => ({
+  EMAIL: () => ({
     message: <FormattedMessage id="ID_EMAIL_VALIDATION"/>,
     validate: (value) => ValidationRule.PATTERN(Regex.EMAIL).validate(value)
   }),
-  PHONE: (phone) => ({
+  PHONE: () => ({
     message: <FormattedMessage id="ID_PHONE_VALIDATION"/>,
     validate: (value) => ValidationRule.PATTERN(Regex.PHONE).validate(value)
   }),
@@ -50,4 +50,4 @@ export const ValidationRule = {
     message: <FormattedMessage id="ID_REQUIRED_VALIDATION"/>,
     validate: (value) => Boolean(value)
   }
-}
+};
