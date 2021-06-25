@@ -75,9 +75,10 @@ const Login = (props) => {
               inputRef => (
                <>
                  <AppInput ref={inputRef} label="Hello world" validateStatus="success" validateMessage="This is success!" validateRules={[ValidationRule.REQUIRED]}/>
-                 <AppInput ref={inputRef} label="Hello world 3" labelCol={{width: 20}} validateStatus="warning" validateMessage="This is warning!"/>
+                 <AppInput ref={inputRef} label="Hello world 3" labelCol={{width: 20}} showSuccessValidateStatus={true} validateStatus="warning" validateMessage="This is warning!" validateRules={[ValidationRule.REQUIRED]}/>
                  <AppInput ref={inputRef} label="Hello world 4 he hehe hehehe" labelCol={{span: 1}} inputCol={{span: 2}} validateStatus="error" validateMessage="This is error!"/>
                  <AppInput ref={inputRef} label={<div>Bello</div>} validateStatus="validating" validateMessage="Do validating..."/>
+                 <AppInput ref={inputRef} label="Hello world 5" labelCol={{width: 20}} showSuccessValidateStatus={true} validateRules={[ValidationRule.REQUIRED, {validate: async (value) => {await await new Promise(r => setTimeout(r, 3000)); return true}}]}/>
                  <Button type="primary" htmlType="submit">
                    Submit
                  </Button>
