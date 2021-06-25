@@ -1,6 +1,7 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { baseProps, fromBaseProps } from '../base';
+import { ConsoleLogger } from '../../utils/loggers';
 import './AppForm.scss';
 
 const propTypes = {
@@ -18,8 +19,13 @@ const defaultProps = {
   layout: 'horizontal'
 };
 
+const handleFormValidationError = (error) => {
+  ConsoleLogger.error('FORM VALIDATION ERROR', error);
+};
+
 const AppForm = (props) => {
-  const inputRefs = useRef([]);
+  const [validating, setValidating] = useState(false);
+  const inputRefs = useRef({});
 
   const addInputRef = useCallback((ref, componentId) => {
     if (ref) {
@@ -27,13 +33,30 @@ const AppForm = (props) => {
     } else {
       delete inputRefs.current[componentId];
     }
-    console.log(inputRefs.current);
   }, []);
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    console.log(event.target.data);
+  const validateFormInputs = async () => {
+    setValidating(true);
+    let result = true;
+    for (const refKey in inputRefs.current) {
+      let inputValid = await inputRefs.current[refKey].validate();
+      result = result && inputValid;
+    }
+    setValidating(false);
+    return result;
   };
+
+  const handleFormSubmit = useCallback((event) => {
+    event.preventDefault();
+    if (validating) {
+      return;
+    }
+    validateFormInputs()
+      .then((validInputs) => {
+        console.log('FORM VALIDATION RESULT', validInputs);
+      })
+      .catch(handleFormValidationError);
+  }, [validating]);
 
   return (
     <form {...fromBaseProps({ className: 'app-form' }, props)}

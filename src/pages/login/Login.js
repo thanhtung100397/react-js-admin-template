@@ -6,6 +6,7 @@ import AppForm from '../../components/form/AppForm';
 import AppInput from '../../components/input/AppInput';
 import { images } from '../../assets/images';
 import './Login.scss';
+import { ValidationRule } from '../../constants/validationRules';
 
 const pageStyle = {
   backgroundImage: `url(${images.img_started_background})`
@@ -73,26 +74,13 @@ const Login = (props) => {
             {
               inputRef => (
                <>
-                 <AppInput ref={inputRef} label="Hello world" validateStatus="success" validateMessage="This is success!"/>
-                 <AppInput label="Hello world 3" labelCol={{width: 20}} validateStatus="warning" validateMessage="This is warning!"/>
-                 <AppInput label="Hello world 4 he hehe hehehe" labelCol={{span: 1}} inputCol={{span: 2}} validateStatus="error" validateMessage="This is error!"/>
-                 <AppInput label={<div>Bello</div>} validateStatus="validating" validateMessage="Do validating..."/>
-                 <Row>
-                   <Col span={12}>
-                     <AppInput label="Username" labelCol={{width: 20}}/>
-                   </Col>
-                   <Col span={12}>
-                     <AppInput label="Password" labelCol={{width: 20}}/>
-                   </Col>
-                 </Row>
-                 <Row>
-                   <Col span={16}>
-                     <AppInput label="Name" labelCol={{width: 20}}/>
-                   </Col>
-                   <Col span={8}>
-                     <AppInput label="Age" labelCol={{width: 20}}/>
-                   </Col>
-                 </Row>
+                 <AppInput ref={inputRef} label="Hello world" validateStatus="success" validateMessage="This is success!" validateRules={[ValidationRule.REQUIRED]}/>
+                 <AppInput ref={inputRef} label="Hello world 3" labelCol={{width: 20}} validateStatus="warning" validateMessage="This is warning!"/>
+                 <AppInput ref={inputRef} label="Hello world 4 he hehe hehehe" labelCol={{span: 1}} inputCol={{span: 2}} validateStatus="error" validateMessage="This is error!"/>
+                 <AppInput ref={inputRef} label={<div>Bello</div>} validateStatus="validating" validateMessage="Do validating..."/>
+                 <Button type="primary" htmlType="submit">
+                   Submit
+                 </Button>
                </>
               )
             }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef, useImperativeHandle, useCallback } from 'react';
+import React, { useState, useEffect, forwardRef, useImperativeHandle, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { baseProps, fromBaseProps } from '../base';
@@ -9,6 +9,7 @@ import { ValidateStatus } from '../../constants/constants';
 import { TypeChecker, Generator } from '../../utils/helpers';
 import colors from '../../colors.module.scss';
 import './AppInput.scss';
+import { spawn } from 'env-cmd/dist/spawn';
 
 const LayoutDirection = {
   HORIZONTAL: 'horizontal',
@@ -39,10 +40,10 @@ const propTypes = {
   validateStatus: PropTypes.oneOf(Object.keys(ValidateStatus).map((key) => ValidateStatus[key])),
   validateMessage: PropTypes.node,
   validateRules: PropTypes.arrayOf(PropTypes.exact({
-    transform: PropTypes.func,
-    trigger: PropTypes.func,
-    validate: PropTypes.func,
-    message: PropTypes.oneOfType([PropTypes.node, PropTypes.func])
+    transform: PropTypes.func, // (value) => {} support async/Promise
+    trigger: PropTypes.func, // (value, valid, transformValue) => {}
+    validate: PropTypes.func, // (value) => {} support async/Promise
+    message: PropTypes.oneOfType([PropTypes.node, PropTypes.func]) // node || (value) => {}
   }))
 };
 
@@ -53,15 +54,15 @@ const defaultProps = {
   }
 };
 
-const renderInputLabel = (label, labelCol, verticalLayout) => {
-  if (label) {
+const renderInputLabel = (props, verticalLayout) => {
+  if (props.label) {
     return (
       <div className="input-label"
-           style={!verticalLayout && labelCol && {
-             flex: labelCol.span,
-             width: labelCol.width
+           style={!verticalLayout && props.labelCol && {
+             flex: props.labelCol.span,
+             width: props.labelCol.width
            }}>
-        {label}
+        {props.label}
       </div>
     );
   }
@@ -78,19 +79,19 @@ const renderValidateIcon = (validateStatus) => {
   );
 };
 
-const renderInputContainer = (inputValue, inputCol, verticalLayout, validateStatus, validateMessage) => {
+const renderInputContainer = (props, verticalLayout, inputRef) => {
   return (
     <div className={classNames('input-container',
                               {
-                                'has-validate-icon': validateStatus && ValidateStatusIcons[validateStatus]
+                                'has-validate-icon': props.validateStatus && ValidateStatusIcons[props.validateStatus]
                               })}
-         style={!verticalLayout && inputCol && {
-           flex: inputCol.span,
-           width: inputCol.width
+         style={!verticalLayout && props.inputCol && {
+           flex: props.inputCol.span,
+           width: props.inputCol.width
          }}>
-      <Input value={inputValue}/>
-      {renderValidateIcon(validateStatus)}
-      {renderValidateMessage(validateMessage)}
+      <Input ref={inputRef} value={props.inputValue}/>
+      {renderValidateIcon(props.validateStatus)}
+      {renderValidateMessage(props.validateMessage)}
     </div>
   );
 };
@@ -105,15 +106,65 @@ const renderValidateMessage = (validateMessage) => {
   }
 };
 
+const transformValue = async (inputValue, transformFunc) => {
+  if (transformFunc) {
+    let result = transformFunc(inputValue);
+    if (TypeChecker.isPromise(result)) {
+      return await result;
+    }
+    return result;
+  }
+  return inputValue;
+};
+
+const validateValue = async (inputValue, validateFunc) => {
+  if (validateFunc) {
+    let result = validateFunc(inputValue);
+    if (TypeChecker.isPromise(result)) {
+      return await result;
+    }
+    return result;
+  }
+  return false;
+};
+
+const executeValidateRule = async (inputValue, rule) => {
+  let transformedValue = await transformValue(inputValue, rule.transform);
+  let validateResult = await validateValue(transformedValue, rule.validate);
+  if (rule.trigger) {
+    rule.trigger(inputValue, validateResult, transformedValue);
+  }
+  return validateResult;
+};
+
+const getInputValue = (inputRef) => {
+  return inputRef.current?.state.value;
+}
+
+const validateRules = (inputValue, validateStatus, validateRules) => {
+  let isValid = true;
+  if (props.validateStatus && props.validateStatus !== ValidateStatus.WARNING) {
+    isValid = props.validateStatus === ValidateStatus.SUCCESS;
+  } else if (props.validateRules) {
+    for (const rule of props.validateRules) {
+      if (!await executeValidateRule(inputValue, rule)) {
+        isValid = false;
+        break;
+      }
+    }
+  }
+}
+
 const AppInput = forwardRef((props, ref) => {
   const [componentId] = useState(() => Generator.uniqueId('AppInput_'));
-  const [validationInfo, setValidationInfo] = useState(() => ({
+  const [validationMeta, setValidationMeta] = useState(() => ({
     status: props.validateStatus,
     message: props.validateMessage
   }));
+  const inputRef = useRef();
 
   useEffect(() => {
-    setValidationInfo({
+    setValidationMeta({
       status: props.validateStatus,
       message: props.validateMessage
     });
@@ -129,19 +180,29 @@ const AppInput = forwardRef((props, ref) => {
     ref.current = newRef;
   }, [ref, componentId]);
 
+  let validate = useCallback(async () => {
+    let inputValue = getInputValue(inputRef);
+
+    if (!isValid) {
+      setValidationMeta({
+        ...validationMeta,
+        status
+      })
+    }
+    return isValid;
+  }, [props.validateStatus, props.validateRules, validationMeta]);
+
   useImperativeHandle(onRefChanged, () => ({
     _componentId: componentId,
-    validate: () => {
-      console.log('INPUT VALIDATED');
-    }
-  }), [componentId]);
+    validate: validate
+  }), [componentId, validate]);
 
   const className = classNames(
     'app-input',
     {
-      'app-input-success': validationInfo.status === ValidateStatus.SUCCESS,
-      'app-input-warning': validationInfo.status === ValidateStatus.WARNING,
-      'app-input-error': validationInfo.status === ValidateStatus.ERROR,
+      'app-input-success': validationMeta.status === ValidateStatus.SUCCESS,
+      'app-input-warning': validationMeta.status === ValidateStatus.WARNING,
+      'app-input-error': validationMeta.status === ValidateStatus.ERROR,
     }
   );
 
@@ -152,9 +213,9 @@ const AppInput = forwardRef((props, ref) => {
   };
 
   return (
-    <div {...fromBaseProps({className: className, style: inputStyle}, props)}>
-      {renderInputLabel(props.label, props.labelCol, isLayoutVertical)}
-      {renderInputContainer(props.value, props.inputCol, isLayoutVertical, props.validateStatus, props.validateMessage)}
+    <div {...fromBaseProps({ className: className, style: inputStyle }, props)}>
+      {renderInputLabel(props, isLayoutVertical)}
+      {renderInputContainer(props, isLayoutVertical, inputRef)}
     </div>
   );
 });

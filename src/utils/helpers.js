@@ -15,15 +15,16 @@ export const TypeChecker = {
   isError: (value) => _.isError(value),
   isElement: (value) => _.isElement(value),
   isUnset: (value) => _.isNull(value) || _.isUndefined(value),
+  isPromise: (value) => value && Object.prototype.toString.call(value) === "[object Promise]",
   isType: (value, type) => {
     let checker = TypeChecker[`is${_.capitalize(type)}`];
     return checker? checker(value) : false;
   }
-}
+};
 
 export const Generator = {
   uniqueId: (prefix) => _.uniqueId(prefix)
-}
+};
 
 export const getLength = (value) => {
   if (TypeChecker.isArray(value) || TypeChecker.isString(value)) {
@@ -33,7 +34,7 @@ export const getLength = (value) => {
   } else if (TypeChecker.isNumber(value)) {
     return value.toString.length;
   }
-}
+};
 
 export const oneOf = (value, values) => {
   if (TypeChecker.isArray(values)) {
@@ -41,7 +42,7 @@ export const oneOf = (value, values) => {
   } else if (TypeChecker.isSet(values)) {
     return values.has(value);
   }
-}
+};
 
 export const printToString = (value) => {
   if (TypeChecker.isNumber(value)) {
@@ -53,4 +54,4 @@ export const printToString = (value) => {
   } else {
     return value.toString;
   }
-}
+};
