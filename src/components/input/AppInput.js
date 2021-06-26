@@ -2,11 +2,13 @@ import React, { useState, useEffect, forwardRef, useImperativeHandle, useCallbac
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { baseProps, fromBaseProps } from '../base';
+import { TransformValueError, ValidateValueError, TriggerValidationError } from './AppInputErrors';
 import { Input } from 'antd';
 import AppSpinner from '../spiner/AppSpinner';
 import { CheckCircleTwoTone, WarningTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 import { ValidateStatus } from '../../constants/constants';
 import { TypeChecker, Generator } from '../../utils/helpers';
+import { ConsoleLogger } from '../../utils/loggers';
 import colors from '../../colors.module.scss';
 import './AppInput.scss';
 
@@ -43,7 +45,7 @@ const propTypes = {
   validateMessage: PropTypes.node,
   validateRules: PropTypes.arrayOf(PropTypes.shape({
     transform: PropTypes.func, // (value) => {} support async/Promise
-    trigger: PropTypes.func, // (value, valid, transformValue) => {}
+    trigger: PropTypes.func, // (value, valid, transformValue) => {} support async/Promise
     validate: PropTypes.func, // (value) => {} support async/Promise
     message: PropTypes.oneOfType([PropTypes.node, PropTypes.func]) // node || (value) => {}
   }))
@@ -111,32 +113,51 @@ const renderValidateMessage = (validateMessage) => {
 
 const transformValue = async (inputValue, transformFunc) => {
   if (transformFunc) {
-    let result = transformFunc(inputValue);
-    if (TypeChecker.isPromise(result)) {
-      return await result;
+    try {
+      let result = transformFunc(inputValue);
+      if (TypeChecker.isPromise(result)) {
+        return await result;
+      }
+      return result;
+    } catch (error) {
+      throw new TransformValueError(error);
     }
-    return result;
   }
   return inputValue;
 };
 
 const validateValue = async (inputValue, validateFunc) => {
   if (validateFunc) {
-    let result = validateFunc(inputValue);
-    if (TypeChecker.isPromise(result)) {
-      return await result;
+    try {
+      let result = validateFunc(inputValue);
+      if (TypeChecker.isPromise(result)) {
+        return await result;
+      }
+      return result;
+    } catch (error) {
+      throw new ValidateValueError(error);
     }
-    return result;
   }
   return false;
 };
 
+const triggerValidation = async (inputValue, validateResult, transformedValue, triggerFunc) => {
+  if (triggerFunc) {
+    try {
+      let result = triggerFunc(inputValue, validateResult, transformedValue);
+      if (TypeChecker.isPromise(result)) {
+        await result;
+      }
+    } catch (error) {
+      throw new TriggerValidationError(error);
+    }
+  }
+}
+
 const validateRule = async (inputValue, rule) => {
   let transformedValue = await transformValue(inputValue, rule.transform);
   let validateResult = await validateValue(transformedValue, rule.validate);
-  if (rule.trigger) {
-    rule.trigger(inputValue, validateResult, transformedValue);
-  }
+  await triggerValidation(inputValue, validateResult, transformedValue, rule.trigger);
   return validateResult;
 };
 
@@ -150,11 +171,19 @@ const validateAllRules = async (inputValue, validateStatus, validateMessage, val
     validateResult.message = createValidationMessage(inputValue, validateMessage);
   } else if (validateRules) {
     for (const rule of validateRules) {
-      if (!await validateRule(inputValue, rule)) {
+      try {
+        if (!await validateRule(inputValue, rule)) {
+          validateResult.valid = false;
+          validateResult.message = createValidationMessage(inputValue, rule.message);
+          break;
+        }
+      } catch (error) {
+        ConsoleLogger.error(error.message, error.cause || error)
         validateResult.valid = false;
-        validateResult.message = createValidationMessage(inputValue, rule.message);
+        validateResult.message = createValidationMessage(inputValue, error.message);
         break;
       }
+
     }
   }
   return validateResult;
@@ -211,7 +240,7 @@ const AppInput = forwardRef((props, ref) => {
       })
     }
     return validateResult.valid;
-  }, [validation.status, props.showSuccessValidateStatus, props.validateStatus, props.validateMessage, props.validateRules]);
+  }, [props.showSuccessValidateStatus, props.validateStatus, props.validateMessage, props.validateRules]);
 
   useImperativeHandle(onRefChanged, () => ({
     _componentId: componentId,

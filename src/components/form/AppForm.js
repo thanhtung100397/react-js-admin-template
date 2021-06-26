@@ -37,25 +37,27 @@ const AppForm = (props) => {
 
   const validateFormInputs = async () => {
     setValidating(true);
-    let result = true;
+    let validateResultPromises = [];
     for (const refKey in inputRefs.current) {
-      let inputValid = await inputRefs.current[refKey].validate();
-      result = result && inputValid;
+      validateResultPromises.push(inputRefs.current[refKey].validate());
     }
-    setValidating(false);
-    return result;
+    try {
+      let validateResults = await Promise.all(validateResultPromises);
+      setValidating(false);
+      return validateResults.every(Boolean);
+    } catch (error) {
+      handleFormValidationError(error);
+      return false;
+    }
   };
 
-  const handleFormSubmit = useCallback((event) => {
+  const handleFormSubmit = useCallback(async (event) => {
     event.preventDefault();
     if (validating) {
       return;
     }
-    validateFormInputs()
-      .then((validInputs) => {
-        console.log('FORM VALIDATION RESULT', validInputs);
-      })
-      .catch(handleFormValidationError);
+    let formValid = await validateFormInputs();
+    console.log('FORM VALIDATION RESULT', formValid);
   }, [validating]);
 
   return (
