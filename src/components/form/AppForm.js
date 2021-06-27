@@ -46,7 +46,6 @@ const AppForm = (props) => {
   const validateFormInputs = async () => {
     setValidating(true);
     let validateResultPromises = [];
-    console.log(formItemRefs.current);
     for (const refKey in formItemRefs.current) {
       validateResultPromises.push(formItemRefs.current[refKey].validate());
     }

@@ -231,7 +231,6 @@ const AppFormItem = (props) => {
     });
     disableInput(inputRef, true);
     let inputValue = getInputValue(inputRef);
-    console.log('INPUT VALUE');
     let validateResult = await validateAllRules(inputValue, props.validateStatus, props.validateMessage, props.validateRules);
     disableInput(inputRef, false);
     if (validateResult.valid) {

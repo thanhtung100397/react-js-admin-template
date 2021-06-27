@@ -33,10 +33,7 @@ const AppInput = (props) => {
   useEffect(() => {
     setInputRef && setInputRef({
       getValue: () => ref.current?.state.value,
-      disable: (disabled) => {
-        console.log('DSIABLLED', disabled);
-        setDisabled(disabled)
-      }
+      disable: (disabled) => setDisabled(disabled)
     });
   }, [setInputRef]);
 
