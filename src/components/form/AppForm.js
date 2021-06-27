@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState } from 'react';
+import React, { useRef, useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { baseProps, fromBaseProps } from '../base';
 import { ConsoleLogger } from '../../utils/loggers';
@@ -20,27 +20,35 @@ const defaultProps = {
   layout: 'horizontal'
 };
 
+const AppFormContext = React.createContext({});
+
 const handleFormValidationError = (error) => {
   ConsoleLogger.error('FORM VALIDATION ERROR', error);
 };
 
 const AppForm = (props) => {
+  const [contextValue, setContextValue] = useState({});
   const [validating, setValidating] = useState(false);
-  const inputRefs = useRef({});
+  const formItemRefs = useRef({});
 
-  const addInputRef = useCallback((ref, componentId) => {
-    if (ref) {
-      inputRefs.current[componentId] = ref;
-    } else {
-      delete inputRefs.current[componentId];
-    }
+  useEffect(() => {
+    setContextValue({
+      updateFormItemRef: (ref, componentId) => {
+        if (ref) {
+          formItemRefs.current[componentId] = ref;
+        } else {
+          delete formItemRefs.current[componentId];
+        }
+      }
+    })
   }, []);
 
   const validateFormInputs = async () => {
     setValidating(true);
     let validateResultPromises = [];
-    for (const refKey in inputRefs.current) {
-      validateResultPromises.push(inputRefs.current[refKey].validate());
+    console.log(formItemRefs.current);
+    for (const refKey in formItemRefs.current) {
+      validateResultPromises.push(formItemRefs.current[refKey].validate());
     }
     try {
       let validateResults = await Promise.all(validateResultPromises);
@@ -62,10 +70,12 @@ const AppForm = (props) => {
   }, [validating]);
 
   return (
-    <form {...fromBaseProps({ className: 'app-form' }, props)}
-          onSubmit={handleFormSubmit}>
-      {props.children(addInputRef)}
-    </form>
+    <AppFormContext.Provider value={contextValue}>
+      <form {...fromBaseProps({ className: 'app-form' }, props)}
+            onSubmit={handleFormSubmit}>
+        {props.children}
+      </form>
+    </AppFormContext.Provider>
   );
 };
 
@@ -73,6 +83,9 @@ AppForm.propTypes = propTypes;
 
 AppForm.defaultProps = defaultProps;
 
-AppForm.Item = AppFormItem
+AppForm.Item = (props) => <AppFormItem {...props}/>
 
 export default AppForm;
+export {
+  AppFormContext
+}

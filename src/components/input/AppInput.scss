@@ -1,0 +1,64 @@
+@import '../../colors.module';
+
+.app-input {
+
+}
+
+.validate-success {
+  .app-input {
+    .ant-input {
+      border-color: $success;
+
+      &:focus {
+        border-color: $success;
+        border-right-width: 1px !important;
+        outline: 0;
+        box-shadow: 0 0 0 2px $success-shadow;
+      }
+    }
+  }
+}
+
+.validate-warning {
+  .ant-input {
+    border-color: $warning;
+
+    &:focus {
+      border-color: $warning;
+      border-right-width: 1px !important;
+      outline: 0;
+      box-shadow: 0 0 0 2px $warning-shadow;
+    }
+  }
+}
+
+.validate-error {
+  .ant-input {
+    border-color: $error;
+
+    &:focus {
+      border-color: $error;
+      border-right-width: 1px !important;
+      outline: 0;
+      box-shadow: 0 0 0 2px $error-shadow;
+    }
+  }
+}
+
+.has-validate-icon {
+  .ant-input {
+    padding-right: 30px;
+  }
+
+  .ant-input-affix-wrapper {
+    .ant-input-suffix {
+      padding-right: 24px;
+    }
+  }
+
+  .ant-input-search:not(.ant-input-search-enter-button) {
+    .ant-input-suffix {
+      right: 34px;
+    }
+  }
+}

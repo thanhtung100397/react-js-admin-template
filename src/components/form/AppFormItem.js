@@ -1,8 +1,9 @@
-import React, { useState, useEffect, forwardRef, useImperativeHandle, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { baseProps, fromBaseProps } from '../base';
 import { TransformValueError, ValidateValueError, TriggerValidationError } from './AppFormItemErrors';
+import { AppFormContext } from './AppForm';
 import AppSpinner from '../spiner/AppSpinner';
 import { CheckCircleTwoTone, WarningTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 import { ValidateStatus } from '../../constants/constants';
@@ -10,7 +11,6 @@ import { TypeChecker, Generator } from '../../utils/helpers';
 import { ConsoleLogger } from '../../utils/loggers';
 import colors from '../../colors.module.scss';
 import './AppFormItem.scss';
-import {Input} from 'antd';
 
 const COMPONENT_ID_PREFIX = 'AppFormItem_';
 
@@ -59,6 +59,8 @@ const defaultProps = {
   showSuccessValidateStatus: false
 };
 
+const AppFormItemContext = React.createContext();
+
 const renderLabel = (props, verticalLayout) => {
   if (props.label) {
     return (
@@ -94,7 +96,7 @@ const renderContainer = (props, verticalLayout, inputRef, validation) => {
            flex: props.inputCol.span,
            width: props.inputCol.width
          }}>
-      <Input ref={inputRef} value={props.inputValue}/>
+      {props.children}
       {renderValidateIcon(validation.status)}
       {renderValidateMessage(validation.message)}
     </div>
@@ -189,18 +191,32 @@ const validateAllRules = async (inputValue, validateStatus, validateMessage, val
   return validateResult;
 };
 
-const getInputValue = (inputRef) => {// TODO
-  return inputRef.current?.state.value;
+const getInputValue = (inputRef) => {
+  return inputRef.current?.getValue && inputRef.current?.getValue();
 };
+
+const disableInput = (inputRef, disabled) => {
+  inputRef.current?.disable && inputRef.current?.disable(disabled);
+}
 
 const createValidationMessage = (inputValue, message) => {
   return TypeChecker.isFunction(message)? message(inputValue) : message;
 };
 
-const AppFormItem = forwardRef((props, ref) => {
+const AppFormItem = (props) => {
   const [componentId] = useState(() => Generator.uniqueId(COMPONENT_ID_PREFIX));
+  const { updateFormItemRef } = useContext(AppFormContext);
+  const [contextValue, setContextValue] = useState({});
   const [validation, setValidation] = useState({});
-  const inputRef = useRef();
+  const inputRef = useRef({});
+
+  useEffect(() => {
+    setContextValue({
+      setInputRef: (ref) => {
+        inputRef.current = ref;
+      }
+    })
+  }, []);
 
   useEffect(() => {
     setValidation({
@@ -209,22 +225,15 @@ const AppFormItem = forwardRef((props, ref) => {
     });
   }, [props.validateStatus, props.validateMessage]);
 
-  let onRefChanged = useCallback((newRef) => {
-    if (!ref) {
-      return;
-    }
-    if (TypeChecker.isFunction(ref)) {
-      ref(newRef, componentId);
-    }
-    ref.current = newRef;
-  }, [ref, componentId]);
-
   const validate = useCallback(async () => {
     setValidation({
       status: ValidateStatus.VALIDATING
     });
-    let inputValue = getInputValue(inputRef);// TODO
+    disableInput(inputRef, true);
+    let inputValue = getInputValue(inputRef);
+    console.log('INPUT VALUE');
     let validateResult = await validateAllRules(inputValue, props.validateStatus, props.validateMessage, props.validateRules);
+    disableInput(inputRef, false);
     if (validateResult.valid) {
       if (props.showSuccessValidateStatus) {
         setValidation({
@@ -242,37 +251,46 @@ const AppFormItem = forwardRef((props, ref) => {
     return validateResult.valid;
   }, [props.showSuccessValidateStatus, props.validateStatus, props.validateMessage, props.validateRules]);
 
-  useImperativeHandle(onRefChanged, () => ({
-    _componentId: componentId,
-    validate: validate
-  }), [componentId, validate]);
+  useEffect(() => {
+    updateFormItemRef && updateFormItemRef({
+      validate: validate
+    }, componentId);
+    return () => {
+      updateFormItemRef && updateFormItemRef(null, componentId);
+    }
+  }, [updateFormItemRef, validate, componentId]);
 
   const className = classNames(
-    'app-input',
+    'app-form-item',
     {
-      'app-input-success': validation.status === ValidateStatus.SUCCESS,
-      'app-input-warning': validation.status === ValidateStatus.WARNING,
-      'app-input-error': validation.status === ValidateStatus.ERROR,
-      'app-input-validating': validation.status === ValidateStatus.VALIDATING,
+      'validate-success': validation.status === ValidateStatus.SUCCESS,
+      'validate-warning': validation.status === ValidateStatus.WARNING,
+      'validate-error': validation.status === ValidateStatus.ERROR,
+      'validate-validating': validation.status === ValidateStatus.VALIDATING,
     }
   );
 
   const isLayoutVertical = props.layoutDirection === LayoutDirection.VERTICAL;
 
-  const inputStyle = {
+  const style = {
     flexDirection: props.layoutDirection
   };
 
   return (
-    <div {...fromBaseProps({ className: className, style: inputStyle }, props)}>
-      {renderLabel(props, isLayoutVertical)}
-      {renderContainer(props, isLayoutVertical, inputRef, validation)}
-    </div>
+    <AppFormItemContext.Provider value={contextValue}>
+      <div {...fromBaseProps({ className: className, style: style }, props)}>
+        {renderLabel(props, isLayoutVertical)}
+        {renderContainer(props, isLayoutVertical, inputRef, validation)}
+      </div>
+    </AppFormItemContext.Provider>
   );
-});
+};
 
 AppFormItem.propTypes = propTypes;
 
 AppFormItem.defaultProps = defaultProps;
 
 export default AppFormItem;
+export {
+  AppFormItemContext
+}

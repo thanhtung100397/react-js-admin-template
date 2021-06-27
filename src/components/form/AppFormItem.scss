@@ -1,7 +1,7 @@
 @import '../../colors.module';
 @import '../../dimens.module';
 
-.app-input {
+.app-form-item {
   display: flex;
 
   @media screen and (max-width: $mobile-device-max-width) {
@@ -24,21 +24,6 @@
     position: relative;
 
     &.has-validate-icon { // based on 'ant-form-item-has-feedback' from antd.css
-      .ant-input {
-        padding-right: 30px;
-      }
-
-      .ant-input-affix-wrapper {
-        .ant-input-suffix {
-          padding-right: 24px;
-        }
-      }
-
-      .ant-input-search:not(.ant-input-search-enter-button) {
-        .ant-input-suffix {
-          right: 34px;
-        }
-      }
 
       .ant-switch {
         margin: 2px 0 4px;
@@ -123,57 +108,20 @@
   }
 }
 
-.app-input-success {
-  .ant-input {
-    border-color: $success;
-
-    &:focus {
-      border-color: $success;
-      border-right-width: 1px !important;
-      outline: 0;
-      box-shadow: 0 0 0 2px $success-shadow;
-    }
-  }
-
+.validate-success {
   .input-validate-message {
     color: $success;
   }
 }
 
-.app-input-warning {
-  .ant-input {
-    border-color: $warning;
-
-    &:focus {
-      border-color: $warning;
-      border-right-width: 1px !important;
-      outline: 0;
-      box-shadow: 0 0 0 2px $warning-shadow;
-    }
-  }
-
+.validate-warning {
   .input-validate-message {
     color: $warning;
   }
 }
 
-.app-input-error {
-  .ant-input {
-    border-color: $error;
-
-    &:focus {
-      border-color: $error;
-      border-right-width: 1px !important;
-      outline: 0;
-      box-shadow: 0 0 0 2px $error-shadow;
-    }
-  }
-
+.validate-error {
   .input-validate-message {
     color: $error;
   }
-}
-
-.app-input-validating {
-
 }
