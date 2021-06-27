@@ -2,6 +2,7 @@ import React, { useRef, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { baseProps, fromBaseProps } from '../base';
 import { ConsoleLogger } from '../../utils/loggers';
+import AppFormItem from './AppFormItem';
 import './AppForm.scss';
 
 const propTypes = {
@@ -71,5 +72,7 @@ const AppForm = (props) => {
 AppForm.propTypes = propTypes;
 
 AppForm.defaultProps = defaultProps;
+
+AppForm.Item = AppFormItem
 
 export default AppForm;
