@@ -18,6 +18,11 @@
     display: flex;
     align-items: center;
     margin-right: 10px;
+
+    .asterisk-sign {
+      color: red;
+      margin-right: 4px;
+    }
   }
 
   .input-container {

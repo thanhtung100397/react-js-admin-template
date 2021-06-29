@@ -11,6 +11,7 @@ import { TypeChecker, Generator } from '../../utils/helpers';
 import { ConsoleLogger } from '../../utils/loggers';
 import colors from '../../colors.module.scss';
 import './AppFormItem.scss';
+import { ValidationRule } from '../../constants/validationRules';
 
 const COMPONENT_ID_PREFIX = 'AppFormItem_';
 
@@ -28,9 +29,8 @@ const ValidateStatusIcons = {
 
 const propTypes = {
   ...baseProps,
-  type: PropTypes.string,
+  name: PropTypes.string,
   label: PropTypes.node,
-  value: PropTypes.string,
   layoutDirection: PropTypes.oneOf(Object.keys(LayoutDirection).map((key) => LayoutDirection[key])),
   labelCol: PropTypes.exact({
     span: PropTypes.number,
@@ -61,6 +61,14 @@ const defaultProps = {
 
 const AppFormItemContext = React.createContext();
 
+const renderAsteriskSign = (props) => {
+  if (props.validateRules?.includes(ValidationRule.REQUIRED)) {
+    return (
+      <span className="asterisk-sign">*</span>
+    );
+  }
+};
+
 const renderLabel = (props, verticalLayout) => {
   if (props.label) {
     return (
@@ -69,7 +77,7 @@ const renderLabel = (props, verticalLayout) => {
              flex: props.labelCol.span,
              width: props.labelCol.width
            }}>
-        {props.label}
+        {renderAsteriskSign(props)} {props.label}
       </div>
     );
   }

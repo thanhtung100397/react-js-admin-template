@@ -89,10 +89,10 @@ const Login = (props) => {
             <AppForm.Item label="Hello world 6" labelCol={{width: 20}} showSuccessValidateStatus={true} validateRules={[ValidationRule.REQUIRED, {validate: async (value) => {await new Promise(r => setTimeout(r, 2000)); return true}}]}>
               <AppInput/>
             </AppForm.Item>
-            <AppForm.Item label="Hello world 7" labelCol={{width: 20}} showSuccessValidateStatus={true} validateRules={[ValidationRule.REQUIRED, {validate: async (value) => {await new Promise(r => setTimeout(r, 3000)); throw Error("This is heavy error!!!!!!")}}]}>
+            <AppForm.Item label="Hello world 7" labelCol={{width: 20}} showSuccessValidateStatus={true} validateRules={[{validate: async (value) => {await new Promise(r => setTimeout(r, 3000)); throw Error("This is heavy error!!!!!!")}}]}>
               <AppInput/>
             </AppForm.Item>
-            <AppForm.Item label="Hello world 8" labelCol={{width: 20}} showSuccessValidateStatus={true} validateRules={[ValidationRule.REQUIRED, {message: 'HALLO WORLD', validate: async (value) => {await new Promise(r => setTimeout(r, 5000)); return false}}]}>
+            <AppForm.Item label="Hello world 8" labelCol={{width: 20}} showSuccessValidateStatus={true} validateRules={[{message: 'HALLO WORLD', validate: async (value) => {await new Promise(r => setTimeout(r, 5000)); return false}}]}>
               <AppInput/>
             </AppForm.Item>
             <AppForm.Item label="Hello world 8" labelCol={{width: 20}} showSuccessValidateStatus={true} validateRules={[ValidationRule.REQUIRED, {transform: async (value) => {await new Promise(r => setTimeout(r, 2000)); return 'HAHA';}, validate: async (value) => {await new Promise(r => setTimeout(r, 2000)); return value === 'hello'}, trigger: async (value, valid, origin) => {await new Promise(r => setTimeout(r, 2000));console.log('TRIGGER', valid, valid, origin)}}]}>
