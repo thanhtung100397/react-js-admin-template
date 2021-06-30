@@ -25,7 +25,7 @@ const defaultProps = {
 const AppTitle = (props) => {
   return (
     <Title {...fromBaseProps({className: 'app-title'}, props)}
-           level={props.level} strong={props.bold} italic={props.italic} underline={props.underline}
+           level={props.level} strong={props.bold} italic={`${props.italic}`} underline={props.underline}
            ellipsis={props.ellipsis} copyable={props.copyable} disabled={props.disabled}
            onClick={props.onClick}>
       {props.children}
