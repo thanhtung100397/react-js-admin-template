@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { baseProps, fromBaseProps } from '../../components/base';
 import { Row } from 'antd';
 import { isEmpty } from '../../utils/helpers';
@@ -32,7 +33,8 @@ const propTypes = {
   lgHGut: PropTypes.number, // horizontal spacing between columns in 'lg' screen-size (screen ≥ 992px)
   xlHGut: PropTypes.number, // horizontal spacing between columns in 'xl' screen-size (screen ≥ 1200px)
   xxlHGut: PropTypes.number, // horizontal spacing between columns in 'xxl' screen-size (screen ≥ 1600px)
-  wrap: PropTypes.bool //auto wrap line,
+  wrap: PropTypes.bool, //auto wrap line,
+  vStretch: PropTypes.bool // stretch all cells height to fit container height
 };
 
 const defaultProps = {
@@ -73,8 +75,10 @@ const AppRow = (props) => {
   const {
     gutter, xsGut, smGut, mdGut, lgGut, xlGut, xxlGut,
     vGutter, xsVGut, smVGut, mdVGut, lgVGut, xlVGut, xxlVGut,
-    hGutter, xsHGut, smHGut, mdHGut, lgHGut, xlHGut, xxlHGut
+    hGutter, xsHGut, smHGut, mdHGut, lgHGut, xlHGut, xxlHGut,
+    vStretch
   } = props;
+
   const [rowGutter, setRowGutter] = useState();
 
   useEffect(() => {
@@ -95,8 +99,12 @@ const AppRow = (props) => {
     vGutter, xsVGut, smVGut, mdVGut, lgVGut, xlVGut, xxlVGut,
     hGutter, xsHGut, smHGut, mdHGut, lgHGut, xlHGut, xxlHGut]);
 
+  const className = classNames('app-row', {
+    'vertical-stretch': vStretch
+  });
+
   return (
-    <Row {...fromBaseProps({ className: 'app-row' }, props)}
+    <Row {...fromBaseProps({ className: className }, props)}
          align={props.vAlign} justify={props.hAlign} gutter={rowGutter} wrap={props.wrap}>
       {props.children}
     </Row>

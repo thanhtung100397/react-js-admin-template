@@ -1,3 +1,5 @@
 .app-row {
-
+  &.vertical-stretch {
+    align-items: stretch;
+  }
 }
