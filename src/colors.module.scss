@@ -2,6 +2,11 @@ $app-primary-color: #40a9ff;
 $app-primary-color-light: #69c0ff;
 $app-primary-color-dark: #1890ff;
 
+$app-text-primary-color: #000000;
+$app-text-secondary-color: #4c4c4c;
+
+$app-disabled-color: #cccccc;
+
 $success: #52c41a;
 $success-shadow: #52c41a33;
 
@@ -12,6 +17,15 @@ $error: #ff4d4f;
 $error-shadow: #ff4d4f33;
 
 :export {
+  appPrimaryColor: $app-primary-color;
+  appPrimaryColorLight: $app-primary-color-light;
+  appPrimaryColorDark: $app-primary-color-dark;
+
+  appTextPrimaryColor: $app-text-primary-color;
+  appTextSecondaryColor: $app-text-secondary-color;
+
+  appDisabledColor: $app-disabled-color;
+
   success: $success;
   warning: $warning;
   error: $error;
