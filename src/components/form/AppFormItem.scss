@@ -115,18 +115,18 @@
 
 .validate-success {
   .input-validate-message {
-    color: $success;
+    color: $success-color;
   }
 }
 
 .validate-warning {
   .input-validate-message {
-    color: $warning;
+    color: $warning-color;
   }
 }
 
 .validate-error {
   .input-validate-message {
-    color: $error;
+    color: $error-color;
   }
 }

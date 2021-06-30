@@ -3,21 +3,22 @@ $app-primary-color-light: #69c0ff;
 $app-primary-color-dark: #1890ff;
 
 $app-text-primary-color: #000000;
-$app-text-secondary-color: #4c4c4c;
+$app-text-secondary-color: #979797;
+$app-text-highlight-color: #ffe58f;
 
 $app-scrollbar-thumb-color: #7f7f7f;
 $app-scrollbar-track-color: none;
 
 $app-disabled-color: #cccccc;
 
-$success: #52c41a;
-$success-shadow: #52c41a33;
+$success-color: #52c41a;
+$success-shadow-color: #52c41a33;
 
-$warning: #faad14;
-$warning-shadow: #faad1433;
+$warning-color: #faad14;
+$warning-shadow-color: #faad1433;
 
-$error: #ff4d4f;
-$error-shadow: #ff4d4f33;
+$error-color: #ff4d4f;
+$error-shadow-color: #ff4d4f33;
 
 :export {
   appPrimaryColor: $app-primary-color;
@@ -29,7 +30,7 @@ $error-shadow: #ff4d4f33;
 
   appDisabledColor: $app-disabled-color;
 
-  success: $success;
-  warning: $warning;
-  error: $error;
+  successColor: $success-color;
+  warningColor: $warning-color;
+  errorColor: $error-color;
 }

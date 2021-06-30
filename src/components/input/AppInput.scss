@@ -7,13 +7,13 @@
 .validate-success {
   .app-input {
     .ant-input {
-      border-color: $success;
+      border-color: $success-color;
 
       &:focus {
-        border-color: $success;
+        border-color: $success-color;
         border-right-width: 1px !important;
         outline: 0;
-        box-shadow: 0 0 0 2px $success-shadow;
+        box-shadow: 0 0 0 2px $success-shadow-color;
       }
     }
   }
@@ -21,26 +21,26 @@
 
 .validate-warning {
   .ant-input {
-    border-color: $warning;
+    border-color: $warning-color;
 
     &:focus {
-      border-color: $warning;
+      border-color: $warning-color;
       border-right-width: 1px !important;
       outline: 0;
-      box-shadow: 0 0 0 2px $warning-shadow;
+      box-shadow: 0 0 0 2px $warning-shadow-color;
     }
   }
 }
 
 .validate-error {
   .ant-input {
-    border-color: $error;
+    border-color: $error-color;
 
     &:focus {
-      border-color: $error;
+      border-color: $error-color;
       border-right-width: 1px !important;
       outline: 0;
-      box-shadow: 0 0 0 2px $error-shadow;
+      box-shadow: 0 0 0 2px $error-shadow-color;
     }
   }
 }
