@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { baseProps, fromBaseProps } from '../../components/base';
+import { baseProps, fromBaseProps } from '../../../components/base';
 import { Row } from 'antd';
-import { isEmpty } from '../../utils/helpers';
+import { isEmpty } from '../../../utils/helpers';
 import './AppRow.scss';
 
 const propTypes = {

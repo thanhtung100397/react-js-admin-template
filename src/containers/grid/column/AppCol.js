@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { baseProps, fromBaseProps } from '../../components/base';
+import { baseProps, fromBaseProps } from '../../../components/base';
 import { Col } from 'antd';
 import './AppCol.scss';
 
