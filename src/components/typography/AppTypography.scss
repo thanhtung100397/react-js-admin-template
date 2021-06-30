@@ -1,0 +1,35 @@
+@import '../../colors.module';
+
+.app-typography {
+  color: $app-text-primary-color;
+
+  &.ant-typography {
+    & + .ant-typography {
+      margin-top: 0;
+    }
+
+    mark {
+      background: $app-text-highlight-color;
+    }
+  }
+
+  &.ant-typography-secondary {
+    color: $app-text-secondary-color;
+  }
+
+  &.ant-typography-success {
+    color: $success-color;
+  }
+
+  &.ant-typography-warning {
+    color: $warning-color;
+  }
+
+  &.ant-typography-error {
+    color: $error-color;
+  }
+
+  &.ant-typography-disabled {
+    color: $app-disabled-color;
+  }
+}

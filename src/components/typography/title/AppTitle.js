@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes  from 'prop-types';
-import { baseProps, fromBaseProps } from '../base';
+import classNames from 'classnames';
+import { baseProps, fromBaseProps } from '../../base';
 import { Typography } from 'antd';
-import { TypeChecker } from '../../utils/helpers';
+import { TypeChecker } from '../../../utils/helpers';
+import '../AppTypography.scss';
 import './AppTitle.scss';
 
 const { Title } = Typography;
@@ -15,6 +17,8 @@ const propTypes = {
   underline: PropTypes.bool, // content underline style
   ellipsis: PropTypes.bool, // display ellipsis when text overflows
   copyable: PropTypes.bool, // whether content can be copyable
+  strikethrough: PropTypes.bool, // strike through line style
+  highlight: PropTypes.bool, // highlight style
   disabled: PropTypes.bool, // disabled content
   onClick: PropTypes.func,
 };
@@ -27,14 +31,14 @@ const italicValue = (italic) => { // ant design has bug about Typography italic 
   if (TypeChecker.isBoolean(italic)) {
     return italic.toString();
   }
-}
+};
 
 const AppTitle = (props) => {
   return (
-    <Title {...fromBaseProps({className: 'app-title'}, props)}
+    <Title {...fromBaseProps({className: classNames('app-typography', 'app-title')}, props)}
            level={props.level} strong={props.bold} italic={italicValue(props.italic)} underline={props.underline}
-           ellipsis={props.ellipsis} copyable={props.copyable} disabled={props.disabled}
-           onClick={props.onClick}>
+           ellipsis={props.ellipsis} copyable={props.copyable} delete={props.strikethrough} mark={props.highlight}
+           disabled={props.disabled} onClick={props.onClick}>
       {props.children}
     </Title>
   );
