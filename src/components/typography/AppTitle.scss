@@ -1,0 +1,10 @@
+@import '../../colors.module';
+@import '../../dimens.module';
+
+.app-title {
+  color: $app-text-primary-color;
+
+  &.ant-typography-disabled {
+    color: $app-disabled-color;
+  }
+}
