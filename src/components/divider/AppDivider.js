@@ -18,12 +18,14 @@ const defaultProps = {
 };
 
 const AppDivider = (props) => {
-  return (
-    <Divider {...fromBaseProps({className: 'app-divider'}, props)}
-             type={props.type} orientation={props.orientation}
-             dashed={props.dashed}>
-      {props.title}
-    </Divider>
+  return (//should wrapped in <div> to prevent some unexpected issues when show on a flex container
+    <div>
+      <Divider {...fromBaseProps({className: 'app-divider'}, props)}
+               type={props.type} orientation={props.orientation}
+               dashed={props.dashed}>
+        {props.title}
+      </Divider>
+    </div>
   )
 };
 
