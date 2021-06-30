@@ -1,7 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes  from 'prop-types';
 import { baseProps, fromBaseProps } from '../base';
 import { Typography } from 'antd';
+import { TypeChecker } from '../../utils/helpers';
 import './AppTitle.scss';
 
 const { Title } = Typography;
@@ -22,10 +23,16 @@ const defaultProps = {
   level: 1
 };
 
+const italicValue = (italic) => { // ant design has bug about Typography italic prop
+  if (TypeChecker.isBoolean(italic)) {
+    return italic.toString();
+  }
+}
+
 const AppTitle = (props) => {
   return (
     <Title {...fromBaseProps({className: 'app-title'}, props)}
-           level={props.level} strong={props.bold} italic={`${props.italic}`} underline={props.underline}
+           level={props.level} strong={props.bold} italic={italicValue(props.italic)} underline={props.underline}
            ellipsis={props.ellipsis} copyable={props.copyable} disabled={props.disabled}
            onClick={props.onClick}>
       {props.children}
