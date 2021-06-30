@@ -58,4 +58,8 @@ export const printToString = (value) => {
 
 export const setObjValue = (obj, path, value) => {
   return _.set(obj, path, value);
-}
+};
+
+export const isEmpty = (value) => {
+  return _.isEmpty(value);
+};

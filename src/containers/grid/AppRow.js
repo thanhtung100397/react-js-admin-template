@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { baseProps, fromBaseProps } from '../../components/base';
 import { Row } from 'antd';
+import { isEmpty } from '../../utils/helpers';
 import './AppRow.scss';
 
 const propTypes = {
@@ -30,8 +31,27 @@ const AppRow = (props) => {
   const [rowGutter, setRowGutter] = useState();
 
   useEffect(() => {
-    if (xsGut || smGut || mdGut || lgGut || xlGut || xxlGut) {
-
+    let rowGutter = {};
+    if (xsGut) {
+      rowGutter['xs'] = xsGut;
+    }
+    if (smGut) {
+      rowGutter['sm'] = smGut;
+    }
+    if (mdGut) {
+      rowGutter['md'] = mdGut;
+    }
+    if (xsGut) {
+      rowGutter['lg'] = lgGut;
+    }
+    if (xlGut) {
+      rowGutter['xl'] = xlGut;
+    }
+    if (xxlGut) {
+      rowGutter['xxl'] = xxlGut;
+    }
+    if (!isEmpty(rowGutter)) {
+      setRowGutter(rowGutter);
     } else if (gutter) {
       setRowGutter(gutter);
     }
