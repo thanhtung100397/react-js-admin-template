@@ -6,7 +6,7 @@ import './AppDivider.scss';
 
 const propTypes = {
   ...baseProps,
-  type: PropTypes.oneOf(['horizontal ', 'vertical']), // direction type of divider,
+  type: PropTypes.oneOf(['horizontal', 'vertical']), // direction type of divider,
   title: PropTypes.node, // divider title
   orientation: PropTypes.oneOf(['left', 'right', 'center']), // position of title inside divider
   dashed: PropTypes.bool, // whether line is dashed
