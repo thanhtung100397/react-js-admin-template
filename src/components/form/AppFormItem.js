@@ -259,13 +259,14 @@ const AppFormItem = (props) => {
   }, [props.showSuccessValidateStatus, props.validateStatus, props.validateMessage, props.validateRules]);
 
   useEffect(() => {
-    updateFormItemRef && updateFormItemRef({
+    updateFormItemRef && updateFormItemRef(props.name, {
+      getValue: () => getInputValue(inputRef),
       validate: validate
     }, componentId);
     return () => {
-      updateFormItemRef && updateFormItemRef(null, componentId);
+      updateFormItemRef && updateFormItemRef(props.name, null, componentId);
     }
-  }, [updateFormItemRef, validate, componentId]);
+  }, [updateFormItemRef, validate, props.name, componentId]);
 
   const className = classNames(
     'app-form-item',

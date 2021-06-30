@@ -55,3 +55,7 @@ export const printToString = (value) => {
     return value.toString;
   }
 };
+
+export const setObjValue = (obj, path, value) => {
+  return _.set(obj, path, value);
+}

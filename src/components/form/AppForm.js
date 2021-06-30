@@ -4,19 +4,18 @@ import { baseProps, fromBaseProps } from '../base';
 import { ConsoleLogger } from '../../utils/loggers';
 import AppFormItem from './AppFormItem';
 import './AppForm.scss';
+import { setObjValue } from '../../utils/helpers';
 
 const propTypes = {
   ...baseProps,
   data: PropTypes.object,
-  onSubmit: PropTypes.func,
-  onValidationError: PropTypes.func,
+  onSubmit: PropTypes.func, // (data) => {}
   layout: PropTypes.oneOf(['horizontal', 'vertical', 'inline']),
 };
 
 const defaultProps = {
   data: {},
   onSubmit: (data) => {},
-  onValidationError: (errors) => {},
   layout: 'horizontal'
 };
 
@@ -26,16 +25,32 @@ const handleFormValidationError = (error) => {
   ConsoleLogger.error('FORM VALIDATION ERROR', error);
 };
 
+const collectFormData = (itemRefs) => {
+  let result = {};
+  Object.keys(itemRefs.current)
+    .forEach((itemKey) => {
+      let item = itemRefs.current[itemKey];
+      if (item.name) {
+        setObjValue(result, item.name, item.ref.getValue())
+      }
+    });
+  return result;
+};
+
 const AppForm = (props) => {
+  const { onSubmit, ...otherProps } = props;
   const [contextValue, setContextValue] = useState({});
   const [validating, setValidating] = useState(false);
   const formItemRefs = useRef({});
 
   useEffect(() => {
     setContextValue({
-      updateFormItemRef: (ref, componentId) => {
+      updateFormItemRef: (name, ref, componentId) => {
         if (ref) {
-          formItemRefs.current[componentId] = ref;
+          formItemRefs.current[componentId] = {
+            name: name,
+            ref: ref
+          };
         } else {
           delete formItemRefs.current[componentId];
         }
@@ -46,8 +61,8 @@ const AppForm = (props) => {
   const validateFormInputs = async () => {
     setValidating(true);
     let validateResultPromises = [];
-    for (const refKey in formItemRefs.current) {
-      validateResultPromises.push(formItemRefs.current[refKey].validate());
+    for (const itemKey in formItemRefs.current) {
+      validateResultPromises.push(formItemRefs.current[itemKey].ref.validate());
     }
     try {
       let validateResults = await Promise.all(validateResultPromises);
@@ -65,12 +80,14 @@ const AppForm = (props) => {
       return;
     }
     let formValid = await validateFormInputs();
-    console.log('FORM VALIDATION RESULT', formValid);
-  }, [validating]);
+    if (formValid) {
+      onSubmit && onSubmit(collectFormData(formItemRefs));
+    }
+  }, [validating, onSubmit]);
 
   return (
     <AppFormContext.Provider value={contextValue}>
-      <form {...fromBaseProps({ className: 'app-form' }, props)}
+      <form {...fromBaseProps({ className: 'app-form' }, otherProps)}
             onSubmit={handleFormSubmit}>
         {props.children}
       </form>
