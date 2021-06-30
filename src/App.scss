@@ -1,3 +1,23 @@
+@import './colors.module';
+@import './dimens.module';
+
+::-webkit-scrollbar {
+  width: $app-scrollbar-width;
+  height: $app-scrollbar-width;
+}
+
+::-webkit-scrollbar-track {
+  background: $app-scroolbar-track-color;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $app-scroolbar-thumb-color;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
 .app {
   width: 100%;
   height: 100%;
