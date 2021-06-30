@@ -1,4 +1,5 @@
 import React from 'react';
+import AppNotification from '../../components/notification/AppNotification';
 import AppContainer from '../../containers/container/AppContainer';
 import AppRow from '../../containers/grid/AppRow';
 import AppCol from '../../containers/grid/AppCol';
@@ -92,7 +93,7 @@ const UiPreview = (props) => {
                         <AppTitle level={5} copyable={true}>
                           (Copyable) Lorem ipsum dolor sit amet
                         </AppTitle>
-                        <AppTitle level={5} onClick={() => {console.log('HALOO')}}>
+                        <AppTitle level={5} onClick={() => AppNotification.success('Click Event Trigger', 'Title clicked')}>
                           (Click listener) Lorem ipsum dolor sit amet
                         </AppTitle>
                       </>
