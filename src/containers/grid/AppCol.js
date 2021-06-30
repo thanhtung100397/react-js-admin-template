@@ -9,7 +9,7 @@ const propTypes = {
   flex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // flex layout style
   offset: PropTypes.number, // number of cells to offset AppCol from the left
   order: PropTypes.number, // order number of AppCol (for sorting)
-  span: PropTypes.number, // number of span cells
+  span: PropTypes.number, // number of span cells (value = 0 - 24)
   xs: PropTypes.number, // number of span cells in 'xs' screen-size (screen < 576px)
   sm: PropTypes.number, // number of span cells in 'sm' screen-size (screen ≥ 576px)
   md: PropTypes.number, // number of span cells in 'md' screen-size (screen ≥ 768px)
