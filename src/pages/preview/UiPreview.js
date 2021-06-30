@@ -12,13 +12,15 @@ const ROW_GUTTER = 24;
 
 const contentCard = (name, footer, content) => {
   return (
-    <AppCard noBodyPadding={true}>
-      <div className="content">
-        {content}
-      </div>
-      <AppDivider title={name}/>
-      <div className="footer">
-        {footer}
+    <AppCard noBodyPadding={true} whFull={true}>
+      <div className="content-container">
+        <div className="body">
+          {content}
+        </div>
+        <AppDivider title={name}/>
+        <div className="footer">
+          {footer}
+        </div>
       </div>
     </AppCard>
   );
@@ -31,7 +33,7 @@ const UiPreview = (props) => {
         <AppTitle className="group-title" level={3}>I. Typography</AppTitle>
         <AppContainer className="content-padding">
           <AppTitle className="section-title" level={4}>1. App Title</AppTitle>
-          <AppRow gutter={ROW_GUTTER}>
+          <AppRow gutter={ROW_GUTTER} vStretch={true}>
             <AppCol xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
               {
                 contentCard('Level', 'All component levels',
@@ -56,7 +58,7 @@ const UiPreview = (props) => {
               }
             </AppCol>
             <AppCol xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
-              <AppRow>
+              <AppRow gutter={ROW_GUTTER} vStretch={true}>
                 <AppCol span={24}>
                   {
                     contentCard('Text Style', 'All supported component text style',
@@ -77,8 +79,6 @@ const UiPreview = (props) => {
                     )
                   }
                 </AppCol>
-              </AppRow>
-              <AppRow>
                 <AppCol span={24}>
                   {
                     contentCard('Other Options', 'All other options of this component',
@@ -93,7 +93,7 @@ const UiPreview = (props) => {
                         <AppTitle level={5} copyable={true}>
                           (Copyable) Lorem ipsum dolor sit amet
                         </AppTitle>
-                        <AppTitle level={5} onClick={() => AppNotification.success('Click Event Trigger', 'Title clicked')}>
+                        <AppTitle level={5} onClick={() => AppNotification.success('Click Message', 'Title clicked')}>
                           (Click listener) Lorem ipsum dolor sit amet
                         </AppTitle>
                       </>
@@ -104,7 +104,6 @@ const UiPreview = (props) => {
             </AppCol>
           </AppRow>
         </AppContainer>
-
       </AppContainer>
     </div>
   );
