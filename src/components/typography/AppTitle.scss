@@ -4,6 +4,10 @@
 .app-title {
   color: $app-text-primary-color;
 
+  &.ant-typography + .ant-typography{
+    margin-top: 0;
+  }
+
   &.ant-typography-disabled {
     color: $app-disabled-color;
   }
