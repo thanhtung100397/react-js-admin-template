@@ -21,9 +21,9 @@ const LayoutDirection = {
 };
 
 const ValidateStatusIcons = {
-  [ValidateStatus.SUCCESS]: <CheckCircleTwoTone twoToneColor={colors.success}/>,
-  [ValidateStatus.WARNING]: <WarningTwoTone twoToneColor={colors.warning}/>,
-  [ValidateStatus.ERROR]: <CloseCircleTwoTone twoToneColor={colors.error}/>,
+  [ValidateStatus.SUCCESS]: <CheckCircleTwoTone twoToneColor={colors.successColor}/>,
+  [ValidateStatus.WARNING]: <WarningTwoTone twoToneColor={colors.warningColor}/>,
+  [ValidateStatus.ERROR]: <CloseCircleTwoTone twoToneColor={colors.errorColor}/>,
   [ValidateStatus.VALIDATING]: <AppSpinner width={14} height={14}/>,
 };
 
