@@ -1,3 +1,8 @@
 .app-card {
 
+  &.no-body-padding {
+    .ant-card-body {
+      padding: 0;
+    }
+  }
 }
