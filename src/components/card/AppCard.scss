@@ -5,4 +5,23 @@
       padding: 0;
     }
   }
+
+  &.w-full {
+    .ant-card-body {
+      width: 100%;
+    }
+  }
+
+  &.h-full {
+    .ant-card-body {
+      width: 100%;
+    }
+  }
+
+  &.wh-full {
+    .ant-card-body {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
