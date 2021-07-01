@@ -6,21 +6,25 @@
 
 .validate-success {
   .app-input {
-    .ant-input {
-      border-color: $success-color;
+    border-color: $success-color;
 
-      &:focus {
-        border-color: $success-color;
-        border-right-width: 1px !important;
-        outline: 0;
-        box-shadow: 0 0 0 2px $success-shadow-color;
-      }
+    &:focus {
+      border-color: $success-color;
+      border-right-width: 1px !important;
+      outline: 0;
+      box-shadow: 0 0 0 2px $success-shadow-color;
+    }
+
+    &:hover {
+      border-color: $success-color;
+      border-right-width: 1px !important;
+      box-shadow: 0 0 0 2px $success-shadow-color;
     }
   }
 }
 
 .validate-warning {
-  .ant-input {
+  .app-input {
     border-color: $warning-color;
 
     &:focus {
@@ -29,11 +33,17 @@
       outline: 0;
       box-shadow: 0 0 0 2px $warning-shadow-color;
     }
+
+    &:hover {
+      border-color: $warning-color;
+      border-right-width: 1px !important;
+      box-shadow: 0 0 0 2px $warning-shadow-color;
+    }
   }
 }
 
 .validate-error {
-  .ant-input {
+  .app-input {
     border-color: $error-color;
 
     &:focus {
@@ -42,23 +52,17 @@
       outline: 0;
       box-shadow: 0 0 0 2px $error-shadow-color;
     }
+
+    &:hover {
+      border-color: $error-color;
+      border-right-width: 1px !important;
+      box-shadow: 0 0 0 2px $error-shadow-color;
+    }
   }
 }
 
 .has-validate-icon {
-  .ant-input {
+  .app-input {
     padding-right: 30px;
-  }
-
-  .ant-input-affix-wrapper {
-    .ant-input-suffix {
-      padding-right: 24px;
-    }
-  }
-
-  .ant-input-search:not(.ant-input-search-enter-button) {
-    .ant-input-suffix {
-      right: 34px;
-    }
   }
 }
