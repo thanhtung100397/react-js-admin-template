@@ -11,6 +11,8 @@ const { Link } = Typography;
 
 const propTypes = {
   ...baseProps,
+  href: PropTypes.string,
+  target: PropTypes.oneOf(['_blank', '_self', '_parent', '_top', 'framename']),
   type: PropTypes.oneOf(['secondary', 'success', 'warning', 'danger']),
   bold: PropTypes.bool, // bold style
   italic: PropTypes.bool, // italic style
@@ -35,6 +37,7 @@ const italicValue = (italic) => { // ant design has bug about Typography italic 
 const AppLink = (props) => {
   return (
     <Link {...fromBaseProps({className: classNames('app-typography', 'app-link')}, props)}
+          href={props.href} target={props.target}
           type={props.type} strong={props.bold} italic={italicValue(props.italic)} underline={props.underline}
           ellipsis={props.ellipsis} copyable={props.copyable} delete={props.strikethrough} mark={props.highlight}
           disabled={props.disabled} onClick={props.onClick}>
