@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { baseProps, fromBaseProps } from '../../base';
+import { typographyPropTypes } from '../AppTypography';
 import { Typography } from 'antd';
 import { TypeChecker } from '../../../utils/helpers';
 import '../AppTypography.scss';
@@ -11,18 +12,10 @@ const { Link } = Typography;
 
 const propTypes = {
   ...baseProps,
+  ...typographyPropTypes,
   href: PropTypes.string,
   target: PropTypes.oneOf(['_blank', '_self', '_parent', '_top', 'framename']),
-  type: PropTypes.oneOf(['secondary', 'success', 'warning', 'danger']),
-  bold: PropTypes.bool, // bold style
-  italic: PropTypes.bool, // italic style
-  underline: PropTypes.bool, // content underline style
-  ellipsis: PropTypes.bool, // display ellipsis when text overflows
-  copyable: PropTypes.bool, // whether content can be copyable
-  strikethrough: PropTypes.bool, // strike through line style
-  highlight: PropTypes.bool, // highlight style
-  disabled: PropTypes.bool, // disabled content
-  onClick: PropTypes.func,
+  type: PropTypes.oneOf(['secondary', 'success', 'warning', 'danger'])
 };
 
 const defaultProps = {
