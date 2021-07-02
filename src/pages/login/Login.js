@@ -4,9 +4,10 @@ import AppContainer from '../../containers/container/AppContainer';
 import AppCard from '../../components/card/AppCard';
 import AppForm from '../../components/form/AppForm';
 import AppInput from '../../components/input/AppInput';
-import { images } from '../../assets/images';
-import './Login.scss';
 import { ValidationRule } from '../../constants/validationRules';
+import { images } from '../../assets/images';
+import { Icons } from '../../assets/icons';
+import './Login.scss';
 
 const pageStyle = {
   backgroundImage: `url(${images.img_started_background})`
@@ -77,10 +78,10 @@ const Login = (props) => {
 
           <AppForm onSubmit={(data) => console.log(data)}>
             <AppForm.Item name="data.items[0].value" label="Hello world" validateStatus="success" validateMessage={`This is success ${value}!`} validateRules={[ValidationRule.REQUIRED]}>
-              <AppInput/>
+              <AppInput allowClear={true} icon={<Icons.UserOutlined/>}/>
             </AppForm.Item>
             <AppForm.Item name="data.items[1].value" label="Hello world 3" labelCol={{width: 20}} showSuccessValidateStatus={true} validateStatus="warning" validateMessage="This is warning!" validateRules={[ValidationRule.REQUIRED]}>
-              <AppInput/>
+              <AppInput allowClear={true}/>
             </AppForm.Item>
             {/*<AppForm.Item label="Hello world 4 he hehe hehehe" labelCol={{span: 1}} inputCol={{span: 2}} validateStatus="error" validateMessage="This is error!">*/}
             {/*  <AppInput/>*/}

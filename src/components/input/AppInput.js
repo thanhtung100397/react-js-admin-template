@@ -11,6 +11,7 @@ const propTypes = {
   value: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
   defaultValue: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
   placeholder: PropTypes.string,
+  icon: PropTypes.node,
   onChange: PropTypes.func,
   allowClear: PropTypes.bool,
   maxLength: PropTypes.number,
@@ -39,11 +40,10 @@ const AppInput = (props) => {
   }, [setInputRef]);
 
   return (
-    <div {...fromBaseProps({ className: 'app-input' }, props)}>
-      <Input ref={ref} id={props.id} allowClear={props.allowClear} maxLength={props.maxLength} disabled={disabled}
-             value={props.value} defaultValue={props.defaultValue} placeholder={props.placeholder}
-             onChange={props.onChange} />
-    </div>
+    <Input {...fromBaseProps({className: 'app-input'}, props)}
+           ref={ref} id={props.id} allowClear={props.allowClear} maxLength={props.maxLength} disabled={disabled}
+           value={props.value} defaultValue={props.defaultValue} placeholder={props.placeholder}
+           onChange={props.onChange} prefix={props.icon}/>
   )
 };
 
