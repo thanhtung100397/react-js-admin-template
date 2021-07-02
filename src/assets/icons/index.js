@@ -12,10 +12,10 @@ import {
 export const Icons = {
   AppLogo,
   UserOutlined
-}
+};
 
 export const icons = {
   favicon,
   ic_app_logo,
   ic_app_loading
-}
+};

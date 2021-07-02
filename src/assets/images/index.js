@@ -4,4 +4,4 @@ import img_started_background from './img_started_background.jpg'
 export const images = {
   img_og_image,
   img_started_background
-}
+};

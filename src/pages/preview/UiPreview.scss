@@ -12,6 +12,16 @@
     }
   }
 
+  .group-container {
+    & + .group-container {
+      margin-top: 32px;
+    }
+
+    .group-sections {
+      padding: 10px;
+    }
+  }
+
   .section-container {
     width: 100%;
 
