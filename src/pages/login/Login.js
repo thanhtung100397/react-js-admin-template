@@ -3,7 +3,7 @@ import { Form, Input, Button } from 'antd';
 import AppContainer from '../../containers/container/AppContainer';
 import AppCard from '../../components/card/AppCard';
 import AppForm from '../../components/form/AppForm';
-import AppInput from '../../components/input/AppInput';
+import AppTextInput from '../../components/input/text/AppTextInput';
 import { ValidationRule } from '../../constants/validationRules';
 import { images } from '../../assets/images';
 import { Icons } from '../../assets/icons';
@@ -78,31 +78,31 @@ const Login = (props) => {
 
           <AppForm onSubmit={(data) => console.log(data)}>
             <AppForm.Item name="data.items[0].value" label="Hello world" validateStatus="success" validateMessage={`This is success ${value}!`} validateRules={[ValidationRule.REQUIRED]}>
-              <AppInput allowClear={true} icon={<Icons.UserOutlined/>}/>
+              <AppTextInput allowClear={true} icon={<Icons.UserOutlined/>}/>
             </AppForm.Item>
             <AppForm.Item name="data.items[1].value" label="Hello world 3" labelCol={{width: 20}} showSuccessValidateStatus={true} validateStatus="warning" validateMessage="This is warning!" validateRules={[ValidationRule.REQUIRED]}>
-              <AppInput allowClear={true}/>
+              <AppTextInput allowClear={true}/>
             </AppForm.Item>
             {/*<AppForm.Item label="Hello world 4 he hehe hehehe" labelCol={{span: 1}} inputCol={{span: 2}} validateStatus="error" validateMessage="This is error!">*/}
-            {/*  <AppInput/>*/}
+            {/*  <AppTextInput/>*/}
             {/*</AppForm.Item>*/}
             {/*<AppForm.Item label={<div>Bello</div>} validateStatus="validating" validateMessage="Do validating...">*/}
-            {/*  <AppInput/>*/}
+            {/*  <AppTextInput/>*/}
             {/*</AppForm.Item>*/}
             {/*<AppForm.Item label="Hello world 5" labelCol={{width: 20}} showSuccessValidateStatus={true} validateRules={[ValidationRule.REQUIRED, {validate: async (value) => {await new Promise(r => setTimeout(r, 4000)); throw Error("This is error!!!!!!")}}]}>*/}
-            {/*  <AppInput/>*/}
+            {/*  <AppTextInput/>*/}
             {/*</AppForm.Item>*/}
             {/*<AppForm.Item label="Hello world 6" labelCol={{width: 20}} showSuccessValidateStatus={true} validateRules={[ValidationRule.REQUIRED, {validate: async (value) => {await new Promise(r => setTimeout(r, 2000)); return true}}]}>*/}
-            {/*  <AppInput/>*/}
+            {/*  <AppTextInput/>*/}
             {/*</AppForm.Item>*/}
             {/*<AppForm.Item label="Hello world 7" labelCol={{width: 20}} showSuccessValidateStatus={true} validateRules={[{validate: async (value) => {await new Promise(r => setTimeout(r, 3000)); throw Error("This is heavy error!!!!!!")}}]}>*/}
-            {/*  <AppInput/>*/}
+            {/*  <AppTextInput/>*/}
             {/*</AppForm.Item>*/}
             {/*<AppForm.Item label="Hello world 8" labelCol={{width: 20}} showSuccessValidateStatus={true} validateRules={[{message: 'HALLO WORLD', validate: async (value) => {await new Promise(r => setTimeout(r, 5000)); return false}}]}>*/}
-            {/*  <AppInput/>*/}
+            {/*  <AppTextInput/>*/}
             {/*</AppForm.Item>*/}
             {/*<AppForm.Item label="Hello world 8" labelCol={{width: 20}} showSuccessValidateStatus={true} validateRules={[ValidationRule.REQUIRED, {transform: async (value) => {await new Promise(r => setTimeout(r, 2000)); return 'HAHA';}, validate: async (value) => {await new Promise(r => setTimeout(r, 2000)); return value === 'hello'}, trigger: async (value, valid, origin) => {await new Promise(r => setTimeout(r, 2000));console.log('TRIGGER', valid, valid, origin)}}]}>*/}
-            {/*  <AppInput/>*/}
+            {/*  <AppTextInput/>*/}
             {/*</AppForm.Item>*/}
             <Button type="primary" htmlType="submit">
               Submit
