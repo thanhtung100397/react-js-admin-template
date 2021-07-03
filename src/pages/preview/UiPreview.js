@@ -5,7 +5,7 @@ import AppGrid from '../../containers/grid/AppGrid';
 import AppCard from '../../components/card/AppCard';
 import AppTypography from '../../components/typography/AppTypography';
 import AppDivider from '../../components/divider/AppDivider';
-import AppTextInput from '../../components/input/text/AppTextInput';
+import AppInput from '../../components/input/AppInput';
 import { Icons } from '../../assets/icons';
 import './UiPreview.scss';
 
@@ -303,13 +303,13 @@ const groups = [
               {
                 contentCard('Basic usage', 'Basic use of text input',
                   <>
-                    <AppTextInput/>
+                    <AppInput.Text/>
                     {space()}
-                    <AppTextInput placeholder="Placeholder text"/>
+                    <AppInput.Text placeholder="Placeholder text"/>
                     {space()}
-                    <AppTextInput value="Lorem ipsum dolor sit amet"/>
+                    <AppInput.Text value="Lorem ipsum dolor sit amet"/>
                     {space()}
-                    <AppTextInput value={undefined} defaultValue="(Default) Lorem ipsum dolor sit amet"/>
+                    <AppInput.Text value={undefined} defaultValue="(Default) Lorem ipsum dolor sit amet"/>
                   </>
                 )
               }
@@ -318,18 +318,18 @@ const groups = [
               {
                 contentCard('Other Options', 'All other options of this component',
                   <>
-                    <AppTextInput placeholder="Input with icon" icon={<Icons.UserOutlined/>}/>
+                    <AppInput.Text placeholder="Input with icon" icon={<Icons.UserOutlined/>}/>
                     {space()}
-                    <AppTextInput placeholder="Input with clear button"
+                    <AppInput.Text placeholder="Input with clear button"
                                   defaultValue="Clear this text"
                                   allowClear={true}/>
                     {space()}
-                    <AppTextInput placeholder="Input with max length = 10"
+                    <AppInput.Text placeholder="Input with max length = 10"
                                   maxLength={10}/>
                     {space()}
-                    <AppTextInput placeholder="Disabled input" disabled={true}/>
+                    <AppInput.Text placeholder="Disabled input" disabled={true}/>
                     {space()}
-                    <AppTextInput placeholder="Input with onChange (Check console)"
+                    <AppInput.Text placeholder="Input with onChange (Check console)"
                                   onChange={(event) => console.log('Input with onChange:', event.target.value)}/>
                   </>
                 )
