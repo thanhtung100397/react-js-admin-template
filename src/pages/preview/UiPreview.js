@@ -8,11 +8,13 @@ import AppDivider from '../../components/divider/AppDivider';
 import AppInput from '../../components/input/AppInput';
 import { Icons } from '../../assets/icons';
 import './UiPreview.scss';
+import AppSpace from '../../containers/space/AppSpace';
 
 const { Row, Col } = AppGrid;
 const { Title, Text, Link } = AppTypography;
 
 const ROW_GUTTER = 24;
+const ITEM_SPACE = 20;
 const ROOT_TITLE_LEVEL = 2;
 const MAX_TITLE_LEVEL = 5;
 
@@ -24,10 +26,6 @@ const DUMMY_PARAGRAPH = "Lorem ipsum dolor sit amet, consectetur adipiscing elit
   "ex ea commodo consequat.\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu " +
   "fugiat nulla pariatur. \nExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
   "mollit anim id est laborum";
-
-const space = (size) => (
-  <div style={{height: size || 20}}/>
-)
 
 const contentCard = (name, footer, content) => (
   <AppCard noBodyPadding={true} whFull={true}>
@@ -300,38 +298,31 @@ const groups = [
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
               {
                 contentCard('Basic usage', 'Basic use of text input',
-                  <>
+                  <AppSpace size={ITEM_SPACE}>
                     <AppInput.Text/>
-                    {space()}
                     <AppInput.Text placeholder="(Placeholder) Enter text"/>
-                    {space()}
                     <AppInput.Text value="(Value) Lorem ipsum dolor sit amet"
                                    placeholder="Enter text"/>
-                    {space()}
                     <AppInput.Text value={undefined} defaultValue="(Default Value) Lorem ipsum dolor sit amet"
                                    placeholder="Enter text"/>
-                  </>
+                  </AppSpace>
                 )
               }
             </Col>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
               {
                 contentCard('Other Options', 'All other options of this component',
-                  <>
+                  <AppSpace size={ITEM_SPACE}>
                     <AppInput.Text placeholder="Text input with icon" icon={<Icons.UserOutlined/>}/>
-                    {space()}
                     <AppInput.Text placeholder="Text input with clear button"
                                   defaultValue="Clear this text"
                                   allowClear={true}/>
-                    {space()}
                     <AppInput.Text placeholder="Text input with max length = 10"
                                   maxLength={10}/>
-                    {space()}
                     <AppInput.Text placeholder="Disabled text input" disabled={true}/>
-                    {space()}
                     <AppInput.Text placeholder="Text input with onChange (Check console)"
                                   onChange={(event) => console.log('Text input with onChange:', event.target.value)}/>
-                  </>
+                  </AppSpace>
                 )
               }
             </Col>
@@ -345,38 +336,30 @@ const groups = [
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
               {
                 contentCard('Basic usage', 'Basic use of password input',
-                  <>
+                  <AppSpace size={ITEM_SPACE}>
                     <AppInput.Password/>
-                    {space()}
                     <AppInput.Password placeholder="(Placeholder) Enter password"/>
-                    {space()}
                     <AppInput.Password placeholder="Without show password button" allowShow={false}/>
-                    {space()}
                     <AppInput.Password value="Lorem ipsum" placeholder="Enter password"/>
-                    {space()}
                     <AppInput.Password value={undefined} defaultValue="Lorem ipsum"/>
-                  </>
+                  </AppSpace>
                 )
               }
             </Col>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
               {
                 contentCard('Other Options', 'All other options of this component',
-                  <>
+                  <AppSpace size={ITEM_SPACE}>
                     <AppInput.Password placeholder="Password with icon" icon={<Icons.KeyOutlined/>}/>
-                    {space()}
                     <AppInput.Password placeholder="Password with clear button"
                                    defaultValue="Lorem ipsum"
                                    allowClear={true}/>
-                    {space()}
                     <AppInput.Password placeholder="Password with max length = 10"
                                    maxLength={10}/>
-                    {space()}
                     <AppInput.Password placeholder="Disabled password" disabled={true}/>
-                    {space()}
                     <AppInput.Password placeholder="Password with onChange (Check console)"
                                    onChange={(event) => console.log('Password with onChange:', event.target.value)}/>
-                  </>
+                  </AppSpace>
                 )
               }
             </Col>
@@ -390,56 +373,45 @@ const groups = [
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
               {
                 contentCard('Basic usage', 'Basic use of text area input',
-                  <>
+                  <AppSpace size={ITEM_SPACE}>
                     <AppInput.TextArea/>
-                    {space()}
                     <AppInput.TextArea placeholder="(Placeholder) Enter multi-line text"/>
-                    {space()}
                     <AppInput.TextArea value={`(Value) ${DUMMY_PARAGRAPH}`}
                                        placeholder="Enter multi-line text"/>
-                    {space()}
                     <AppInput.TextArea value={undefined} defaultValue={`(Default Value) ${DUMMY_PARAGRAPH}`}
                                        placeholder="Enter multi-line text"/>
-                    {space()}
                     <AppInput.TextArea value={undefined} defaultValue={DUMMY_PARAGRAPH}
                                        placeholder="Enter multi-line text, fixed 4 line"/>
-                  </>
+                  </AppSpace>
                 )
               }
             </Col>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
               {
                 contentCard('Rows Options', 'All rows option for text area input',
-                  <>
+                  <AppSpace size={ITEM_SPACE}>
                     <AppInput.TextArea placeholder="Fixed 3 rows text area" rows={3}/>
-                    {space()}
                     <AppInput.TextArea placeholder="Min 3 rows text area" minRows={3}/>
-                    {space()}
                     <AppInput.TextArea placeholder="Max 5 rows text area" maxRows={5}/>
-                    {space()}
                     <AppInput.TextArea placeholder="(Min = 3, Max = 5) rows text area" minRows={3} maxRows={5}/>
-                    {space()}
                     <AppInput.TextArea placeholder="Auto adjust rows text area" autoRows={true}/>
-                  </>
+                  </AppSpace>
                 )
               }
             </Col>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
               {
                 contentCard('Other Options', 'All other options of this component',
-                  <>
+                  <AppSpace size={ITEM_SPACE}>
                     <AppInput.TextArea placeholder="Text area with clear button"
                                        defaultValue={DUMMY_PARAGRAPH}
                                        allowClear={true}/>
-                    {space()}
                     <AppInput.TextArea placeholder="Text area with max length = 10"
                                        maxLength={10}/>
-                    {space()}
                     <AppInput.TextArea placeholder="Disabled text area" disabled={true}/>
-                    {space()}
                     <AppInput.TextArea placeholder="Text area with onChange (Check console)"
                                        onChange={(event) => console.log('Text area with onChange:', event.target.value)}/>
-                  </>
+                  </AppSpace>
                 )
               }
             </Col>
