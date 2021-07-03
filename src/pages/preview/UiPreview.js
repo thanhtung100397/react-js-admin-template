@@ -2,13 +2,13 @@ import React from 'react';
 import AppNotification from '../../components/notification/AppNotification';
 import AppContainer from '../../containers/container/AppContainer';
 import AppGrid from '../../containers/grid/AppGrid';
+import AppSpace from '../../containers/space/AppSpace';
 import AppCard from '../../components/card/AppCard';
 import AppTypography from '../../components/typography/AppTypography';
 import AppDivider from '../../components/divider/AppDivider';
 import AppInput from '../../components/input/AppInput';
 import { Icons } from '../../assets/icons';
 import './UiPreview.scss';
-import AppSpace from '../../containers/space/AppSpace';
 
 const { Row, Col } = AppGrid;
 const { Title, Text, Link } = AppTypography;
