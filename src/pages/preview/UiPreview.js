@@ -303,7 +303,7 @@ const groups = [
                     <AppInput.Text placeholder="(Placeholder) Enter text"/>
                     <AppInput.Text value="(Value) Lorem ipsum dolor sit amet"
                                    placeholder="Enter text"/>
-                    <AppInput.Text value={undefined} defaultValue="(Default Value) Lorem ipsum dolor sit amet"
+                    <AppInput.Text defaultValue="(Default Value) Lorem ipsum dolor sit amet"
                                    placeholder="Enter text"/>
                   </AppSpace>
                 )
@@ -322,6 +322,7 @@ const groups = [
                     <AppInput.Text placeholder="Disabled text input" disabled={true}/>
                     <AppInput.Text placeholder="Text input with onChange (Check console)"
                                   onChange={(event) => console.log('Text input with onChange:', event.target.value)}/>
+                    <AppInput.Text placeholder="Borderless text input" borderless={true}/>
                   </AppSpace>
                 )
               }
@@ -341,7 +342,7 @@ const groups = [
                     <AppInput.Password placeholder="(Placeholder) Enter password"/>
                     <AppInput.Password placeholder="Without show password button" allowShow={false}/>
                     <AppInput.Password value="Lorem ipsum" placeholder="Enter password"/>
-                    <AppInput.Password value={undefined} defaultValue="Lorem ipsum"/>
+                    <AppInput.Password defaultValue="Lorem ipsum"/>
                   </AppSpace>
                 )
               }
@@ -359,6 +360,7 @@ const groups = [
                     <AppInput.Password placeholder="Disabled password" disabled={true}/>
                     <AppInput.Password placeholder="Password with onChange (Check console)"
                                    onChange={(event) => console.log('Password with onChange:', event.target.value)}/>
+                    <AppInput.Password placeholder="Borderless password" borderless={true}/>
                   </AppSpace>
                 )
               }
@@ -411,6 +413,7 @@ const groups = [
                     <AppInput.TextArea placeholder="Disabled text area" disabled={true}/>
                     <AppInput.TextArea placeholder="Text area with onChange (Check console)"
                                        onChange={(event) => console.log('Text area with onChange:', event.target.value)}/>
+                    <AppInput.TextArea placeholder="Borderless text area" borderless={true}/>
                   </AppSpace>
                 )
               }
