@@ -1,6 +1,7 @@
 $app-primary-color: #40a9ff;
 $app-primary-color-light: #69c0ff;
 $app-primary-color-dark: #1890ff;
+$app-primary-shadow-color: #{$app-primary-color + '33'};
 
 $app-text-primary-color: #000000;
 $app-text-secondary-color: #979797;
@@ -12,13 +13,13 @@ $app-scrollbar-track-color: none;
 $app-disabled-color: #cccccc;
 
 $success-color: #52c41a;
-$success-shadow-color: #52c41a33;
+$success-shadow-color: #{$success-color + '33'};
 
 $warning-color: #faad14;
-$warning-shadow-color: #faad1433;
+$warning-shadow-color: #{$warning-color + '33'};
 
 $error-color: #ff4d4f;
-$error-shadow-color: #ff4d4f33;
+$error-shadow-color: #{$error-color + '33'};
 
 :export {
   appPrimaryColor: $app-primary-color;

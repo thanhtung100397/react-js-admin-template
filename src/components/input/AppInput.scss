@@ -1,7 +1,24 @@
 @import '../../colors.module';
 
 .app-input {
+  &.ant-input-affix-wrapper {
+    .ant-input-prefix {
+      margin-right: 11px;
+    }
+  }
 
+  &:focus {
+    border-color: $app-primary-color;
+    border-right-width: 1px !important;
+    outline: 0;
+    box-shadow: 0 0 0 2px $app-primary-shadow-color;
+  }
+
+  &:hover {
+    border-color: $app-primary-color;
+    border-right-width: 1px !important;
+    box-shadow: 0 0 0 2px $app-primary-shadow-color;
+  }
 }
 
 .validate-success {
