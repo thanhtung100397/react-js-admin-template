@@ -1,10 +1,9 @@
 import React from 'react';
-import PropTypes  from 'prop-types';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { baseProps, fromBaseProps } from '../../base';
-import { typographyPropTypes } from '../AppTypography';
+import { typographyPropTypes, fromTypographyProps } from '../base';
 import { Typography } from 'antd';
-import { TypeChecker } from '../../../utils/helpers';
 import '../AppTypography.scss';
 import './AppTitle.scss';
 
@@ -20,18 +19,11 @@ const defaultProps = {
   level: 1
 };
 
-const italicValue = (italic) => { // ant design has bug about Typography italic prop
-  if (TypeChecker.isBoolean(italic)) {
-    return italic.toString();
-  }
-};
-
 const AppTitle = (props) => {
   return (
     <Title {...fromBaseProps({className: classNames('app-typography', 'app-title')}, props)}
-           level={props.level} strong={props.bold} italic={italicValue(props.italic)} underline={props.underline}
-           ellipsis={props.ellipsis} copyable={props.copyable} delete={props.strikethrough} mark={props.highlight}
-           disabled={props.disabled} onClick={props.onClick}>
+           {...fromTypographyProps(props)}
+           level={props.level}>
       {props.children}
     </Title>
   );
