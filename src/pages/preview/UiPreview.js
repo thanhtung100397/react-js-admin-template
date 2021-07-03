@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppNotification from '../../components/notification/AppNotification';
 import AppContainer from '../../containers/container/AppContainer';
 import AppGrid from '../../containers/grid/AppGrid';
@@ -329,7 +329,8 @@ const groups = [
                     {space()}
                     <AppTextInput placeholder="Disabled input" disabled={true}/>
                     {space()}
-                    <AppTextInput placeholder="Input with onChange()" onChange={() => {}}/>
+                    <AppTextInput placeholder="Input with onChange (Check console)"
+                                  onChange={(event) => console.log('Input with onChange:', event.target.value)}/>
                   </>
                 )
               }

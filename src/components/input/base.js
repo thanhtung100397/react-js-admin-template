@@ -4,8 +4,8 @@ import { AppFormItemContext } from '../form/AppFormItem';
 
 export const inputPropTypes = {
   id: PropTypes.string,
-  value: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
-  defaultValue: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+  value: PropTypes.string,
+  defaultValue: PropTypes.string,
   placeholder: PropTypes.string,
   icon: PropTypes.node,
   onChange: PropTypes.func,
