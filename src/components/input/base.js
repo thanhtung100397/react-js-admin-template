@@ -11,7 +11,8 @@ export const inputPropTypes = {
   onChange: PropTypes.func,
   allowClear: PropTypes.bool,
   maxLength: PropTypes.number,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  borderless: PropTypes.bool
 };
 
 export const fromInputProps = (props) => {
@@ -24,7 +25,8 @@ export const fromInputProps = (props) => {
     defaultValue: props.defaultValue,
     placeholder: props.placeholder,
     onChange: props.onChange,
-    prefix: props.icon
+    prefix: props.icon,
+    bordered: !props.borderless
   }
 };
 

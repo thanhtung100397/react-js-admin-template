@@ -7,14 +7,14 @@
     }
   }
 
-  &:focus {
+  &:not(.ant-input-borderless):not(.ant-input-affix-wrapper-borderless):focus {
     border-color: $app-primary-color;
     border-right-width: 1px !important;
     outline: 0;
     box-shadow: 0 0 0 2px $app-primary-shadow-color;
   }
 
-  &:hover {
+  &:not(.ant-input-borderless):not(.ant-input-affix-wrapper-borderless):hover {
     border-color: $app-primary-color;
     border-right-width: 1px !important;
     box-shadow: 0 0 0 2px $app-primary-shadow-color;
