@@ -1,5 +1,9 @@
+@import '../../../colors.module';
 @import '../../../dimens.module';
 
 .app-text {
-  font-size: $app-font-size-normal;
+  &.ant-typography {
+    font-size: $app-font-size-normal;
+    color: $app-text-primary-color;
+  }
 }

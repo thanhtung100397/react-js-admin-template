@@ -1,8 +1,6 @@
 @import '../../colors.module';
 
 .app-typography {
-  color: $app-text-primary-color;
-
   &.ant-typography {
     & + .ant-typography {
       margin-top: 0;

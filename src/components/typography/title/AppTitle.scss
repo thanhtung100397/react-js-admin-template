@@ -1,3 +1,8 @@
-.app-title {
+@import '../../../colors.module';
+@import '../../../dimens.module';
 
+.app-title {
+  &.ant-typography {
+    color: $app-text-primary-color;
+  }
 }

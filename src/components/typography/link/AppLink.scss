@@ -1,5 +1,21 @@
+@import '../../../colors.module';
 @import '../../../dimens.module';
 
 .app-link {
-  font-size: $app-font-size-normal;
+  &.ant-typography {
+    font-size: $app-font-size-normal;
+    color: $app-link-color;
+
+    &:hover {
+      color: $app-link-active-color;
+    }
+
+    &:focus {
+      color: $app-link-active-color;
+    }
+
+    &:active {
+      color: $app-link-active-color;
+    }
+  }
 }
