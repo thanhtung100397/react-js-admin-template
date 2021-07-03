@@ -9,13 +9,21 @@ import AppInput from '../../components/input/AppInput';
 import { Icons } from '../../assets/icons';
 import './UiPreview.scss';
 
-
 const { Row, Col } = AppGrid;
 const { Title, Text, Link } = AppTypography;
 
 const ROW_GUTTER = 24;
 const ROOT_TITLE_LEVEL = 2;
 const MAX_TITLE_LEVEL = 5;
+
+const LONG_DUMMY_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt " +
+  "ut labore et dolore magna aliqua";
+
+const DUMMY_PARAGRAPH = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt " +
+  "ut labore et dolore magna aliqua.\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip " +
+  "ex ea commodo consequat.\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu " +
+  "fugiat nulla pariatur. \nExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
+  "mollit anim id est laborum";
 
 const space = (size) => (
   <div style={{height: size || 20}}/>
@@ -112,11 +120,7 @@ const groups = [
                 contentCard('Other Options', 'All other options of this component',
                   <>
                     <Title level={5} ellipsis={true}>
-                      (Ellipsis) Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-                      in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                      non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+                      (Ellipsis) {LONG_DUMMY_TEXT}
                     </Title>
                     <Title level={5} copyable={true}>
                       (Copyable) Lorem ipsum dolor sit amet
@@ -189,11 +193,7 @@ const groups = [
                 contentCard('Other Options', 'All other options of this component',
                   <>
                     <Text ellipsis={true}>
-                      (Ellipsis) Consectetur adipiscing elit, sed do eiusmod tempor
-                      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-                      in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                      non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+                      (Ellipsis) {LONG_DUMMY_TEXT}
                     </Text>
                     <Text copyable={true}>
                       (Copyable) Consectetur adipiscing elit
@@ -266,9 +266,7 @@ const groups = [
                 contentCard('Other Options', 'All other options of this component',
                   <>
                     <Link href="https://reactjs.org" target="_blank" ellipsis={true}>
-                      (Ellipsis) React makes it painless to create interactive UIs. Design simple views for each state in
-                      your application, and React will efficiently update and render just the right components
-                      when your data changes.
+                      (Ellipsis) {LONG_DUMMY_TEXT}
                     </Link>
                     <Link href="https://reactjs.org" target="_blank" copyable={true}>
                       (Copyable) Consectetur adipiscing elit
@@ -307,9 +305,11 @@ const groups = [
                     {space()}
                     <AppInput.Text placeholder="(Placeholder) Enter text"/>
                     {space()}
-                    <AppInput.Text value="(Value) Lorem ipsum dolor sit amet"/>
+                    <AppInput.Text value="(Value) Lorem ipsum dolor sit amet"
+                                   placeholder="Enter text"/>
                     {space()}
-                    <AppInput.Text value={undefined} defaultValue="(Default Value) Lorem ipsum dolor sit amet"/>
+                    <AppInput.Text value={undefined} defaultValue="(Default Value) Lorem ipsum dolor sit amet"
+                                   placeholder="Enter text"/>
                   </>
                 )
               }
@@ -352,7 +352,7 @@ const groups = [
                     {space()}
                     <AppInput.Password placeholder="Without show password button" allowShow={false}/>
                     {space()}
-                    <AppInput.Password value="Lorem ipsum"/>
+                    <AppInput.Password value="Lorem ipsum" placeholder="Enter password"/>
                     {space()}
                     <AppInput.Password value={undefined} defaultValue="Lorem ipsum"/>
                   </>
@@ -376,6 +376,69 @@ const groups = [
                     {space()}
                     <AppInput.Password placeholder="Password with onChange (Check console)"
                                    onChange={(event) => console.log('Password with onChange:', event.target.value)}/>
+                  </>
+                )
+              }
+            </Col>
+          </Row>
+        )
+      },
+      {
+        title: '3. App Text Area Input',
+        content: (
+          <Row gutter={ROW_GUTTER} vStretch={true}>
+            <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+              {
+                contentCard('Basic usage', 'Basic use of text area input',
+                  <>
+                    <AppInput.TextArea/>
+                    {space()}
+                    <AppInput.TextArea placeholder="(Placeholder) Enter multi-line text"/>
+                    {space()}
+                    <AppInput.TextArea value={`(Value) ${DUMMY_PARAGRAPH}`}
+                                       placeholder="Enter multi-line text"/>
+                    {space()}
+                    <AppInput.TextArea value={undefined} defaultValue={`(Default Value) ${DUMMY_PARAGRAPH}`}
+                                       placeholder="Enter multi-line text"/>
+                    {space()}
+                    <AppInput.TextArea value={undefined} defaultValue={DUMMY_PARAGRAPH}
+                                       placeholder="Enter multi-line text, fixed 4 line"/>
+                  </>
+                )
+              }
+            </Col>
+            <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+              {
+                contentCard('Rows Options', 'All rows option for text area input',
+                  <>
+                    <AppInput.TextArea placeholder="Fixed 3 rows text area" rows={3}/>
+                    {space()}
+                    <AppInput.TextArea placeholder="Min 3 rows text area" minRows={3}/>
+                    {space()}
+                    <AppInput.TextArea placeholder="Max 5 rows text area" maxRows={5}/>
+                    {space()}
+                    <AppInput.TextArea placeholder="(Min = 3, Max = 5) rows text area" minRows={3} maxRows={5}/>
+                    {space()}
+                    <AppInput.TextArea placeholder="Auto adjust rows text area" autoRows={true}/>
+                  </>
+                )
+              }
+            </Col>
+            <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+              {
+                contentCard('Other Options', 'All other options of this component',
+                  <>
+                    <AppInput.TextArea placeholder="Text area with clear button"
+                                       defaultValue={DUMMY_PARAGRAPH}
+                                       allowClear={true}/>
+                    {space()}
+                    <AppInput.TextArea placeholder="Text area with max length = 10"
+                                       maxLength={10}/>
+                    {space()}
+                    <AppInput.TextArea placeholder="Disabled text area" disabled={true}/>
+                    {space()}
+                    <AppInput.TextArea placeholder="Text area with onChange (Check console)"
+                                       onChange={(event) => console.log('Text area with onChange:', event.target.value)}/>
                   </>
                 )
               }
