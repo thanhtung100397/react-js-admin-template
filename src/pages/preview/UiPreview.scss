@@ -3,12 +3,8 @@
 .ui-preview-page {
   .app-title {
     &.group-title {
-      margin-bottom: 0;
+      margin-bottom: 10px;
       color: $app-primary-color-dark;
-    }
-
-    &.section-title {
-      color: $app-primary-color;
     }
   }
 
@@ -17,16 +13,8 @@
       margin-top: 32px;
     }
 
-    .group-sections {
+    .group-items-container {
       padding: 10px;
-    }
-  }
-
-  .section-container {
-    width: 100%;
-
-    & + .section-container {
-      margin-top: 32px;
     }
 
     .app-card {

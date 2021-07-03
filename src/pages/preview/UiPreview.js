@@ -5,12 +5,21 @@ import AppGrid from '../../containers/grid/AppGrid';
 import AppCard from '../../components/card/AppCard';
 import AppTypography from '../../components/typography/AppTypography';
 import AppDivider from '../../components/divider/AppDivider';
+import AppTextInput from '../../components/input/text/AppTextInput';
+import { Icons } from '../../assets/icons';
 import './UiPreview.scss';
+
 
 const { Row, Col } = AppGrid;
 const { Title, Text, Link } = AppTypography;
 
 const ROW_GUTTER = 24;
+const ROOT_TITLE_LEVEL = 2;
+const MAX_TITLE_LEVEL = 5;
+
+const space = (size) => (
+  <div style={{height: size || 20}}/>
+)
 
 const contentCard = (name, footer, content) => (
   <AppCard noBodyPadding={true} whFull={true}>
@@ -26,32 +35,33 @@ const contentCard = (name, footer, content) => (
   </AppCard>
 );
 
-const newSection = (index, title, content) => (
-  <div key={index} className="section-container">
-    <Title className="section-title" level={4}>{index + 1}. {title}</Title>
-    {content}
+const getTitleLevel = (depth = 0) => {
+  let level = ROOT_TITLE_LEVEL + depth;
+  if (level > MAX_TITLE_LEVEL) {
+    return MAX_TITLE_LEVEL;
+  }
+  return level;
+};
+
+const newGroup = (index, group, depth = 0) => (
+  <div key={index} className="group-container">
+    <Title className="group-title" level={getTitleLevel(depth)}>{group.title}</Title>
+    {group.content}
+    <div className="group-items-container">
+      {
+        group.items?.map((item, itemIndex) =>
+          newGroup(itemIndex, item, depth + 1))
+      }
+    </div>
   </div>
 );
 
-const newGroup = (index, title, sections) => {
-  return (
-    <div key={index} className="group-container">
-      <Title className="group-title" level={2}>{title}</Title>
-      <div className="group-sections">
-        {
-          sections.map((section, sectionIndex) => newSection(sectionIndex, title, section.content))
-        }
-      </div>
-    </div>
-  )
-};
-
 const groups = [
   {
-    title: 'App Typography',
-    sections: [
+    title: 'I. App Typography',
+    items: [
       {
-        title: 'App Title',
+        title: '1. App Title',
         content: (
           <Row gutter={ROW_GUTTER} vStretch={true}>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
@@ -128,7 +138,7 @@ const groups = [
         )
       },
       {
-        title: 'App Text',
+        title: '2. App Text',
         content: (
           <Row gutter={ROW_GUTTER} vStretch={true}>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
@@ -205,7 +215,7 @@ const groups = [
         )
       },
       {
-        title: 'App Link',
+        title: '3. App Link',
         content: (
           <Row gutter={ROW_GUTTER} vStretch={true}>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
@@ -281,6 +291,53 @@ const groups = [
         )
       }
     ]
+  },
+  {
+    title: 'II. App Input',
+    items: [
+      {
+        title: '1. App Input Text',
+        content: (
+          <Row gutter={ROW_GUTTER} vStretch={true}>
+            <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+              {
+                contentCard('Basic usage', 'Basic use of text input',
+                  <>
+                    <AppTextInput/>
+                    {space()}
+                    <AppTextInput placeholder="Placeholder text"/>
+                    {space()}
+                    <AppTextInput value="Lorem ipsum dolor sit amet"/>
+                    {space()}
+                    <AppTextInput value={undefined} defaultValue="(Default) Lorem ipsum dolor sit amet"/>
+                  </>
+                )
+              }
+            </Col>
+            <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+              {
+                contentCard('Other Options', 'All other options of this component',
+                  <>
+                    <AppTextInput placeholder="Input with icon" icon={<Icons.UserOutlined/>}/>
+                    {space()}
+                    <AppTextInput placeholder="Input with clear button"
+                                  defaultValue="Clear this text"
+                                  allowClear={true}/>
+                    {space()}
+                    <AppTextInput placeholder="Input with max length = 10"
+                                  maxLength={10}/>
+                    {space()}
+                    <AppTextInput placeholder="Disabled input" disabled={true}/>
+                    {space()}
+                    <AppTextInput placeholder="Input with onChange()" onChange={() => {}}/>
+                  </>
+                )
+              }
+            </Col>
+          </Row>
+        )
+      }
+    ]
   }
 ];
 
@@ -291,7 +348,7 @@ const UiPreview = (props) => {
     <div className="ui-preview-page page-padding">
       <AppContainer>
         {
-          groups.map((group, groupIndex) => newGroup(groupIndex, group.title, group.sections))
+          groups.map((group, groupIndex) => newGroup(groupIndex, group))
         }
       </AppContainer>
     </div>
