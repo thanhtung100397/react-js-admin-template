@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AppNotification from '../../components/notification/AppNotification';
 import AppContainer from '../../containers/container/AppContainer';
 import AppGrid from '../../containers/grid/AppGrid';
@@ -296,7 +296,7 @@ const groups = [
     title: 'II. App Input',
     items: [
       {
-        title: '1. App Input Text',
+        title: '1. App Text Input',
         content: (
           <Row gutter={ROW_GUTTER} vStretch={true}>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
@@ -305,11 +305,11 @@ const groups = [
                   <>
                     <AppInput.Text/>
                     {space()}
-                    <AppInput.Text placeholder="Placeholder text"/>
+                    <AppInput.Text placeholder="(Placeholder) Enter text"/>
                     {space()}
-                    <AppInput.Text value="Lorem ipsum dolor sit amet"/>
+                    <AppInput.Text value="(Value) Lorem ipsum dolor sit amet"/>
                     {space()}
-                    <AppInput.Text value={undefined} defaultValue="(Default) Lorem ipsum dolor sit amet"/>
+                    <AppInput.Text value={undefined} defaultValue="(Default Value) Lorem ipsum dolor sit amet"/>
                   </>
                 )
               }
@@ -318,19 +318,64 @@ const groups = [
               {
                 contentCard('Other Options', 'All other options of this component',
                   <>
-                    <AppInput.Text placeholder="Input with icon" icon={<Icons.UserOutlined/>}/>
+                    <AppInput.Text placeholder="Text input with icon" icon={<Icons.UserOutlined/>}/>
                     {space()}
-                    <AppInput.Text placeholder="Input with clear button"
+                    <AppInput.Text placeholder="Text input with clear button"
                                   defaultValue="Clear this text"
                                   allowClear={true}/>
                     {space()}
-                    <AppInput.Text placeholder="Input with max length = 10"
+                    <AppInput.Text placeholder="Text input with max length = 10"
                                   maxLength={10}/>
                     {space()}
-                    <AppInput.Text placeholder="Disabled input" disabled={true}/>
+                    <AppInput.Text placeholder="Disabled text input" disabled={true}/>
                     {space()}
-                    <AppInput.Text placeholder="Input with onChange (Check console)"
-                                  onChange={(event) => console.log('Input with onChange:', event.target.value)}/>
+                    <AppInput.Text placeholder="Text input with onChange (Check console)"
+                                  onChange={(event) => console.log('Text input with onChange:', event.target.value)}/>
+                  </>
+                )
+              }
+            </Col>
+          </Row>
+        )
+      },
+      {
+        title: '2. App Password Input',
+        content: (
+          <Row gutter={ROW_GUTTER} vStretch={true}>
+            <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+              {
+                contentCard('Basic usage', 'Basic use of password input',
+                  <>
+                    <AppInput.Password/>
+                    {space()}
+                    <AppInput.Password placeholder="(Placeholder) Enter password"/>
+                    {space()}
+                    <AppInput.Password placeholder="Without show password button" allowShow={false}/>
+                    {space()}
+                    <AppInput.Password value="Lorem ipsum"/>
+                    {space()}
+                    <AppInput.Password value={undefined} defaultValue="Lorem ipsum"/>
+                  </>
+                )
+              }
+            </Col>
+            <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+              {
+                contentCard('Other Options', 'All other options of this component',
+                  <>
+                    <AppInput.Password placeholder="Password with icon" icon={<Icons.KeyOutlined/>}/>
+                    {space()}
+                    <AppInput.Password placeholder="Password with clear button"
+                                   defaultValue="Lorem ipsum"
+                                   allowClear={true}/>
+                    {space()}
+                    <AppInput.Password placeholder="Password with max length = 10"
+                                   maxLength={10}/>
+                    {space()}
+                    <AppInput.Password placeholder="Disabled password" disabled={true}/>
+                    {space()}
+                    <AppInput.Password placeholder="Password with onChange (Check console)"
+                                   onChange={(event) => console.log('Password with onChange:', event.target.value)}/>
                   </>
                 )
               }
