@@ -63,3 +63,7 @@ export const setObjValue = (obj, path, value) => {
 export const isEmpty = (value) => {
   return _.isEmpty(value);
 };
+
+export const excludeFields = (obj, fields) => {
+  return _.omit(obj, fields);
+}

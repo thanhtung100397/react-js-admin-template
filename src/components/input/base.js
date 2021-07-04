@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { AppFormItemContext } from '../form/AppFormItem';
+import { excludeFields } from '../../utils/helpers';
 
 export const inputPropTypes = {
   id: PropTypes.string,
-  value: PropTypes.string,
-  defaultValue: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   placeholder: PropTypes.string,
   icon: PropTypes.node,
   onChange: PropTypes.func,
@@ -15,8 +16,8 @@ export const inputPropTypes = {
   borderless: PropTypes.bool
 };
 
-export const fromInputProps = (props) => {
-  return {
+export const fromInputProps = (props, ignoreProps) => {
+  let result = {
     id: props.id,
     allowClear: props.allowClear,
     maxLength: props.maxLength,
@@ -28,6 +29,10 @@ export const fromInputProps = (props) => {
     prefix: props.icon,
     bordered: !props.borderless
   }
+  if (ignoreProps) {
+    return excludeFields(result, ignoreProps);
+  }
+  return result;
 };
 
 export const useAppFormItem = (disable) => {
