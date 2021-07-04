@@ -7,13 +7,15 @@ import ic_app_loading from "./ic_app_loading.svg";
 
 import {
   UserOutlined,
-  KeyOutlined
+  KeyOutlined,
+  NumberOutlined
 } from '@ant-design/icons';
 
 export const Icons = {
   AppLogo,
   UserOutlined,
-  KeyOutlined
+  KeyOutlined,
+  NumberOutlined
 };
 
 export const icons = {

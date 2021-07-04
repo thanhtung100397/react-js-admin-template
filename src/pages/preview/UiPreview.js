@@ -420,7 +420,47 @@ const groups = [
             </Col>
           </Row>
         )
-      }
+      },
+      {
+        title: '4. App Number Input',
+        content: (
+          <Row gutter={ROW_GUTTER} vStretch={true}>
+            <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+              {
+                contentCard('Basic usage', 'Basic use of number input',
+                  <AppSpace size={ITEM_SPACE}>
+                    <AppInput.Number fullWidth={true}/>
+                    <AppInput.Number placeholder="Enter number"/>
+                    <AppInput.Number value={12345}
+                                     placeholder="Enter number"/>
+                    <AppInput.Number defaultValue={12345}
+                                     placeholder="Enter number"/>
+                    <AppInput.Number defaultValue={5}
+                                     max={10}
+                                     min={0}
+                                     placeholder="Enter number (min = 0, max = 10)"/>
+                  </AppSpace>
+                )
+              }
+            </Col>
+            <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+              {
+                contentCard('Other Options', 'All other options of this component',
+                  <AppSpace size={ITEM_SPACE}>
+                    <AppInput.Number placeholder="Number input with icon" icon={<Icons.UserOutlined/>}/>
+                    <AppInput.Number placeholder="Number input with clear button"
+                                     defaultValue="12345"/>
+                    <AppInput.Number placeholder="Disabled text input" disabled={true}/>
+                    <AppInput.Number placeholder="Number input with onChange (Check console)"
+                                     onChange={(event) => console.log('Text input with onChange:', event.target.value)}/>
+                    <AppInput.Number placeholder="Borderless text input" borderless={true}/>
+                  </AppSpace>
+                )
+              }
+            </Col>
+          </Row>
+        )
+      },
     ]
   }
 ];
