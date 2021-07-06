@@ -35,7 +35,7 @@ export const fromInputProps = (props, ignoreProps) => {
   return result;
 };
 
-export const useAppFormItem = (disable) => {
+export const useAppFormItem = (disable, getValue) => {
   const { setInputRef } = useContext(AppFormItemContext) || {};
   const [disabled, setDisabled] = useState();
   const ref = useRef({});
@@ -46,10 +46,15 @@ export const useAppFormItem = (disable) => {
 
   useEffect(() => {
     setInputRef && setInputRef({
-      getValue: () => ref.current?.state.value,
+      getValue: () => {
+        if (getValue) {
+          return getValue(ref);
+        }
+        return ref.current?.state?.value
+      },
       disable: (disabled) => setDisabled(disabled)
     });
-  }, [setInputRef]);
+  }, [setInputRef, getValue]);
 
   return [ref, disabled]
 }
