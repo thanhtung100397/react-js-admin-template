@@ -1,3 +1,14 @@
 .app-number-input {
   width: 100%;
 }
+
+.has-validate-icon {
+  .app-number-input {
+    padding-right: 20px;
+
+    .ant-input-number-handler-wrap {
+      right: 30px;
+      border-right: 1px solid #d9d9d9;
+    }
+  }
+}

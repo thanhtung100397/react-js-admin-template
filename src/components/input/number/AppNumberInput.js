@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { baseProps, fromBaseProps } from '../../base';
@@ -25,7 +25,8 @@ const defaultProps = {
 };
 
 const AppNumberInput = (props) => {
-  const [ref, disabled] = useAppFormItem(props.disabled);
+  const getValue = useCallback((ref) => ref.current?.value || undefined, []);
+  const [ref, disabled] = useAppFormItem(props.disabled, getValue);
   const className = classNames('app-input', 'app-number-input');
   return (
     <InputNumber {...fromBaseProps({className: className}, props)}
