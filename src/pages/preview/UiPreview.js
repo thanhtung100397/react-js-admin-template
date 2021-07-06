@@ -7,11 +7,13 @@ import AppCard from '../../components/card/AppCard';
 import AppTypography from '../../components/typography/AppTypography';
 import AppDivider from '../../components/divider/AppDivider';
 import AppInput from '../../components/input/AppInput';
+import AppSelect from '../../components/select/AppSelect';
 import { Icons } from '../../assets/icons';
 import './UiPreview.scss';
 
 const { Row, Col } = AppGrid;
 const { Title, Text, Link } = AppTypography;
+const { Option } = AppSelect;
 
 const ROW_GUTTER = 24;
 const ITEM_SPACE = 20;
@@ -462,10 +464,204 @@ const groups = [
         )
       },
     ]
+  },
+  {
+    title: 'III. App Select',
+    content: (
+      <Row gutter={ROW_GUTTER} vStretch={true}>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+          {
+            contentCard('Basic usage', 'Basic use of text input',
+              <AppSpace size={ITEM_SPACE}>
+                <AppSelect wFull={true}>
+                  <Option value={1}>Lorem</Option>
+                  <Option value={2}>Ipsum</Option>
+                  <Option value={3}>Dolor</Option>
+                  <Option value={4}>Sit</Option>
+                  <Option value={5}>Amet</Option>
+                </AppSelect>
+                <AppSelect wFull={true} placeholder="(Placeholder) Pick one">
+                  <Option value={1}>Lorem</Option>
+                  <Option value={2}>Ipsum</Option>
+                  <Option value={3}>Dolor</Option>
+                  <Option value={4}>Sit</Option>
+                  <Option value={5}>Amet</Option>
+                </AppSelect>
+                <AppSelect wFull={true} placeholder="(Placeholder) Pick one"
+                           defaultValue={1}>
+                  <Option value={1}>Lorem</Option>
+                  <Option value={2}>Ipsum</Option>
+                  <Option value={3}>Dolor</Option>
+                  <Option value={4}>Sit</Option>
+                  <Option value={5}>Amet</Option>
+                </AppSelect>
+                <AppSelect wFull={true} placeholder="(Placeholder) Pick multiple"
+                           mode="multiple">
+                  <Option value={1}>Lorem</Option>
+                  <Option value={2}>Ipsum</Option>
+                  <Option value={3}>Dolor</Option>
+                  <Option value={4}>Sit</Option>
+                  <Option value={5}>Amet</Option>
+                </AppSelect>
+              </AppSpace>
+            )
+          }
+        </Col>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+          {
+            contentCard('Tags Select', "Basic use of mode = 'tags'",
+              <AppSpace size={ITEM_SPACE}>
+                <AppSelect wFull={true} placeholder="(Placeholder) Pick or enter tags"
+                           mode="tags">
+                  <Option value="Lorem">Lorem</Option>
+                  <Option value="Ipsum">Ipsum</Option>
+                  <Option value="Dolor">Dolor</Option>
+                  <Option value="Sit">Sit</Option>
+                  <Option value="Amet">Amet</Option>
+                </AppSelect>
+                <AppSelect wFull={true} placeholder="(Placeholder) Pick or enter tags"
+                           mode="tags" defaultValue={['Lorem', 'Ipsum']}>
+                  <Option value="Lorem">Lorem</Option>
+                  <Option value="Ipsum">Ipsum</Option>
+                  <Option value="Dolor">Dolor</Option>
+                  <Option value="Sit">Sit</Option>
+                  <Option value="Amet">Amet</Option>
+                </AppSelect>
+                <AppSelect wFull={true} placeholder="(Placeholder) Pick or enter tags (max display = 3)"
+                           mode="tags" maxTagCount={3}>
+                  <Option value="Lorem">Lorem</Option>
+                  <Option value="Ipsum">Ipsum</Option>
+                  <Option value="Dolor">Dolor</Option>
+                  <Option value="Sit">Sit</Option>
+                  <Option value="Amet">Amet</Option>
+                </AppSelect>
+                <AppSelect wFull={true} placeholder="(Placeholder) Pick or enter tags (max tag text length= 10)"
+                           mode="tags" maxTagTextLength={10}>
+                  <Option value="Lorem ipsum dolor sit amet">Lorem ipsum dolor sit amet</Option>
+                  <Option value="Consectetur adipiscing elit">Consectetur adipiscing elit</Option>
+                  <Option value="Sed do eiusmod tempor incididunt">Sed do eiusmod tempor incididunt</Option>
+                  <Option value="Ut labore et dolore magna aliqua">Ut labore et dolore magna aliqua</Option>
+                  <Option value="Ut enim ad minim veniam">Ut enim ad minim veniam</Option>
+                </AppSelect>
+              </AppSpace>
+            )
+          }
+        </Col>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+          {
+            contentCard('Search Select', "Basic use of app select with supported filter",
+              <AppSpace size={ITEM_SPACE}>
+                <AppSelect wFull={true} placeholder="Pick or enter search keyword (by contain, match case)"
+                           filterMatchCase={true} showSearch={true}>
+                  <Option value="Lorem">Lorem</Option>
+                  <Option value="Ipsum">Ipsum</Option>
+                  <Option value="Dolor">Dolor</Option>
+                  <Option value="Sit">Sit</Option>
+                  <Option value="Amet">Amet</Option>
+                </AppSelect>
+                <AppSelect wFull={true} placeholder="Pick or enter search keyword (by contain, ignore case)"
+                           showSearch={true}>
+                  <Option value="Lorem">Lorem</Option>
+                  <Option value="Ipsum">Ipsum</Option>
+                  <Option value="Dolor">Dolor</Option>
+                  <Option value="Sit">Sit</Option>
+                  <Option value="Amet">Amet</Option>
+                </AppSelect>
+                <AppSelect wFull={true} placeholder="Pick or enter search keyword (by start, match case, result sort asc)"
+                           showSearch={true} filterOptionProp="children"
+                           filterMatchStart={true} filterMatchCase={true} filterSortType="asc">
+                  <Option value={1}>Lorem</Option>
+                  <Option value={7}>Lore</Option>
+                  <Option value={8}>Lone</Option>
+                  <Option value={2}>Ipsum</Option>
+                  <Option value={3}>Dolor</Option>
+                  <Option value={4}>Sit</Option>
+                  <Option value={5}>Amet</Option>
+                </AppSelect>
+                <AppSelect wFull={true} placeholder="Pick or enter search keyword (by start, ignore case, result sort asc)"
+                           showSearch={true} filterOptionProp="children"
+                           filterMatchStart={true} filterSortType="asc">
+                  <Option value={1}>Lorem</Option>
+                  <Option value={7}>Lore</Option>
+                  <Option value={8}>Lone</Option>
+                  <Option value={2}>Ipsum</Option>
+                  <Option value={3}>Dolor</Option>
+                  <Option value={4}>Sit</Option>
+                  <Option value={5}>Amet</Option>
+                </AppSelect>
+                <AppSelect wFull={true} placeholder="Pick or enter search keyword (filter label, by contain, match case)"
+                           showSearch={true} filterMatchCase={true} filterOptionProp="children">
+                  <Option value={1}>Lorem</Option>
+                  <Option value={2}>Ipsum</Option>
+                  <Option value={3}>Dolor</Option>
+                  <Option value={4}>Sit</Option>
+                  <Option value={5}>Amet</Option>
+                </AppSelect>
+              </AppSpace>
+            )
+          }
+        </Col>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+          {
+            contentCard('Other Options', "All other options of this component",
+              <AppSpace size={ITEM_SPACE}>
+                <AppSelect wFull={true} placeholder="Custom display label"
+                           displayOptionProp="label">
+                  <Option value={1} label="One">1</Option>
+                  <Option value={2} label="Two">2</Option>
+                  <Option value={3} label="Three">3</Option>
+                  <Option value={4} label="Four">4</Option>
+                  <Option value={5} label="Five">5</Option>
+                </AppSelect>
+                <AppSelect wFull={true} allowClear={true}
+                           placeholder="Select with clear button">
+                  <Option value={1}>Lorem</Option>
+                  <Option value={2}>Ipsum</Option>
+                  <Option value={3}>Dolor</Option>
+                  <Option value={4}>Sit</Option>
+                  <Option value={5}>Amet</Option>
+                </AppSelect>
+                <AppSelect wFull={true} disabled={true}
+                           placeholder="Select disabled">
+                  <Option value={1}>Lorem</Option>
+                  <Option value={2}>Ipsum</Option>
+                  <Option value={3}>Dolor</Option>
+                  <Option value={4}>Sit</Option>
+                  <Option value={5}>Amet</Option>
+                </AppSelect>
+                <AppSelect wFull={true} onChange={(value) => console.log('Select with onChange:', value)}
+                           placeholder="Select with onChange (check console)">
+                  <Option value={1}>Lorem</Option>
+                  <Option value={2}>Ipsum</Option>
+                  <Option value={3}>Dolor</Option>
+                  <Option value={4}>Sit</Option>
+                  <Option value={5}>Amet</Option>
+                </AppSelect>
+                <AppSelect wFull={true} fullValueOnChange={true}
+                           onChange={(value) => console.log('Select with onChange full value:', value)}
+                           placeholder="Select with onChange full value (check console)">
+                  <Option value={1}>Lorem</Option>
+                  <Option value={2}>Ipsum</Option>
+                  <Option value={3}>Dolor</Option>
+                  <Option value={4}>Sit</Option>
+                  <Option value={5}>Amet</Option>
+                </AppSelect>
+                <AppSelect wFull={true} borderless={true} showArrow={false}
+                           placeholder="Select borderless">
+                  <Option value={1}>Lorem</Option>
+                  <Option value={2}>Ipsum</Option>
+                  <Option value={3}>Dolor</Option>
+                  <Option value={4}>Sit</Option>
+                  <Option value={5}>Amet</Option>
+                </AppSelect>
+              </AppSpace>
+            )
+          }
+        </Col>
+      </Row>
+    )
   }
 ];
-
-//=================================================== Typography =====================================================//
 
 const UiPreview = (props) => {
   return (
