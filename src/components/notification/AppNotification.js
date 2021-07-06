@@ -23,7 +23,7 @@ const newNotification = async (type, config) => {
     try {
       func({
         ...defaultConfig,
-        config,
+        ...config,
         onClose: () => {
           config.onClose && config.onClose();
           resolve();
