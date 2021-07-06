@@ -79,7 +79,12 @@ const AppForm = (props) => {
     if (validating) {
       return;
     }
-    let formValid = await validateFormInputs();
+    let formValid;
+    try {
+      formValid = await validateFormInputs();
+    } finally {
+      setValidating(false);
+    }
     if (formValid) {
       onSubmit && onSubmit(collectFormData(formItemRefs));
     }
