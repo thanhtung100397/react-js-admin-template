@@ -25,14 +25,14 @@
   .app-input {
     border-color: $success-color;
 
-    &:focus {
+    &:not(.ant-input-borderless):not(.ant-input-affix-wrapper-borderless):focus {
       border-color: $success-color;
       border-right-width: 1px !important;
       outline: 0;
       box-shadow: 0 0 0 2px $success-shadow-color;
     }
 
-    &:hover {
+    &:not(.ant-input-borderless):not(.ant-input-affix-wrapper-borderless):hover {
       border-color: $success-color;
       border-right-width: 1px !important;
       box-shadow: 0 0 0 2px $success-shadow-color;
@@ -44,14 +44,14 @@
   .app-input {
     border-color: $warning-color;
 
-    &:focus {
+    &:not(.ant-input-borderless):not(.ant-input-affix-wrapper-borderless):focus {
       border-color: $warning-color;
       border-right-width: 1px !important;
       outline: 0;
       box-shadow: 0 0 0 2px $warning-shadow-color;
     }
 
-    &:hover {
+    &:not(.ant-input-borderless):not(.ant-input-affix-wrapper-borderless):hover {
       border-color: $warning-color;
       border-right-width: 1px !important;
       box-shadow: 0 0 0 2px $warning-shadow-color;
@@ -63,14 +63,14 @@
   .app-input {
     border-color: $error-color;
 
-    &:focus {
+    &:not(.ant-input-borderless):not(.ant-input-affix-wrapper-borderless):focus {
       border-color: $error-color;
       border-right-width: 1px !important;
       outline: 0;
       box-shadow: 0 0 0 2px $error-shadow-color;
     }
 
-    &:hover {
+    &:not(.ant-input-borderless):not(.ant-input-affix-wrapper-borderless):hover {
       border-color: $error-color;
       border-right-width: 1px !important;
       box-shadow: 0 0 0 2px $error-shadow-color;
