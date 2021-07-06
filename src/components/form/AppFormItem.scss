@@ -13,15 +13,23 @@
     }
   }
 
-  .input-label {
+  .input-label-container {
     height: 32px;
     display: flex;
     align-items: center;
-    margin-right: 10px;
+    justify-content: flex-end;
+    min-width: 0;
 
-    .asterisk-sign {
-      color: red;
-      margin-right: 4px;
+    .input-label {
+      margin-right: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      .asterisk-sign {
+        color: red;
+        margin-right: 4px;
+      }
     }
   }
 

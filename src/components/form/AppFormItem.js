@@ -71,13 +71,18 @@ const renderAsteriskSign = (props) => {
 
 const renderLabel = (props, verticalLayout) => {
   if (props.label) {
+    let style;
+    if (!verticalLayout && props.labelCol) {
+      style = {
+        flex: props.labelCol.span,
+        width: props.labelCol.width
+      };
+    }
     return (
-      <div className="input-label"
-           style={!verticalLayout && props.labelCol && {
-             flex: props.labelCol.span,
-             width: props.labelCol.width
-           }}>
-        {renderAsteriskSign(props)} {props.label}
+      <div className="input-label-container" style={style}>
+        <div className="input-label">
+          {renderAsteriskSign(props)} {props.label}
+        </div>
       </div>
     );
   }
@@ -95,15 +100,19 @@ const renderValidateIcon = (validateStatus) => {
 };
 
 const renderContainer = (props, verticalLayout, inputRef, validation) => {
+  let style;
+  if (!verticalLayout && props.inputCol) {
+    style = {
+      flex: props.inputCol.span,
+      width: props.inputCol.width
+    };
+  }
   return (
     <div className={classNames('input-container',
                               {
                                 'has-validate-icon': validation.status && ValidateStatusIcons[validation.status]
                               })}
-         style={!verticalLayout && props.inputCol && {
-           flex: props.inputCol.span,
-           width: props.inputCol.width
-         }}>
+         style={style}>
       {props.children}
       {renderValidateIcon(validation.status)}
       {renderValidateMessage(validation.message)}
@@ -237,25 +246,34 @@ const AppFormItem = (props) => {
     setValidation({
       status: ValidateStatus.VALIDATING
     });
-    disableInput(inputRef, true);
-    let inputValue = getInputValue(inputRef);
-    let validateResult = await validateAllRules(inputValue, props.validateStatus, props.validateMessage, props.validateRules);
-    disableInput(inputRef, false);
-    if (validateResult.valid) {
-      if (props.showSuccessValidateStatus) {
-        setValidation({
-          status: ValidateStatus.SUCCESS
-        });
+    try {
+      disableInput(inputRef, true);
+      let inputValue = getInputValue(inputRef);
+      let validateResult = await validateAllRules(inputValue, props.validateStatus, props.validateMessage, props.validateRules);
+      if (validateResult.valid) {
+        if (props.showSuccessValidateStatus) {
+          setValidation({
+            status: ValidateStatus.SUCCESS
+          });
+        } else {
+          setValidation({});
+        }
       } else {
-        setValidation({});
+        setValidation({
+          status: ValidateStatus.ERROR,
+          message: validateResult.message
+        })
       }
-    } else {
+      return validateResult.valid;
+    } catch (e) {
       setValidation({
         status: ValidateStatus.ERROR,
-        message: validateResult.message
+        message: e.message
       })
+      return false;
+    } finally {
+      disableInput(inputRef, false);
     }
-    return validateResult.valid;
   }, [props.showSuccessValidateStatus, props.validateStatus, props.validateMessage, props.validateRules]);
 
   useEffect(() => {
@@ -281,7 +299,7 @@ const AppFormItem = (props) => {
   const isLayoutVertical = props.layoutDirection === LayoutDirection.VERTICAL;
 
   const style = {
-    flexDirection: props.layoutDirection
+    flexDirection: isLayoutVertical? 'column' : 'row'
   };
 
   return (
