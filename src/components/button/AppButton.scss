@@ -1,0 +1,41 @@
+@import '../../colors.module';
+
+.app-button {
+  &.ant-btn {
+    &.ant-btn-dangerous {
+      background: $error-color;
+      border-color: $error-color;
+    }
+  }
+
+  &.ant-btn-primary {
+    background: $app-primary-color-dark;
+    border-color: $app-primary-color-dark;
+
+    &.ant-btn-dangerous {
+      background: $error-color;
+      border-color: $error-color;
+    }
+  }
+
+  &.ant-btn-dashed {
+    &.ant-btn-dangerous {
+      background: $error-color;
+      border-color: $error-color;
+    }
+  }
+
+  &.ant-btn-text {
+    &.ant-btn-dangerous {
+      color: $error-color;
+    }
+  }
+
+  &.ant-btn-link {
+    color: $app-link-color;
+
+    &.ant-btn-dangerous {
+      color: $error-color;
+    }
+  }
+}
