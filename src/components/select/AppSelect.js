@@ -1,9 +1,10 @@
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { baseProps, fromBaseProps } from '../base';
-import { AppFormItemContext } from '../form/AppFormItem';
+import { AppFormItemContext, useAppFormItem } from '../form/AppFormItem';
 import { Select } from 'antd';
 import './AppSelect.scss';
+import { toNumber } from '../../utils/helpers';
 
 const { Option, OptionGroup } = Select;
 
@@ -45,6 +46,8 @@ const propTypes = {
 };
 
 const defaultProps = {
+  showArrow: true,
+  showSearch: false
 };
 
 const getOptionValue = (option, filterOptionProp) => {
@@ -54,29 +57,16 @@ const getOptionValue = (option, filterOptionProp) => {
   return option.value;
 };
 
+const getInputValue = (ref) => {
+  console.log('HELLO', ref.current);
+  console.log('HELLO', ref.current?.value);
+  return ref.current?.value;
+};
+
 const AppSelect = (props) => {
   const { filterOptionProp, filterMatchStart, filterMatchCase,
     onFilter, filterSortType, onFilterSort } = props;
-  const { setInputRef } = useContext(AppFormItemContext) || {};
-  const [disabled, setDisabled] = useState();
-  const ref = useRef({});
-
-  useEffect(() => {
-    setDisabled(props.disabled);
-  }, [props.disabled]);
-
-  const changeDisable = useCallback((disabled) => {
-    if (!props.disabled) {
-      setDisabled(disabled);
-    }
-  }, [props.disabled])
-
-  useEffect(() => {
-    setInputRef && setInputRef({
-      getValue: () => ref.current?.state.value,
-      disable: (disabled) => changeDisable(disabled)
-    });
-  }, [setInputRef, changeDisable]);
+  const [ref, disabled] = useAppFormItem(props.disabled, getInputValue);
 
   const filterOption = useMemo(() => {
     let filterFunc;

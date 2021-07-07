@@ -1,7 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 import { baseProps, fromBaseProps } from '../../base';
-import { inputPropTypes, fromInputProps, useAppFormItem } from '../base';
+import { inputPropTypes, fromInputProps } from '../base';
+import { useAppFormItem } from '../../form/AppFormItem';
 import { Input } from 'antd';
 import '../AppInput.scss';
 import './AppTextInput.scss';

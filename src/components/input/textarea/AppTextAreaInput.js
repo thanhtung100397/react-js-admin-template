@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { baseProps, fromBaseProps } from '../../base';
-import { fromInputProps, inputPropTypes, useAppFormItem } from '../base';
+import { fromInputProps, inputPropTypes } from '../base';
+import { useAppFormItem } from '../../form/AppFormItem';
 import { Input } from 'antd';
 import { isEmpty, TypeChecker } from '../../../utils/helpers';
 import '../AppInput.scss';
@@ -21,6 +22,11 @@ const propTypes = {
 
 const defaultProps = {
 };
+
+const getSelectValue = (ref) => {
+  console.log('HELLO', ref.current?.value);
+  return ref.current?.value;
+}
 
 const AppTextAreaInput = (props) => {
   const { maxRows, minRows, autoRows } = props;

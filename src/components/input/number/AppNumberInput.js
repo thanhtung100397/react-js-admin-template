@@ -1,9 +1,11 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { baseProps, fromBaseProps } from '../../base';
-import { fromInputProps, inputPropTypes, useAppFormItem } from '../base';
+import { fromInputProps, inputPropTypes } from '../base';
+import { useAppFormItem } from '../../form/AppFormItem';
 import { InputNumber } from 'antd';
+import { toNumber } from '../../../utils/helpers';
 import '../AppInput.scss';
 import './AppNumberInput.scss';
 
@@ -24,9 +26,17 @@ const defaultProps = {
   step: 1
 };
 
+const getInputValue = (ref) => {
+  if (ref.current?.value) {
+    let value = toNumber(ref.current?.value);
+    if (value) {
+      return value;
+    }
+  }
+};
+
 const AppNumberInput = (props) => {
-  const getValue = useCallback((ref) => ref.current?.value || undefined, []);
-  const [ref, disabled] = useAppFormItem(props.disabled, getValue);
+  const [ref, disabled] = useAppFormItem(props.disabled, getInputValue);
   const className = classNames('app-input', 'app-number-input');
   return (
     <InputNumber {...fromBaseProps({className: className}, props)}
