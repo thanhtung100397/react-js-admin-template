@@ -67,3 +67,17 @@ export const isEmpty = (value) => {
 export const excludeFields = (obj, fields) => {
   return _.omit(obj, fields);
 }
+
+export const toNumber = (value) => {
+  return _.toNumber(value);
+}
+
+export const delay = async (millis) => {
+  return new Promise((resolve, reject) => {
+    try {
+      _.delay(resolve, millis);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
