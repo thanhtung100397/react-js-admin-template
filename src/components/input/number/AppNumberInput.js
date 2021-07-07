@@ -26,22 +26,20 @@ const defaultProps = {
   step: 1
 };
 
-const getInputValue = (ref) => {
-  if (ref.current?.value) {
-    let value = toNumber(ref.current?.value);
-    if (value) {
-      return value;
-    }
+const getInputValue = (value) => {
+  value = toNumber(value);
+  if (value) {
+    return value;
   }
 };
 
 const AppNumberInput = (props) => {
-  const [ref, disabled] = useAppFormItem(props.disabled, getInputValue);
+  const [onChange, disabled] = useAppFormItem(props.disabled, props.onChange, getInputValue);
   const className = classNames('app-input', 'app-number-input');
   return (
     <InputNumber {...fromBaseProps({className: className}, props)}
                  {...fromInputProps(props, ['allowClear'])}
-                 ref={ref} disabled={disabled} max={props.max} min={props.min}
+                 onChange={onChange} disabled={disabled} max={props.max} min={props.min}
                  precision={props.precision} formatter={props.formatter} parser={props.parser}
                  step={props.step} onStep={props.onStep}/>
   )

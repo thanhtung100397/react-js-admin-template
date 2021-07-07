@@ -1,10 +1,9 @@
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { baseProps, fromBaseProps } from '../base';
-import { AppFormItemContext, useAppFormItem } from '../form/AppFormItem';
+import { useAppFormItem } from '../form/AppFormItem';
 import { Select } from 'antd';
 import './AppSelect.scss';
-import { toNumber } from '../../utils/helpers';
 
 const { Option, OptionGroup } = Select;
 
@@ -57,16 +56,16 @@ const getOptionValue = (option, filterOptionProp) => {
   return option.value;
 };
 
-const getInputValue = (ref) => {
-  console.log('HELLO', ref.current);
-  console.log('HELLO', ref.current?.value);
-  return ref.current?.value;
-};
+const getInputValue = (value) => {
+  return value;
+}
 
 const AppSelect = (props) => {
-  const { filterOptionProp, filterMatchStart, filterMatchCase,
-    onFilter, filterSortType, onFilterSort } = props;
-  const [ref, disabled] = useAppFormItem(props.disabled, getInputValue);
+  const {
+    filterOptionProp, filterMatchStart, filterMatchCase,
+    onFilter, filterSortType, onFilterSort
+  } = props;
+  const [onChange, disabled] = useAppFormItem(props.disabled, props.onChange, getInputValue);
 
   const filterOption = useMemo(() => {
     let filterFunc;
@@ -106,8 +105,8 @@ const AppSelect = (props) => {
 
   return (
     <Select {...fromBaseProps({className: 'app-select'}, props)}
-            ref={ref} disabled={disabled} placeholder={props.placeholder} mode={props.mode}
-            value={props.value} defaultValue={props.defaultValue} onChange={props.onChange}
+            disabled={disabled} placeholder={props.placeholder} mode={props.mode}
+            value={props.value} defaultValue={props.defaultValue} onChange={onChange}
             defaultActiveFirstOption={props.firstSelected}
             labelInValue={props.fullValueOnChange} allowClear={props.allowClear}
             bordered={!props.borderless} showArrow={props.showArrow}

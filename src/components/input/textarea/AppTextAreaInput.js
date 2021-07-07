@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { baseProps, fromBaseProps } from '../../base';
@@ -23,15 +23,10 @@ const propTypes = {
 const defaultProps = {
 };
 
-const getSelectValue = (ref) => {
-  console.log('HELLO', ref.current?.value);
-  return ref.current?.value;
-}
-
 const AppTextAreaInput = (props) => {
   const { maxRows, minRows, autoRows } = props;
-  const [ref, disabled] = useAppFormItem(props.disabled);
   const [autoSize, setAutoSize] = useState();
+  const [onChange, disabled] = useAppFormItem(props.disabled, props.onChange);
 
   useEffect(() => {
     let autoSize;
@@ -55,7 +50,7 @@ const AppTextAreaInput = (props) => {
   return (
     <TextArea {...fromBaseProps({className: classNames('app-input', 'app-text-area-input')}, props)}
               {...fromInputProps(props)}
-              ref={ref} disabled={disabled} rows={props.rows} autoSize={autoSize}/>
+              onChange={onChange} disabled={disabled} rows={props.rows} autoSize={autoSize}/>
   )
 };
 

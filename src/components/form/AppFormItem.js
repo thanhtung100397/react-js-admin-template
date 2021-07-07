@@ -61,10 +61,20 @@ const defaultProps = {
 
 const AppFormItemContext = React.createContext();
 
-export const useAppFormItem = (disable, getValue) => {
+const defaultOnChangeTransform = (e) => e.target.value;
+
+export const useAppFormItem = (disable, propOnChange,
+                               onChangeTransform = defaultOnChangeTransform) => {
   const { setInputRef } = useContext(AppFormItemContext) || {};
   const [disabled, setDisabled] = useState();
-  const ref = useRef({});
+  const valueRef = useRef({});
+
+  const onChange = useCallback((e) => {
+    valueRef.current.value = onChangeTransform(e);
+    if (propOnChange) {
+      propOnChange(e);
+    }
+  }, [propOnChange, onChangeTransform]);
 
   useEffect(() => {
     setDisabled(disable);
@@ -72,21 +82,17 @@ export const useAppFormItem = (disable, getValue) => {
 
   useEffect(() => {
     setInputRef && setInputRef({
-      getValue: () => {
-        if (getValue) {
-          return getValue(ref);
-        }
-        return ref.current?.state?.value
-      },
+      getValue: () => valueRef.current.value,
       disable: (disabled) => {
         if (!disable) {
           setDisabled(disabled);
         }
-      }
+      },
+      isDisabled: () => disabled,
     });
-  }, [setInputRef, getValue, disable]);
+  }, [setInputRef, disable, disabled]);
 
-  return [ref, disabled]
+  return [onChange, disabled];
 };
 
 const renderAsteriskSign = (props) => {
@@ -240,6 +246,10 @@ const getInputValue = (inputRef) => {
   return inputRef.current?.getValue && inputRef.current?.getValue();
 };
 
+const getInputDisabled = (inputRef) => {
+  return inputRef.current?.isDisabled && inputRef.current?.isDisabled();
+};
+
 const disableInput = (inputRef, disabled) => {
   inputRef.current?.disable && inputRef.current?.disable(disabled);
 }
@@ -271,6 +281,10 @@ const AppFormItem = (props) => {
   }, [props.validateStatus, props.validateMessage]);
 
   const validate = useCallback(async () => {
+    let inputDisabled = getInputDisabled(inputRef);
+    if (inputDisabled) {
+      return true;
+    }
     setValidation({
       status: ValidateStatus.VALIDATING
     });

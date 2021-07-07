@@ -16,11 +16,11 @@ const defaultProps = {
 };
 
 const AppTextInput = (props) => {
-  const [ref, disabled] = useAppFormItem(props.disabled);
+  const [onChange, disabled] = useAppFormItem(props.disabled, props.onChange);
   return (
     <Input {...fromBaseProps({className: classNames('app-input', 'app-text-input')}, props)}
            {...fromInputProps(props)}
-           ref={ref} disabled={disabled}/>
+           onChange={onChange} disabled={disabled}/>
   )
 };
 

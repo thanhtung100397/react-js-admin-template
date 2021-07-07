@@ -20,11 +20,11 @@ const defaultProps = {
 };
 
 const AppPasswordInput = (props) => {
-  const [ref, disabled] = useAppFormItem(props.disabled);
+  const [onChange, disabled] = useAppFormItem(props.disabled, props.onChange);
   return (
     <Password {...fromBaseProps({className: classNames('app-input', 'app-password-input')}, props)}
               {...fromInputProps(props)}
-              ref={ref} disabled={disabled} visibilityToggle={props.allowShow}/>
+              onChange={onChange} disabled={disabled} visibilityToggle={props.allowShow}/>
   )
 };
 
