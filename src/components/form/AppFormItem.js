@@ -61,6 +61,34 @@ const defaultProps = {
 
 const AppFormItemContext = React.createContext();
 
+export const useAppFormItem = (disable, getValue) => {
+  const { setInputRef } = useContext(AppFormItemContext) || {};
+  const [disabled, setDisabled] = useState();
+  const ref = useRef({});
+
+  useEffect(() => {
+    setDisabled(disable);
+  }, [disable]);
+
+  useEffect(() => {
+    setInputRef && setInputRef({
+      getValue: () => {
+        if (getValue) {
+          return getValue(ref);
+        }
+        return ref.current?.state?.value
+      },
+      disable: (disabled) => {
+        if (!disable) {
+          setDisabled(disabled);
+        }
+      }
+    });
+  }, [setInputRef, getValue, disable]);
+
+  return [ref, disabled]
+};
+
 const renderAsteriskSign = (props) => {
   if (props.validateRules?.includes(ValidationRule.REQUIRED)) {
     return (

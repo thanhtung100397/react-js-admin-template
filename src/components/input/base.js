@@ -1,6 +1,4 @@
 import PropTypes from 'prop-types';
-import { useContext, useEffect, useRef, useState } from 'react';
-import { AppFormItemContext } from '../form/AppFormItem';
 import { excludeFields } from '../../utils/helpers';
 
 export const inputPropTypes = {
@@ -34,27 +32,3 @@ export const fromInputProps = (props, ignoreProps) => {
   }
   return result;
 };
-
-export const useAppFormItem = (disable, getValue) => {
-  const { setInputRef } = useContext(AppFormItemContext) || {};
-  const [disabled, setDisabled] = useState();
-  const ref = useRef({});
-
-  useEffect(() => {
-    setDisabled(disable);
-  }, [disable]);
-
-  useEffect(() => {
-    setInputRef && setInputRef({
-      getValue: () => {
-        if (getValue) {
-          return getValue(ref);
-        }
-        return ref.current?.state?.value
-      },
-      disable: (disabled) => setDisabled(disabled)
-    });
-  }, [setInputRef, getValue]);
-
-  return [ref, disabled]
-}
