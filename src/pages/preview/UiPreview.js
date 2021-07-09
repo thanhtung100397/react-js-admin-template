@@ -944,6 +944,83 @@ const groups = [
           }
         </Col>
         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+          {
+            contentCard('Form Item Layout Direction', 'All types of form item layout direction', (
+              <>
+                <div className="h-full d-flex flex-column v-align-center">
+                  <AppForm>
+                    <AppSpace className="w-full" size={ITEM_SPACE}>
+                      <Row>
+                        <Col span={12} sidePadding={true}>
+                          <AppForm.Item label="Field 1" labelCol={{span: 8}} inputCol={{span: 16}}>
+                            <AppInput.Text placeholder="Enter value (direction horizontal)"/>
+                          </AppForm.Item>
+                        </Col>
+                        <Col span={12} sidePadding={true}>
+                          <AppForm.Item label="Field 2" labelCol={{span: 6}} inputCol={{span: 18}}>
+                            <AppInput.Text placeholder="Enter value (direction horizontal)"/>
+                          </AppForm.Item>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col span={24} sidePadding={true}>
+                          <AppForm.Item label="Field 3" labelCol={{span: 4}} inputCol={{span: 20}}>
+                            <AppInput.Text placeholder="Enter value (direction horizontal)"/>
+                          </AppForm.Item>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col span={24} sidePadding={true}>
+                          <AppForm.Item label="Field 4" labelCol={{span: 4}} inputCol={{span: 20}}
+                                        validateRules={[ValidationRule.REQUIRED]}>
+                            <AppInput.Text placeholder="Enter value (direction horizontal)"/>
+                          </AppForm.Item>
+                        </Col>
+                      </Row>
+                    </AppSpace>
+                  </AppForm>
+                </div>
+                <AppDivider/>
+                <div className="h-full d-flex flex-column v-align-center">
+                  <AppForm>
+                    <AppSpace className="w-full" size={ITEM_SPACE}>
+                      <Row>
+                        <Col xs={0} sm={4} md={4} lg={4} xl={4} xxl={4}/>
+                        <Col xs={12} sm={10} md={10} lg={10} xl={10} xxl={10} sidePadding={true}>
+                          <AppForm.Item layoutDirection="vertical" label="Field 1">
+                            <AppInput.Text placeholder="Enter value (direction horizontal)"/>
+                          </AppForm.Item>
+                        </Col>
+                        <Col xs={12} sm={10} md={10} lg={10} xl={10} xxl={10} sidePadding={true}>
+                          <AppForm.Item layoutDirection="vertical" label="Field 2">
+                            <AppInput.Text placeholder="Enter value (direction horizontal)"/>
+                          </AppForm.Item>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col xs={0} sm={4} md={4} lg={4} xl={4} xxl={4}/>
+                        <Col xs={24} sm={20} md={20} lg={20} xl={20} xxl={20} sidePadding={true}>
+                          <AppForm.Item layoutDirection="vertical" label="Field 3">
+                            <AppInput.Text placeholder="Enter value (direction vertical)"/>
+                          </AppForm.Item>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col xs={0} sm={4} md={4} lg={4} xl={4} xxl={4}/>
+                        <Col xs={24} sm={20} md={20} lg={20} xl={20} xxl={20} sidePadding={true}>
+                          <AppForm.Item layoutDirection="vertical" label="Field 4"
+                                        labelCol={{span: 4}} inputCol={{span: 20}}
+                                        validateRules={[ValidationRule.REQUIRED]}>
+                            <AppInput.Text placeholder="Enter value (direction vertical)"/>
+                          </AppForm.Item>
+                        </Col>
+                      </Row>
+                    </AppSpace>
+                  </AppForm>
+                </div>
+              </>
+            ))
+          }
         </Col>
       </Row>
     )
