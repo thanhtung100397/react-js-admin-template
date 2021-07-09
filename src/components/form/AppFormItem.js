@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useCallback, useRef, useContext } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { baseProps, fromBaseProps } from '../base';
 import { TransformValueError, ValidateValueError, TriggerValidationError } from './AppFormItemErrors';
 import { AppFormContext } from './AppForm';
 import AppSpinner from '../spiner/AppSpinner';
+import { ValidationRule } from '../../constants/validationRules';
 import { CheckCircleTwoTone, WarningTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 import { ValidateStatus } from '../../constants/constants';
 import { TypeChecker, Generator } from '../../utils/helpers';
 import { ConsoleLogger } from '../../utils/loggers';
 import colors from '../../colors.module.scss';
 import './AppFormItem.scss';
-import { ValidationRule } from '../../constants/validationRules';
 
 const COMPONENT_ID_PREFIX = 'AppFormItem_';
 
@@ -328,27 +328,28 @@ const AppFormItem = (props) => {
     }
   }, [updateFormItemRef, validate, props.name, componentId]);
 
-  const className = classNames(
+  const verticalLayout = props.layoutDirection === LayoutDirection.VERTICAL;
+
+  const className = useMemo(() => classNames(
     'app-form-item',
     {
       'validate-success': validation.status === ValidateStatus.SUCCESS,
       'validate-warning': validation.status === ValidateStatus.WARNING,
       'validate-error': validation.status === ValidateStatus.ERROR,
       'validate-validating': validation.status === ValidateStatus.VALIDATING,
+      'vertical-direction': props.layoutDirection === LayoutDirection.VERTICAL
     }
-  );
-
-  const isLayoutVertical = props.layoutDirection === LayoutDirection.VERTICAL;
+  ), [validation.status, props.layoutDirection]);
 
   const style = {
-    flexDirection: isLayoutVertical? 'column' : 'row'
+    flexDirection: verticalLayout? 'column' : 'row'
   };
 
   return (
     <AppFormItemContext.Provider value={contextValue}>
       <div {...fromBaseProps({ className: className, style: style }, props)}>
-        {renderLabel(props, isLayoutVertical)}
-        {renderContainer(props, isLayoutVertical, inputRef, validation)}
+        {renderLabel(props, verticalLayout)}
+        {renderContainer(props, verticalLayout, inputRef, validation)}
       </div>
     </AppFormItemContext.Provider>
   );

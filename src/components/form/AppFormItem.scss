@@ -4,6 +4,12 @@
 .app-form-item {
   display: flex;
 
+  &.vertical-direction {
+    .input-label-container {
+      justify-content: start;
+    }
+  }
+
   @media screen and (max-width: $mobile-device-max-width) {
     flex-direction: column !important;
 
