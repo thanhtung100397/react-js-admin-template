@@ -8,7 +8,11 @@ import AppTypography from '../../components/typography/AppTypography';
 import AppDivider from '../../components/divider/AppDivider';
 import AppInput from '../../components/input/AppInput';
 import AppSelect from '../../components/select/AppSelect';
+import AppForm from '../../components/form/AppForm';
+import AppButton from '../../components/button/AppButton';
 import { Icons } from '../../assets/icons';
+import { ValidationRule } from '../../constants/validationRules';
+import { delay } from '../../utils/helpers';
 import './UiPreview.scss';
 
 const { Row, Col } = AppGrid;
@@ -657,6 +661,289 @@ const groups = [
               </AppSpace>
             )
           }
+        </Col>
+      </Row>
+    )
+  },
+  {
+    title: 'IV. App Form',
+    content: (
+      <Row gutter={ROW_GUTTER} vStretch={true}>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}
+             flexContainer={true} rowGut={ROW_GUTTER}>
+          <Row>
+            <Col span={24}>
+              {
+                contentCard('Basic usage', 'Basic use of form', (
+                  <AppForm onSubmit={(data) => AppNotification.success('FORM SUBMIT',
+                    `Hi, ${data.userInfo?.lastName} ${data.userInfo?.firstName}, age: ${data.userInfo?.age}`)}>
+                    <AppSpace className="w-full" size={ITEM_SPACE}>
+                      <Row>
+                        <Col span={12} sidePadding={true}>
+                          <AppForm.Item name="userInfo.firstName" label="Firstname" labelCol={{span: 8}}
+                                        inputCol={{span: 16}}>
+                            <AppInput.Text placeholder="Enter your firstname" allowClear={true}/>
+                          </AppForm.Item>
+                        </Col>
+                        <Col span={12} sidePadding={true}>
+                          <AppForm.Item name="userInfo.lastName" label="Lastname" labelCol={{span: 8}}
+                                        inputCol={{span: 16}}>
+                            <AppInput.Text placeholder="Enter your lastname" allowClear={true}/>
+                          </AppForm.Item>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col span={24} sidePadding={true}>
+                          <AppForm.Item name="userInfo.age" label="Age" labelCol={{span: 4}} inputCol={{span: 20}}>
+                            <AppInput.Number placeholder="Enter your age" allowClear={true}/>
+                          </AppForm.Item>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col xs={0} sm={4} md={4} lg={4} xl={4} xxl={4} sidePadding={true}/>
+                        <Col xs={24} sm={20} md={20} lg={20} xl={20} xxl={20} sidePadding={true}>
+                          <AppButton type="primary" htmlType="submit">Submit</AppButton>
+                        </Col>
+                      </Row>
+                    </AppSpace>
+                  </AppForm>
+                ))
+              }
+            </Col>
+          </Row>
+          <Row flex={1}>
+            <Col span={24} className="h-full">
+              {
+                contentCard('Custom validation',
+                  'Custom validation for form item\n' +
+                  'Note: Custom validation has higher priority than validate rule(s)', (
+                    <AppForm>
+                      <AppSpace className="w-full" size={ITEM_SPACE}>
+                        <Row>
+                          <Col span={24}>
+                            <AppForm.Item label="Field 1" labelCol={{span: 4}} inputCol={{span: 20}}
+                                          validateStatus="success">
+                              <AppInput.Text placeholder="Enter value"/>
+                            </AppForm.Item>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col span={24}>
+                            <AppForm.Item label="Field 2" labelCol={{span: 4}} inputCol={{span: 20}}
+                                          validateStatus="success" validateMessage="Look good! can submit">
+                              <AppInput.Text defaultValue="Lorem ipsum dolor sit amet"
+                                             placeholder="Enter value"/>
+                            </AppForm.Item>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col span={24}>
+                            <AppForm.Item label="Field 3" labelCol={{span: 4}} inputCol={{span: 20}}
+                                          validateStatus="warning">
+                              <AppInput.Text placeholder="Enter value"/>
+                            </AppForm.Item>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col span={24}>
+                            <AppForm.Item label="Field 4" labelCol={{span: 4}} inputCol={{span: 20}}
+                                          validateStatus="warning" validateMessage="Seem not good, but can submit">
+                              <AppInput.Text defaultValue="Consectetur adipiscing elit"
+                                             placeholder="Enter value"/>
+                            </AppForm.Item>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col span={24}>
+                            <AppForm.Item label="Field 5" labelCol={{span: 4}} inputCol={{span: 20}}
+                                          validateStatus="error">
+                              <AppInput.Text placeholder="Enter value"/>
+                            </AppForm.Item>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col span={24}>
+                            <AppForm.Item label="Field 6" labelCol={{span: 4}} inputCol={{span: 20}}
+                                          validateStatus="error" validateMessage="Error, cannot submit">
+                              <AppInput.Text defaultValue="Ut enim ad minim veniam"
+                                             placeholder="Enter value"/>
+                            </AppForm.Item>
+                          </Col>
+                        </Row>
+                      </AppSpace>
+                    </AppForm>
+                  ))
+              }
+            </Col>
+          </Row>
+        </Col>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+          {
+            contentCard('Basic usage', 'Basic use of form', (
+              <AppForm onSubmit={(data) => console.log(data)}>
+                <AppSpace className="w-full" size={ITEM_SPACE}>
+                  <Row>
+                    <Col span={24} sidePadding={true}>
+                      <AppForm.Item name="userInfo.email" label="Email" labelCol={{span: 4}} inputCol={{span: 20}}
+                                    validateRules={[ValidationRule.REQUIRED, ValidationRule.EMAIL]}
+                                    showSuccessValidateStatus={true}>
+                        <AppInput.Text placeholder="Enter your email" allowClear={true}/>
+                      </AppForm.Item>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col span={24} sidePadding={true}>
+                      <AppForm.Item name="userInfo.password" label="Password" labelCol={{span: 4}} inputCol={{span: 20}}
+                                    validateRules={[ValidationRule.REQUIRED, ValidationRule.MIN(6)]}
+                                    showSuccessValidateStatus={true}>
+                        <AppInput.Password placeholder="Enter your password (min length = 6)" allowClear={true}/>
+                      </AppForm.Item>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col span={24} sidePadding={true}>
+                      <AppForm.Item name="userInfo.phone" label="Phone" labelCol={{span: 4}} inputCol={{span: 20}}
+                                    validateRules={[ValidationRule.REQUIRED, ValidationRule.PHONE]}
+                                    showSuccessValidateStatus={true}>
+                        <AppInput.Text placeholder="Enter your phone number" allowClear={true}/>
+                      </AppForm.Item>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col span={24} sidePadding={true}>
+                      <AppForm.Item name="userInfo.department" label="Department" labelCol={{span: 4}} inputCol={{span: 20}}
+                                    validateRules={[ValidationRule.REQUIRED]}
+                                    showSuccessValidateStatus={true}>
+                        <AppInput.Text placeholder="Enter your department" value="IT Department" allowClear={true} disabled={true}/>
+                      </AppForm.Item>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col span={12} sidePadding={true}>
+                      <AppForm.Item name="userInfo.gender" label="Gender" labelCol={{span: 8}} inputCol={{span: 16}}
+                                    validateRules={[ValidationRule.REQUIRED, ValidationRule.ONE_OF_VALUES(['male', 'female'])]}
+                                    showSuccessValidateStatus={true}>
+                        <AppInput.Text placeholder="Enter 'male' or 'female'" allowClear={true}/>
+                      </AppForm.Item>
+                    </Col>
+                    <Col span={12} sidePadding={true}>
+                      <AppForm.Item name="userInfo.age" label="Age" labelCol={{span: 6}} inputCol={{span: 18}}
+                                    validateRules={[ValidationRule.REQUIRED, ValidationRule.MIN(0), ValidationRule.MAX(100)]}
+                                    showSuccessValidateStatus={true}>
+                        <AppInput.Number placeholder="Enter your age (min = 0, max = 100)" allowClear={true}/>
+                      </AppForm.Item>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col span={24} sidePadding={true}>
+                      <AppForm.Item name="userInfo.introduce" label="Introduce" labelCol={{span: 4}} inputCol={{span: 20}}
+                                    validateRules={[ValidationRule.MAX(128)]}
+                                    showSuccessValidateStatus={true}>
+                        <AppInput.TextArea placeholder="Write some introduce about yourself (max 128 characters length)"
+                                           rows={5} allowClear={true}/>
+                      </AppForm.Item>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col span={24} sidePadding={true}>
+                      <AppForm.Item name="userInfo.code" label="Code" labelCol={{span: 4}} inputCol={{span: 20}}
+                                    validateRules={[ValidationRule.REQUIRED, ValidationRule.MAX(10), ValidationRule.PATTERN('^([a-z])*$')]}
+                                    showSuccessValidateStatus={true}>
+                        <AppInput.Text placeholder="Enter your code (max length = 10, lowercase alphabetic letters only)"
+                                       allowClear={true}/>
+                      </AppForm.Item>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col span={24} sidePadding={true}>
+                      <AppForm.Item name="userInfo.items" label="Items" labelCol={{span: 4}} inputCol={{span: 20}}
+                                    validateRules={[ValidationRule.REQUIRED, ValidationRule.MAX(2)]}
+                                    showSuccessValidateStatus={true}>
+                        <AppSelect wFull={true} placeholder="Pick items (max = 2 items)" mode="multiple">
+                          <Option value={1}>TV</Option>
+                          <Option value={2}>Tablet</Option>
+                          <Option value={3}>PC</Option>
+                          <Option value={4}>Laptop</Option>
+                          <Option value={5}>Smartphone</Option>
+                        </AppSelect>
+                      </AppForm.Item>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col span={12} sidePadding={true}>
+                      <AppForm.Item name="userInfo.evenNumber" label="Even Num" labelCol={{span: 8}} inputCol={{span: 16}}
+                                    validateRules={[ValidationRule.REQUIRED,
+                                      {
+                                        message: 'Please enter an even number',
+                                        validate: (value) => value % 2 === 0
+                                      }]}
+                                    showSuccessValidateStatus={true}>
+                        <AppInput.Number placeholder="Enter any even number (custom validation)"
+                                         allowClear={true}/>
+                      </AppForm.Item>
+                    </Col>
+                    <Col span={12} sidePadding={true}>
+                      <AppForm.Item name="userInfo.oddNumber" label="Odd Num" labelCol={{span: 8}} inputCol={{span: 16}}
+                                    validateRules={[ValidationRule.REQUIRED,
+                                      {
+                                        message: 'Please enter an odd number',
+                                        validate: async (value) => {
+                                          await delay(3000);
+                                          return value % 2 !== 0;
+                                        }
+                                      }]}
+                                    showSuccessValidateStatus={true}>
+                        <AppInput.Number placeholder="Enter any even odd (delay 3s)"
+                                         allowClear={true}/>
+                      </AppForm.Item>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col span={24} sidePadding={true}>
+                      <AppForm.Item name="userInfo.task1" label="Task 1" labelCol={{span: 4}} inputCol={{span: 20}}
+                                    validateRules={[ValidationRule.REQUIRED,
+                                      {
+                                        message: 'This task not found',
+                                        validate: async (value) => {
+                                          await delay(5000);
+                                          return true;
+                                        }
+                                      }]}
+                                    showSuccessValidateStatus={true}>
+                        <AppInput.Text placeholder="Enter any text (custom validation, delay 5s, success)"
+                                         allowClear={true}/>
+                      </AppForm.Item>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col span={24} sidePadding={true}>
+                      <AppForm.Item name="userInfo.task2" label="Task 2" labelCol={{span: 4}} inputCol={{span: 20}}
+                                    validateRules={[ValidationRule.REQUIRED,
+                                      {
+                                        message: 'This task not found',
+                                        validate: async (value) => {
+                                          await delay(2000);
+                                          throw "Unexpected error occurred, please try again";
+                                        }
+                                      }]}
+                                    showSuccessValidateStatus={true}>
+                        <AppInput.Text placeholder="Enter any text (custom validation, delay 2s, unexpected error)"
+                                         allowClear={true}/>
+                      </AppForm.Item>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col xs={0} sm={4} md={4} lg={4} xl={4} xxl={4} sidePadding={true}/>
+                    <Col xs={24} sm={20} md={20} lg={20} xl={20} xxl={20} sidePadding={true}>
+                      <AppButton type="primary" htmlType="submit">Submit</AppButton>
+                    </Col>
+                  </Row>
+                </AppSpace>
+              </AppForm>
+            ))
+          }
+        </Col>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
         </Col>
       </Row>
     )
