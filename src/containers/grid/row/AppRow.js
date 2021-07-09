@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { baseProps, fromBaseProps } from '../../../components/base';
@@ -10,6 +10,7 @@ const propTypes = {
   ...baseProps,
   vAlign: PropTypes.oneOf(['top', 'middle', 'bottom']), // vertical alignment
   hAlign: PropTypes.oneOf(['start', 'center', 'end', 'space-around', 'space-between']), // horizontal alignment
+
   gutter: PropTypes.number, // vertical + horizontal spacing between columns (the same by using vGutter + hGutter)
   xsGut: PropTypes.number, // vertical + horizontal spacing between columns in 'xs' screen-size (screen < 576px)
   smGut: PropTypes.number, // vertical + horizontal spacing between columns in 'sm' screen-size (screen ≥ 576px)
@@ -33,8 +34,10 @@ const propTypes = {
   lgHGut: PropTypes.number, // horizontal spacing between columns in 'lg' screen-size (screen ≥ 992px)
   xlHGut: PropTypes.number, // horizontal spacing between columns in 'xl' screen-size (screen ≥ 1200px)
   xxlHGut: PropTypes.number, // horizontal spacing between columns in 'xxl' screen-size (screen ≥ 1600px)
+
   wrap: PropTypes.bool, //auto wrap line,
-  vStretch: PropTypes.bool // stretch all cells height to fit container height
+  vStretch: PropTypes.bool, // stretch all cells height to fit container height
+  flex: PropTypes.number,
 };
 
 const defaultProps = {
@@ -103,8 +106,16 @@ const AppRow = (props) => {
     'vertical-stretch': vStretch
   });
 
+  const style = useMemo(() => {
+    if (props.flex) {
+      return {
+        flex: props.flex
+      }
+    }
+  }, [props.flex])
+
   return (
-    <Row {...fromBaseProps({ className: className }, props)}
+    <Row {...fromBaseProps({ className: className, style: style }, props)}
          align={props.vAlign} justify={props.hAlign} gutter={rowGutter} wrap={props.wrap}>
       {props.children}
     </Row>
