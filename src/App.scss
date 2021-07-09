@@ -21,6 +21,34 @@
   overflow: overlay;
 }
 
+.d-flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+
+  &.v-align-center {
+    align-items: center;
+  }
+
+  &.h-align-center {
+    justify-content: center;
+  }
+}
+
+.flex-column {
+  flex-direction: column;
+
+  &.v-align-center {
+    justify-content: center;
+  }
+
+  &.h-align-center {
+    align-items: center;
+  }
+}
+
 .w-full {
   width: 100%;
 }
