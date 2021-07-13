@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { baseProps, fromBaseProps } from '../../base';
 import { fromInputProps, inputPropTypes } from '../base';
+import { useIntl } from 'react-intl';
 import { useAppFormItem } from '../../form/AppFormItem';
 import { Input } from 'antd';
 import '../AppInput.scss';
@@ -21,9 +22,10 @@ const defaultProps = {
 
 const AppPasswordInput = (props) => {
   const [onChange, disabled] = useAppFormItem(props.disabled, props.onChange);
+  const intl = useIntl();
   return (
     <Password {...fromBaseProps({className: classNames('app-input', 'app-password-input')}, props)}
-              {...fromInputProps(props)}
+              {...fromInputProps(props, undefined, intl)}
               onChange={onChange} disabled={disabled} visibilityToggle={props.allowShow}/>
   )
 };

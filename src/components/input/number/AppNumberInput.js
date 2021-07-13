@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { baseProps, fromBaseProps } from '../../base';
 import { fromInputProps, inputPropTypes } from '../base';
+import { useIntl } from 'react-intl';
 import { useAppFormItem } from '../../form/AppFormItem';
 import { InputNumber } from 'antd';
 import { toNumber } from '../../../utils/helpers';
@@ -35,10 +36,11 @@ const getInputValue = (value) => {
 
 const AppNumberInput = (props) => {
   const [onChange, disabled] = useAppFormItem(props.disabled, props.onChange, getInputValue);
+  const intl = useIntl();
   const className = classNames('app-input', 'app-number-input');
   return (
     <InputNumber {...fromBaseProps({className: className}, props)}
-                 {...fromInputProps(props, ['allowClear'])}
+                 {...fromInputProps(props, ['allowClear'], intl)}
                  onChange={onChange} disabled={disabled} max={props.max} min={props.min}
                  precision={props.precision} formatter={props.formatter} parser={props.parser}
                  step={props.step} onStep={props.onStep}/>

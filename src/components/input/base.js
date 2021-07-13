@@ -6,6 +6,7 @@ export const inputPropTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   placeholder: PropTypes.string,
+  placeholderID: PropTypes.string,
   icon: PropTypes.node,
   onChange: PropTypes.func,
   allowClear: PropTypes.bool,
@@ -14,7 +15,13 @@ export const inputPropTypes = {
   borderless: PropTypes.bool
 };
 
-export const fromInputProps = (props, ignoreProps) => {
+export const fromInputProps = (props, ignoreProps, intl) => {
+  let placeholder;
+  if (props.placeholderID) {
+    placeholder = intl?.formatMessage({ id: props.placeholderID }) || props.placeholderID;
+  } else {
+    placeholder = props.placeholder;
+  }
   let result = {
     id: props.id,
     allowClear: props.allowClear,
@@ -22,7 +29,7 @@ export const fromInputProps = (props, ignoreProps) => {
     disabled: props.disabled,
     value: props.value,
     defaultValue: props.defaultValue,
-    placeholder: props.placeholder,
+    placeholder: placeholder,
     onChange: props.onChange,
     prefix: props.icon,
     bordered: !props.borderless

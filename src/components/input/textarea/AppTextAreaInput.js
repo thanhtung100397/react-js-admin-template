@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { baseProps, fromBaseProps } from '../../base';
 import { fromInputProps, inputPropTypes } from '../base';
+import { useIntl } from 'react-intl';
 import { useAppFormItem } from '../../form/AppFormItem';
 import { Input } from 'antd';
 import { isEmpty, TypeChecker } from '../../../utils/helpers';
@@ -27,6 +28,7 @@ const AppTextAreaInput = (props) => {
   const { maxRows, minRows, autoRows } = props;
   const [autoSize, setAutoSize] = useState();
   const [onChange, disabled] = useAppFormItem(props.disabled, props.onChange);
+  const intl = useIntl();
 
   useEffect(() => {
     let autoSize;
@@ -49,7 +51,7 @@ const AppTextAreaInput = (props) => {
 
   return (
     <TextArea {...fromBaseProps({className: classNames('app-input', 'app-text-area-input')}, props)}
-              {...fromInputProps(props)}
+              {...fromInputProps(props, undefined, intl)}
               onChange={onChange} disabled={disabled} rows={props.rows} autoSize={autoSize}/>
   )
 };
