@@ -1,0 +1,78 @@
+@import '../../colors.module';
+@import '../../dimens.module';
+
+.app-image {
+  display: flex;
+  flex-direction: column;
+
+  &.image-fit-cover {
+    .ant-image-img {
+      object-fit: cover;
+    }
+  }
+
+  &.image-fit-contain {
+    .ant-image-img {
+      object-fit: contain;
+    }
+  }
+
+  &.circle-image {
+    .ant-image-img {
+      border-radius: 50%;
+    }
+
+    .ant-image-placeholder {
+      img {
+        border-radius: 50%;
+      }
+    }
+
+    .ant-image-mask {
+      border-radius: 50%;
+    }
+  }
+
+  &.round-image {
+    .ant-image-img {
+      border-radius: $app-image-border-radius-default;
+    }
+
+    .ant-image-placeholder {
+      img {
+        border-radius: $app-image-border-radius-default;
+      }
+    }
+
+    .ant-image-mask {
+      border-radius: $app-image-border-radius-default;
+    }
+  }
+
+  &.bordered-image {
+    .ant-image-img {
+      border: $app-image-border-width solid $app-image-border-color;
+    }
+  }
+
+  &.no-image {
+    .ant-image-img {
+      display: none;
+    }
+  }
+
+  .ant-image {
+    .ant-image-mask {
+      .ant-image-mask-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .anticon {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
