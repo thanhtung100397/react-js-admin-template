@@ -1,3 +1,5 @@
+import React from 'react';
+import colors from '../../colors.module.scss';
 import favicon from './favicon.ico';
 
 import { ReactComponent as AppLogo } from "./ic_app_logo.svg";
@@ -11,11 +13,21 @@ import {
   NumberOutlined
 } from '@ant-design/icons';
 
+const colorIconStyle = {
+  color: colors.appPrimaryColorDark
+};
+
 export const Icons = {
   AppLogo,
   UserOutlined,
   KeyOutlined,
   NumberOutlined
+};
+
+export const ColorIcons = {
+  UserOutlined: (props) => <UserOutlined style={colorIconStyle}/>,
+  KeyOutlined: (props) => <KeyOutlined style={colorIconStyle}/>,
+  NumberOutlined: (props) => <NumberOutlined style={colorIconStyle}/>
 };
 
 export const icons = {
