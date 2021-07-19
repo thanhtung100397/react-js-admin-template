@@ -81,3 +81,11 @@ export const delay = async (millis) => {
     }
   });
 };
+
+export const reduce = (values, transform, initialValue) => {
+  return _.reduce(values, transform, initialValue);
+}
+
+export const assign = (des, ...src) => {
+  return _.assign(des, src);
+}
