@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { baseProps, fromBaseProps } from '../base';
 import { useAppFormItem } from '../form/AppFormItem';
+import { useIntl } from 'react-intl';
 import { Select } from 'antd';
 import './AppSelect.scss';
 
@@ -25,6 +27,8 @@ const propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array]),
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array]),
   placeholder: PropTypes.string,
+  placeholderID: PropTypes.string,
+  icon: PropTypes.node,
   onChange: PropTypes.func,
   firstSelected: PropTypes.bool,
   allowClear: PropTypes.bool,
@@ -66,6 +70,7 @@ const AppSelect = (props) => {
     onFilter, filterSortType, onFilterSort
   } = props;
   const [onChange, disabled] = useAppFormItem(props.disabled, props.onChange, getInputValue);
+  const intl = useIntl();
 
   const filterOption = useMemo(() => {
     let filterFunc;
@@ -103,19 +108,43 @@ const AppSelect = (props) => {
     }
   }, [filterOptionProp, filterSortType, onFilterSort]);
 
+  const placeholder = useMemo(() => {
+    if (props.placeholderID) {
+      return intl?.formatMessage({ id: props.placeholderID }) || props.placeholderID;
+    } else {
+      return props.placeholder;
+    }
+  }, [props.placeholder, props.placeholderID]);
+
+  const prefixNode = useMemo(() => {
+    if (props.icon) {
+      return (
+        <span className="app-select-prefix">
+          {props.icon}
+        </span>
+      );
+    }
+  }, [props.icon]);
+
+  const className = classNames('app-select-wrapper', 'app-select', {
+    'app-select-borderless': props.borderless
+  });
+
   return (
-    <Select {...fromBaseProps({className: 'app-select'}, props)}
-            disabled={disabled} placeholder={props.placeholder} mode={props.mode}
-            value={props.value} defaultValue={props.defaultValue} onChange={onChange}
-            defaultActiveFirstOption={props.firstSelected}
-            labelInValue={props.fullValueOnChange} allowClear={props.allowClear}
-            bordered={!props.borderless} showArrow={props.showArrow}
-            maxTagCount={props.maxTagCount} maxTagTextLength={props.maxTagTextLength}
-            optionLabelProp={props.displayLabelOptionProp}
-            showSearch={props.showSearch} optionFilterProp={props.filterOptionProp}
-            filterOption={filterOption} filterSort={filterSort}>
-      {props.children}
-    </Select>
+    <span {...fromBaseProps({ className: className }, props)}>
+      {prefixNode}
+      <Select disabled={disabled} placeholder={placeholder} mode={props.mode}
+              value={props.value} defaultValue={props.defaultValue} onChange={onChange}
+              defaultActiveFirstOption={props.firstSelected}
+              labelInValue={props.fullValueOnChange} allowClear={props.allowClear}
+              bordered={!props.borderless} showArrow={props.showArrow}
+              maxTagCount={props.maxTagCount} maxTagTextLength={props.maxTagTextLength}
+              optionLabelProp={props.displayLabelOptionProp}
+              showSearch={props.showSearch} optionFilterProp={props.filterOptionProp}
+              filterOption={filterOption} filterSort={filterSort}>
+        {props.children}
+      </Select>
+    </span>
   )
 };
 
