@@ -3,8 +3,14 @@ import En from '../translations/en.json';
 
 export const DEFAULT_LOCALE = 'vi';
 export const Translations = {
-  vi: Vi,
-  en: En
+  vi: {
+    name: 'Tiếng Việt',
+    src: Vi
+  },
+  en: {
+    name: 'English',
+    src: En
+  }
 }
 
 export const ValidateStatus = {

@@ -13,7 +13,7 @@ const defaultProps = {
 
 const TranslationProvider = (props) => {
   return (
-    <IntlProvider locale={props.locale} messages={Translations[props.locale]}>
+    <IntlProvider locale={props.locale} messages={Translations[props.locale]?.src}>
       {props.children}
     </IntlProvider>
   )
