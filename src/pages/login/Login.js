@@ -1,116 +1,66 @@
-import React, { useState } from 'react';
-import { Form, Input, Button } from 'antd';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import AppContainer from '../../containers/container/AppContainer';
+import AppSpace from '../../containers/space/AppSpace';
+import AppLanguageSelect from '../../translations/components/AppLanguageSelect';
 import AppCard from '../../components/card/AppCard';
+import AppImage from '../../components/image/AppImage';
+import AppTypography from '../../components/typography/AppTypography';
 import AppForm from '../../components/form/AppForm';
-import AppTextInput from '../../components/input/text/AppTextInput';
+import AppInput from '../../components/input/AppInput';
+import AppButton from '../../components/button/AppButton';
 import { ValidationRule } from '../../constants/validationRules';
 import { images } from '../../assets/images';
-import { Icons } from '../../assets/icons';
+import { ColorIcons } from '../../assets/icons';
 import './Login.scss';
+
+const { Title } = AppTypography;
 
 const pageStyle = {
   backgroundImage: `url(${images.img_started_background})`
 };
 
 const Login = (props) => {
-  let [value, setValue] = useState(0);
 
-  const test = {
-    name: 'hello'
-  };
+  const handleFormSubmit = (data) => {
+
+  }
 
   return (
-    <div className="login-page wh-full" style={pageStyle}>
-      <AppContainer className="wh-full">
-        <AppCard>
-
-
-
-
-          <Form
-            name="basic"
-            initialValues={{
-              username: 'abcdef',
-              password: 'ghijkl'
-            }}
-            onFinish={(data) => {
-              console.log('FORM FINISH', data);
-            }}
-            onFinishFailed={(errors) => {
-              console.log('FORM ERROR', errors);
-            }}
-          >
-            <Form.Item
-              labelCol={{
-                span: 6
-              }}
-              wrapperCol={{
-                span: 18
-              }}
-              label="Username"
-              name="username"
-              rules={[{ required: true, message: 'Please input your username!' }]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item
-              labelCol={{
-                span: 6
-              }}
-              wrapperCol={{
-                span: 18
-              }}
-              label="Password"
-              name="password"
-              rules={[{ required: true, message: 'Please input your password!' }]}
-            >
-              <Input.Password />
-            </Form.Item>
-
-            <Form.Item>
-              <Button type="primary" onClick={() => setValue(value + 1)}>
-                Submit
-              </Button>
-            </Form.Item>
-          </Form>
-
-          <AppForm onSubmit={(data) => console.log(data)}>
-            <AppForm.Item name="data.items[0].value" label="Hello world" validateStatus="success" validateMessage={`This is success ${value}!`} validateRules={[ValidationRule.REQUIRED]}>
-              <AppTextInput allowClear={true} icon={<Icons.UserOutlined/>}/>
-            </AppForm.Item>
-            <AppForm.Item name="data.items[1].value" label="Hello world 3" labelCol={{width: 20}} showSuccessValidateStatus={true} validateStatus="warning" validateMessage="This is warning!" validateRules={[ValidationRule.REQUIRED]}>
-              <AppTextInput allowClear={true}/>
-            </AppForm.Item>
-            {/*<AppForm.Item label="Hello world 4 he hehe hehehe" labelCol={{span: 1}} inputCol={{span: 2}} validateStatus="error" validateMessage="This is error!">*/}
-            {/*  <AppTextInput/>*/}
-            {/*</AppForm.Item>*/}
-            {/*<AppForm.Item label={<div>Bello</div>} validateStatus="validating" validateMessage="Do validating...">*/}
-            {/*  <AppTextInput/>*/}
-            {/*</AppForm.Item>*/}
-            {/*<AppForm.Item label="Hello world 5" labelCol={{width: 20}} showSuccessValidateStatus={true} validateRules={[ValidationRule.REQUIRED, {validate: async (value) => {await new Promise(r => setTimeout(r, 4000)); throw Error("This is error!!!!!!")}}]}>*/}
-            {/*  <AppTextInput/>*/}
-            {/*</AppForm.Item>*/}
-            {/*<AppForm.Item label="Hello world 6" labelCol={{width: 20}} showSuccessValidateStatus={true} validateRules={[ValidationRule.REQUIRED, {validate: async (value) => {await new Promise(r => setTimeout(r, 2000)); return true}}]}>*/}
-            {/*  <AppTextInput/>*/}
-            {/*</AppForm.Item>*/}
-            {/*<AppForm.Item label="Hello world 7" labelCol={{width: 20}} showSuccessValidateStatus={true} validateRules={[{validate: async (value) => {await new Promise(r => setTimeout(r, 3000)); throw Error("This is heavy error!!!!!!")}}]}>*/}
-            {/*  <AppTextInput/>*/}
-            {/*</AppForm.Item>*/}
-            {/*<AppForm.Item label="Hello world 8" labelCol={{width: 20}} showSuccessValidateStatus={true} validateRules={[{message: 'HALLO WORLD', validate: async (value) => {await new Promise(r => setTimeout(r, 5000)); return false}}]}>*/}
-            {/*  <AppTextInput/>*/}
-            {/*</AppForm.Item>*/}
-            {/*<AppForm.Item label="Hello world 8" labelCol={{width: 20}} showSuccessValidateStatus={true} validateRules={[ValidationRule.REQUIRED, {transform: async (value) => {await new Promise(r => setTimeout(r, 2000)); return 'HAHA';}, validate: async (value) => {await new Promise(r => setTimeout(r, 2000)); return value === 'hello'}, trigger: async (value, valid, origin) => {await new Promise(r => setTimeout(r, 2000));console.log('TRIGGER', valid, valid, origin)}}]}>*/}
-            {/*  <AppTextInput/>*/}
-            {/*</AppForm.Item>*/}
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
+    <AppContainer className="login-page wh-full" style={pageStyle}>
+      <AppLanguageSelect icon={<ColorIcons.GlobalOutlined/>} borderless={false}/>
+      <AppCard>
+        <div className="login-form-container d-flex flex-column h-align-center">
+          <AppImage className="logo-image"
+                    circle={true} bordered={true}
+                    src={images.img_app_logo}
+                    placeholder={images.img_logo_placeholder}
+                    width={64} height={64}/>
+          <Title className="sign-in-title" level={4} allCaps={true}>
+            <FormattedMessage id="ID_SIGN_IN"/>
+          </Title>
+          <AppForm onSubmit={handleFormSubmit}>
+            <AppSpace className="w-full" size={12}>
+              <AppForm.Item layoutDirection="vertical"
+                            name="username" label={<FormattedMessage id="ID_USERNAME"/>}
+                            validateRules={[ValidationRule.REQUIRED]}>
+                <AppInput.Text icon={<ColorIcons.UserOutlined/>} allowClear={true}
+                               placeholderID="ID_USERNAME"/>
+              </AppForm.Item>
+              <AppForm.Item layoutDirection="vertical"
+                            name="password" label={<FormattedMessage id="ID_PASSWORD"/>}
+                            validateRules={[ValidationRule.REQUIRED]}>
+                <AppInput.Password icon={<ColorIcons.KeyOutlined/>} allowClear={true}
+                                   placeholderID="ID_PASSWORD"/>
+              </AppForm.Item>
+              <AppButton className="btn-sign-in w-full" type="primary" htmlType="submit">
+                <FormattedMessage id="ID_SIGN_IN"/>
+              </AppButton>
+            </AppSpace>
           </AppForm>
-        </AppCard>
-      </AppContainer>
-    </div>
+        </div>
+      </AppCard>
+    </AppContainer>
   )
 };
 

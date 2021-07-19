@@ -11,5 +11,9 @@
   "ID_PATTERN_VALIDATION": "Giá trị không khớp pattern {pattern}",
   "ID_EMAIL_VALIDATION": "Email không hợp lệ",
   "ID_PHONE_VALIDATION": "Số điện thoại không hợp lệ",
-  "ID_REQUIRED_VALIDATION": "Giá trị bắt buộc"
+  "ID_REQUIRED_VALIDATION": "Giá trị bắt buộc",
+
+  "ID_USERNAME": "Tên đăng nhập",
+  "ID_PASSWORD": "Mật khẩu",
+  "ID_SIGN_IN": "Đăng nhập"
 }

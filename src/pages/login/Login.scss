@@ -2,13 +2,37 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 
-  .app-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .app-language-select {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 10px 10px 0 0;
+  }
 
-    .app-card {
+  .app-card {
+    min-width: 250px;
+
+    .login-form-container {
+
+      .sign-in-title {
+        margin-bottom: 20px;
+      }
+
+      .logo-image {
+        margin-bottom: 24px;
+      }
+
+      .app-input {
+        width: 250px;
+      }
+
+      .btn-sign-in {
+        margin-top: 12px;
+      }
     }
   }
 }

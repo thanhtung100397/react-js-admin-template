@@ -11,5 +11,9 @@
   "ID_PATTERN_VALIDATION": "Input not match pattern {pattern}",
   "ID_EMAIL_VALIDATION": "Input is not valid email",
   "ID_PHONE_VALIDATION": "Input is not valid phone number",
-  "ID_REQUIRED_VALIDATION": "Input required"
+  "ID_REQUIRED_VALIDATION": "Input required",
+
+  "ID_USERNAME": "Username",
+  "ID_PASSWORD": "Password",
+  "ID_SIGN_IN": "Sign in"
 }
