@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { baseProps, fromBaseProps } from '../../base';
-import { typographyPropTypes, fromTypographyProps } from '../base';
+import { baseProps } from '../../base';
+import { typographyPropTypes, fromTypographyBaseProps } from '../base';
 import { Typography } from 'antd';
 import '../AppTypography.scss';
 import './AppText.scss';
@@ -20,8 +20,7 @@ const defaultProps = {
 
 const AppText = (props) => {
   return (
-    <Text {...fromBaseProps({className: classNames('app-typography', 'app-text')}, props)}
-          {...fromTypographyProps(props)}
+    <Text {...fromTypographyBaseProps({className: classNames('app-typography', 'app-text')}, props)}
           type={props.type}>
       {props.children}
     </Text>

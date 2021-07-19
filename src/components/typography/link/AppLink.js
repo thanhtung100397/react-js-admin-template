@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { baseProps, fromBaseProps } from '../../base';
-import { typographyPropTypes, fromTypographyProps } from '../base';
+import { baseProps } from '../../base';
+import { typographyPropTypes, fromTypographyBaseProps } from '../base';
 import { Typography } from 'antd';
 import '../AppTypography.scss';
 import './AppLink.scss';
@@ -22,8 +22,7 @@ const defaultProps = {
 
 const AppLink = (props) => {
   return (
-    <Link {...fromBaseProps({className: classNames('app-typography', 'app-link')}, props)}
-          {...fromTypographyProps(props)}
+    <Link {...fromTypographyBaseProps({className: classNames('app-typography', 'app-link')}, props)}
           href={props.href} target={props.target} type={props.type}>
       {props.children}
     </Link>

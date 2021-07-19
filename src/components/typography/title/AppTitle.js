@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { baseProps, fromBaseProps } from '../../base';
-import { typographyPropTypes, fromTypographyProps } from '../base';
+import { baseProps } from '../../base';
+import { typographyPropTypes, fromTypographyBaseProps } from '../base';
 import { Typography } from 'antd';
 import '../AppTypography.scss';
 import './AppTitle.scss';
@@ -21,8 +21,7 @@ const defaultProps = {
 
 const AppTitle = (props) => {
   return (
-    <Title {...fromBaseProps({className: classNames('app-typography', 'app-title')}, props)}
-           {...fromTypographyProps(props)}
+    <Title {...fromTypographyBaseProps({className: classNames('app-typography', 'app-title')}, props)}
            level={props.level}>
       {props.children}
     </Title>
