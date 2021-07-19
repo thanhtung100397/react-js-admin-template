@@ -30,4 +30,12 @@
   &.ant-typography-disabled {
     color: $app-disabled-color;
   }
+
+  &.all-caps {
+    text-transform: uppercase;
+  }
+
+  &.first-caps:first-letter {
+    text-transform: uppercase;
+  }
 }
