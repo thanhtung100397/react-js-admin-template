@@ -495,21 +495,21 @@ const groups = [
           {
             contentCard('Basic usage', 'Basic use of text input',
               <AppSpace size={ITEM_SPACE}>
-                <AppSelect wFull={true}>
+                <AppSelect>
                   <Option value={1}>Lorem</Option>
                   <Option value={2}>Ipsum</Option>
                   <Option value={3}>Dolor</Option>
                   <Option value={4}>Sit</Option>
                   <Option value={5}>Amet</Option>
                 </AppSelect>
-                <AppSelect wFull={true} placeholder="(Placeholder) Pick one">
+                <AppSelect placeholder="(Placeholder) Pick one">
                   <Option value={1}>Lorem</Option>
                   <Option value={2}>Ipsum</Option>
                   <Option value={3}>Dolor</Option>
                   <Option value={4}>Sit</Option>
                   <Option value={5}>Amet</Option>
                 </AppSelect>
-                <AppSelect wFull={true} placeholder="(Placeholder) Pick one"
+                <AppSelect placeholder="(Placeholder) Pick one"
                            defaultValue={1}>
                   <Option value={1}>Lorem</Option>
                   <Option value={2}>Ipsum</Option>
@@ -517,7 +517,7 @@ const groups = [
                   <Option value={4}>Sit</Option>
                   <Option value={5}>Amet</Option>
                 </AppSelect>
-                <AppSelect wFull={true} placeholder="(Placeholder) Pick multiple"
+                <AppSelect placeholder="(Placeholder) Pick multiple"
                            mode="multiple">
                   <Option value={1}>Lorem</Option>
                   <Option value={2}>Ipsum</Option>
@@ -533,7 +533,7 @@ const groups = [
           {
             contentCard('Tags Select', "Basic use of mode = 'tags'",
               <AppSpace size={ITEM_SPACE}>
-                <AppSelect wFull={true} placeholder="(Placeholder) Pick or enter tags"
+                <AppSelect placeholder="(Placeholder) Pick or enter tags"
                            mode="tags">
                   <Option value="Lorem">Lorem</Option>
                   <Option value="Ipsum">Ipsum</Option>
@@ -541,7 +541,7 @@ const groups = [
                   <Option value="Sit">Sit</Option>
                   <Option value="Amet">Amet</Option>
                 </AppSelect>
-                <AppSelect wFull={true} placeholder="(Placeholder) Pick or enter tags"
+                <AppSelect placeholder="(Placeholder) Pick or enter tags"
                            mode="tags" defaultValue={['Lorem', 'Ipsum']}>
                   <Option value="Lorem">Lorem</Option>
                   <Option value="Ipsum">Ipsum</Option>
@@ -549,7 +549,7 @@ const groups = [
                   <Option value="Sit">Sit</Option>
                   <Option value="Amet">Amet</Option>
                 </AppSelect>
-                <AppSelect wFull={true} placeholder="(Placeholder) Pick or enter tags (max display = 3)"
+                <AppSelect placeholder="(Placeholder) Pick or enter tags (max display = 3)"
                            mode="tags" maxTagCount={3}>
                   <Option value="Lorem">Lorem</Option>
                   <Option value="Ipsum">Ipsum</Option>
@@ -557,7 +557,7 @@ const groups = [
                   <Option value="Sit">Sit</Option>
                   <Option value="Amet">Amet</Option>
                 </AppSelect>
-                <AppSelect wFull={true} placeholder="(Placeholder) Pick or enter tags (max tag text length= 10)"
+                <AppSelect placeholder="(Placeholder) Pick or enter tags (max tag text length= 10)"
                            mode="tags" maxTagTextLength={10}>
                   <Option value="Lorem ipsum dolor sit amet">Lorem ipsum dolor sit amet</Option>
                   <Option value="Consectetur adipiscing elit">Consectetur adipiscing elit</Option>
@@ -573,7 +573,7 @@ const groups = [
           {
             contentCard('Search Select', "Basic use of app select with supported filter",
               <AppSpace size={ITEM_SPACE}>
-                <AppSelect wFull={true} placeholder="Pick or enter search keyword (by contain, match case)"
+                <AppSelect placeholder="Pick or enter search keyword (by contain, match case)"
                            filterMatchCase={true} showSearch={true}>
                   <Option value="Lorem">Lorem</Option>
                   <Option value="Ipsum">Ipsum</Option>
@@ -581,7 +581,7 @@ const groups = [
                   <Option value="Sit">Sit</Option>
                   <Option value="Amet">Amet</Option>
                 </AppSelect>
-                <AppSelect wFull={true} placeholder="Pick or enter search keyword (by contain, ignore case)"
+                <AppSelect placeholder="Pick or enter search keyword (by contain, ignore case)"
                            showSearch={true}>
                   <Option value="Lorem">Lorem</Option>
                   <Option value="Ipsum">Ipsum</Option>
@@ -589,7 +589,7 @@ const groups = [
                   <Option value="Sit">Sit</Option>
                   <Option value="Amet">Amet</Option>
                 </AppSelect>
-                <AppSelect wFull={true} placeholder="Pick or enter search keyword (by start, match case, result sort asc)"
+                <AppSelect placeholder="Pick or enter search keyword (by start, match case, result sort asc)"
                            showSearch={true} filterOptionProp="children"
                            filterMatchStart={true} filterMatchCase={true} filterSortType="asc">
                   <Option value={1}>Lorem</Option>
@@ -600,7 +600,7 @@ const groups = [
                   <Option value={4}>Sit</Option>
                   <Option value={5}>Amet</Option>
                 </AppSelect>
-                <AppSelect wFull={true} placeholder="Pick or enter search keyword (by start, ignore case, result sort asc)"
+                <AppSelect placeholder="Pick or enter search keyword (by start, ignore case, result sort asc)"
                            showSearch={true} filterOptionProp="children"
                            filterMatchStart={true} filterSortType="asc">
                   <Option value={1}>Lorem</Option>
@@ -611,7 +611,7 @@ const groups = [
                   <Option value={4}>Sit</Option>
                   <Option value={5}>Amet</Option>
                 </AppSelect>
-                <AppSelect wFull={true} placeholder="Pick or enter search keyword (filter label, by contain, match case)"
+                <AppSelect placeholder="Pick or enter search keyword (filter label, by contain, match case)"
                            showSearch={true} filterMatchCase={true} filterOptionProp="children">
                   <Option value={1}>Lorem</Option>
                   <Option value={2}>Ipsum</Option>
@@ -627,7 +627,23 @@ const groups = [
           {
             contentCard('Other Options', "All other options of this component",
               <AppSpace size={ITEM_SPACE}>
-                <AppSelect wFull={true} placeholder="Custom display label"
+                <AppSelect icon={<Icons.UserOutlined/>}
+                           placeholder="Select with icon">
+                  <Option value={1}>Lorem</Option>
+                  <Option value={2}>Ipsum</Option>
+                  <Option value={3}>Dolor</Option>
+                  <Option value={4}>Sit</Option>
+                  <Option value={5}>Amet</Option>
+                </AppSelect>
+                <AppSelect mode="multiple" icon={<Icons.UserOutlined/>}
+                           placeholder="Multi-Select with icon">
+                  <Option value={1}>Lorem</Option>
+                  <Option value={2}>Ipsum</Option>
+                  <Option value={3}>Dolor</Option>
+                  <Option value={4}>Sit</Option>
+                  <Option value={5}>Amet</Option>
+                </AppSelect>
+                <AppSelect placeholder="Custom display label"
                            displayOptionProp="label">
                   <Option value={1} label="One">1</Option>
                   <Option value={2} label="Two">2</Option>
@@ -635,23 +651,21 @@ const groups = [
                   <Option value={4} label="Four">4</Option>
                   <Option value={5} label="Five">5</Option>
                 </AppSelect>
-                <AppSelect wFull={true} allowClear={true}
-                           placeholder="Select with clear button">
+                <AppSelect allowClear={true} placeholder="Select with clear button">
                   <Option value={1}>Lorem</Option>
                   <Option value={2}>Ipsum</Option>
                   <Option value={3}>Dolor</Option>
                   <Option value={4}>Sit</Option>
                   <Option value={5}>Amet</Option>
                 </AppSelect>
-                <AppSelect wFull={true} disabled={true}
-                           placeholder="Select disabled">
+                <AppSelect disabled={true} placeholder="Select disabled">
                   <Option value={1}>Lorem</Option>
                   <Option value={2}>Ipsum</Option>
                   <Option value={3}>Dolor</Option>
                   <Option value={4}>Sit</Option>
                   <Option value={5}>Amet</Option>
                 </AppSelect>
-                <AppSelect wFull={true} onChange={(value) => console.log('Select with onChange:', value)}
+                <AppSelect onChange={(value) => console.log('Select with onChange:', value)}
                            placeholder="Select with onChange (check console)">
                   <Option value={1}>Lorem</Option>
                   <Option value={2}>Ipsum</Option>
@@ -659,7 +673,7 @@ const groups = [
                   <Option value={4}>Sit</Option>
                   <Option value={5}>Amet</Option>
                 </AppSelect>
-                <AppSelect wFull={true} fullValueOnChange={true}
+                <AppSelect fullValueOnChange={true}
                            onChange={(value) => console.log('Select with onChange full value:', value)}
                            placeholder="Select with onChange full value (check console)">
                   <Option value={1}>Lorem</Option>
@@ -668,7 +682,7 @@ const groups = [
                   <Option value={4}>Sit</Option>
                   <Option value={5}>Amet</Option>
                 </AppSelect>
-                <AppSelect wFull={true} borderless={true} showArrow={false}
+                <AppSelect borderless={true} showArrow={false}
                            placeholder="Select borderless">
                   <Option value={1}>Lorem</Option>
                   <Option value={2}>Ipsum</Option>
