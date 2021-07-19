@@ -9,13 +9,16 @@ export const baseProps = {
   whFull: PropTypes.bool
 };
 
+export const baseClassNames = (props) => ({
+  'w-full': props.wFull,
+  'h-full': props.hFull,
+  'wh-full': props.whFull
+});
+
 export const fromBaseProps = (startedValues = {}, props) => {
   return {
-    className: classNames(
-      {
-        'w-full': props.wFull,
-        'h-full': props.hFull,
-        'wh-full': props.whFull,
+    className: classNames({
+        ...baseClassNames(props),
         [startedValues.className]: startedValues.className,
         [props.className]: props.className
       }
