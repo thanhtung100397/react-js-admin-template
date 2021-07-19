@@ -123,6 +123,12 @@ const groups = [
               {
                 contentCard('Other Options', 'All other options of this component',
                   <>
+                    <Title level={5} firstCap={true}>
+                      lorem ipsum dolor sit amet (First Caps)
+                    </Title>
+                    <Title level={5} allCaps={true}>
+                      (All Caps) Lorem ipsum dolor sit amet
+                    </Title>
                     <Title level={5} ellipsis={true}>
                       (Ellipsis) {LONG_DUMMY_TEXT}
                     </Title>
@@ -196,6 +202,12 @@ const groups = [
               {
                 contentCard('Other Options', 'All other options of this component',
                   <>
+                    <Text firstCap={true}>
+                      consectetur adipiscing elit (First Caps)
+                    </Text>
+                    <Text allCaps={true}>
+                      (All Caps) Consectetur adipiscing elit
+                    </Text>
                     <Text ellipsis={true}>
                       (Ellipsis) {LONG_DUMMY_TEXT}
                     </Text>
@@ -269,6 +281,12 @@ const groups = [
               {
                 contentCard('Other Options', 'All other options of this component',
                   <>
+                    <Link href="https://reactjs.org" target="_blank" firstCap={true}>
+                      consectetur adipiscing elit (First Caps)
+                    </Link>
+                    <Link href="https://reactjs.org" target="_blank" allCaps={true}>
+                      (All Caps) Consectetur adipiscing elit
+                    </Link>
                     <Link href="https://reactjs.org" target="_blank" ellipsis={true}>
                       (Ellipsis) {LONG_DUMMY_TEXT}
                     </Link>
