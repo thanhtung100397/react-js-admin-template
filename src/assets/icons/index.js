@@ -10,7 +10,8 @@ import ic_app_loading from "./ic_app_loading.svg";
 import {
   UserOutlined,
   KeyOutlined,
-  NumberOutlined
+  NumberOutlined,
+  GlobalOutlined
 } from '@ant-design/icons';
 
 const colorIconStyle = {
@@ -21,13 +22,15 @@ export const Icons = {
   AppLogo,
   UserOutlined,
   KeyOutlined,
-  NumberOutlined
+  NumberOutlined,
+  GlobalOutlined
 };
 
 export const ColorIcons = {
   UserOutlined: (props) => <UserOutlined style={colorIconStyle}/>,
   KeyOutlined: (props) => <KeyOutlined style={colorIconStyle}/>,
-  NumberOutlined: (props) => <NumberOutlined style={colorIconStyle}/>
+  NumberOutlined: (props) => <NumberOutlined style={colorIconStyle}/>,
+  GlobalOutlined: (props) => <GlobalOutlined style={colorIconStyle}/>
 };
 
 export const icons = {
