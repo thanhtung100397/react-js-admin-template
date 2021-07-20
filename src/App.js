@@ -2,10 +2,12 @@ import React from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
+import TranslationProvider from './translations/provider/TranslationsProvider';
+import { Provider } from 'react-redux';
+import store from './redux/store';
+import AppLoading from './components/loading/AppLoading';
 import { icons } from './assets/icons';
 import { images } from './assets/images';
-import TranslationProvider from './translations/provider/TranslationsProvider';
-import AppLoading from './components/loading/AppLoading';
 import './App.scss';
 
 const appMeta = (
@@ -26,18 +28,20 @@ const appMeta = (
 
 const App = (props) => {
   return (
-    <TranslationProvider>
-      <HelmetProvider>
-        {appMeta}
-        <div className="app">
-          <BrowserRouter>
-            <React.Suspense fallback={<AppLoading/>}>
-              <AppRoutes/>
-            </React.Suspense>
-          </BrowserRouter>
-        </div>
-      </HelmetProvider>
-    </TranslationProvider>
+    <Provider store={store}>
+      <TranslationProvider>
+        <HelmetProvider>
+          {appMeta}
+          <div className="app">
+            <BrowserRouter>
+              <React.Suspense fallback={<AppLoading/>}>
+                <AppRoutes/>
+              </React.Suspense>
+            </BrowserRouter>
+          </div>
+        </HelmetProvider>
+      </TranslationProvider>
+    </Provider>
   );
 }
 
