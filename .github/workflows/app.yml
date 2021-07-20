@@ -11,10 +11,7 @@ job:
     container: node:alpine3.14
     steps:
       - name: Check out source code
-        uses: actions/checkout@v1
-
-      - name: Install yarn
-        run: npm install -g yarn
+        uses: actions/checkout@v2
 
       - name: Install packages
         run: yarn install
