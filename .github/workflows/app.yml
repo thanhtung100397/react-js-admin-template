@@ -1,0 +1,23 @@
+name: App workflow
+on:
+  push:
+    branches:
+      - '*'
+
+job:
+  test:
+    name: Run test
+    runs-on: ubuntu-latest
+    container: node:alpine3.14
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v1
+
+      - name: Install yarn
+        run: npm install -g yarn
+
+      - name: Install packages
+        run: yarn install
+
+      - name: Run test
+        run: yarn test --watchAll
