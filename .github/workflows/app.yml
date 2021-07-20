@@ -12,9 +12,6 @@ jobs:
       - name: Check out source code
         uses: actions/checkout@v2
 
-      - name: Set version for yarn
-        run: yarn set version 1.22.4
-
       - name: Install packages
         run: yarn install
 
