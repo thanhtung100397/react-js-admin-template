@@ -16,4 +16,4 @@ jobs:
         run: yarn install
 
       - name: Run test
-        run: yarn test --watchAll
+        run: yarn test --ci
