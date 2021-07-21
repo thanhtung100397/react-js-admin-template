@@ -1,4 +1,5 @@
 FROM node:10.16.3-alpine as build-deps
+ARG ENV
 WORKDIR /usr/src/app
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
