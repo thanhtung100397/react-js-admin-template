@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { IntlProvider } from 'react-intl';
 import { DEFAULT_LOCALE, Translations } from '../../constants/constants';
@@ -12,8 +13,9 @@ const defaultProps = {
 }
 
 const TranslationProvider = (props) => {
+  const currentLanguageId = useSelector((state) => state.ui?.language?.languageId);
   return (
-    <IntlProvider locale={props.locale} messages={Translations[props.locale]?.src}>
+    <IntlProvider locale={currentLanguageId} messages={Translations[currentLanguageId]?.src}>
       {props.children}
     </IntlProvider>
   )

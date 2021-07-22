@@ -1,7 +1,9 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { baseProps, fromBaseProps } from '../../components/base';
-import { DEFAULT_LOCALE, Translations } from '../../constants/constants';
+import { changeLanguageAction } from '../../state/ui/language/languageAction';
+import { Translations } from '../../constants/constants';
 import AppSelect from '../../components/select/AppSelect';
 import './AppLanguageSelect.scss';
 
@@ -17,6 +19,19 @@ const defaultProps = {
 };
 
 const AppLanguageSelect = (props) => {
+  const [currentValue, setCurrentValue] = useState();
+
+  const currentLanguageID = useSelector((state) => state.ui?.language?.languageId)
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setCurrentValue(currentLanguageID);
+  }, [currentLanguageID]);
+
+  const handleOnChange = (languageId) => {
+    setCurrentValue(languageId);
+    dispatch(changeLanguageAction(languageId));
+  };
 
   const languageOptions = useMemo(() => {
     return Object.keys(Translations).map((languageKey) => {
@@ -30,7 +45,8 @@ const AppLanguageSelect = (props) => {
 
   return (
     <AppSelect {...fromBaseProps({ className: 'app-language-select' }, props)}
-               defaultValue={DEFAULT_LOCALE} icon={props.icon} borderless={props.borderless}>
+               value={currentValue} onChange={handleOnChange}
+               icon={props.icon} borderless={props.borderless}>
       {languageOptions}
     </AppSelect>
   )
