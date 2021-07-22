@@ -37,7 +37,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - id: vars
-        run: "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
 
       - uses: docker/setup-qemu-action@v1
 
