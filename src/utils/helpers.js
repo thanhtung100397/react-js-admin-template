@@ -66,11 +66,11 @@ export const isEmpty = (value) => {
 
 export const excludeFields = (obj, fields) => {
   return _.omit(obj, fields);
-}
+};
 
 export const toNumber = (value) => {
   return _.toNumber(value);
-}
+};
 
 export const delay = async (millis) => {
   return new Promise((resolve, reject) => {
@@ -84,8 +84,23 @@ export const delay = async (millis) => {
 
 export const reduce = (values, transform, initialValue) => {
   return _.reduce(values, transform, initialValue);
-}
+};
 
 export const assign = (des, ...src) => {
   return _.assign(des, src);
-}
+};
+
+export const newSet = (...values) => {
+  return new Set(values);
+};
+
+export const collectionContain = (collection, value) => {
+  if (TypeChecker.isArray(collection)) {
+    return collection.includes(value)
+  } else if (TypeChecker.isSet(collection)) {
+    return collection.has(value);
+  } else if (TypeChecker.isMap(collection)) {
+    return Boolean(collection[value])
+  }
+  return false;
+};
