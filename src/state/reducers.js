@@ -1,15 +1,16 @@
 import { combineReducers } from 'redux';
-import languageReducer from './ui/language/languageReducer';
 import { isEmpty, collectionContain, TypeChecker } from '../utils/helpers';
 import reducerLogger from './_middleware/reducer/reducerLogger';
 import { ConsoleLogger } from '../utils/loggers';
+import languageReducer from './ui/language/languageReducer';
+import signInReducers from './data/auth/authReducer';
 
 const reducers = { // define all application reducers here
   ui: {
     language: languageReducer
   },
   data: {
-
+    auth: signInReducers
   }
 };
 
