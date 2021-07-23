@@ -1,6 +1,7 @@
 import { CHANGE_LANGUAGE } from '../../actionTypes';
 import { DEFAULT_LOCALE } from '../../../constants/constants';
 import { getLanguage } from '../../../services/ui/language/languageService';
+import { StateHelpers } from '../../reducers';
 
 const DEFAULT_STATE = {
   languageId: getLanguage() || DEFAULT_LOCALE
@@ -9,10 +10,7 @@ const DEFAULT_STATE = {
 const languageReducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
     case CHANGE_LANGUAGE:
-      return {
-        ...state,
-        ...action.payload
-      }
+      return StateHelpers.updateFields(state, action.payload, ['languageId']);
 
     default:
       return state;

@@ -87,8 +87,16 @@ export const reduce = (values, transform, initialValue) => {
 };
 
 export const assign = (des, ...src) => {
-  return _.assign(des, src);
+  return _.assign(des, ...src);
 };
+
+export const extractFields = (des, fieldNames) => {
+  return _.pick(des, fieldNames);
+}
+
+export const removeFields = (des, fieldNames) => {
+  return _.omit(des, fieldNames);
+}
 
 export const newSet = (...values) => {
   return new Set(values);

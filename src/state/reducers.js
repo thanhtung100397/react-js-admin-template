@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import languageReducer from './ui/language/languageReducer';
-import { isEmpty, collectionContain, TypeChecker } from '../utils/helpers';
+import { isEmpty, collectionContain, TypeChecker, assign, removeFields, extractFields } from '../utils/helpers';
 import reducerLogger from './_middleware/reducer/reducerLogger';
 import { ConsoleLogger } from '../utils/loggers';
 
@@ -11,6 +11,12 @@ const reducers = { // define all application reducers here
   data: {
 
   }
+};
+
+export const StateHelpers = {
+  update: (state, newValues) => assign({}, state, newValues),
+  updateFields: (state, newValues, fieldNames) => assign({}, state, extractFields(newValues, fieldNames)),
+  removeFields: (state, fieldNames) => removeFields(state, fieldNames)
 };
 
 const createAppReducer = (reducer) => {
