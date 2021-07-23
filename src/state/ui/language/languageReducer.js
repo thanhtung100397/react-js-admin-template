@@ -1,7 +1,7 @@
 import { CHANGE_LANGUAGE } from '../../actionTypes';
 import { DEFAULT_LOCALE } from '../../../constants/constants';
 import { getLanguage } from '../../../services/ui/language/languageService';
-import { StateHelpers } from '../../reducers';
+import { StateHelpers } from '../../../utils/stateHelpers';
 
 const DEFAULT_STATE = {
   languageId: getLanguage() || DEFAULT_LOCALE
