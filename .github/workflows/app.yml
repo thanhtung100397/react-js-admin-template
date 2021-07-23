@@ -85,3 +85,4 @@ jobs:
           port: 22
           script: export image_tag=${{ steps.vars.outputs.image_tag }} && cd /home/anhnd/react-js-admin-template/ && docker-compose up -d
 
+
