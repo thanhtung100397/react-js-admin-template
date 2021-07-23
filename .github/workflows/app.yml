@@ -2,7 +2,7 @@ name: App workflow
 on:
   push:
     branches:
-      - '*'
+      - '**'
 jobs:
   test:
     name: Run test
