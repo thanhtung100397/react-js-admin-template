@@ -3,6 +3,21 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.scss';
+import * as Sentry from "@sentry/react";
+import { Integrations } from "@sentry/tracing";
+import {currentEnv} from "./utils/envHelpers";
+
+
+Sentry.init({
+  dsn: "https://fecb1486362f49d38b6fb0081fdbc252@o927233.ingest.sentry.io/5876584",
+  integrations: [new Integrations.BrowserTracing()],
+  environment: currentEnv(),
+
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});
 
 const app = (
   <App/>
