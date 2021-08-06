@@ -1,6 +1,11 @@
 @import '../../colors.module';
 
 .app-button {
+
+  .ant-btn-loading-icon {
+    margin-right: 5px;
+  }
+
   &.ant-btn {
     &.ant-btn-dangerous {
       background: $error-color;
