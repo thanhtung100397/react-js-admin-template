@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import AppContainer from '../../containers/container/AppContainer';
 import AppSpace from '../../containers/space/AppSpace';
@@ -13,6 +13,8 @@ import { ValidationRule } from '../../constants/validationRules';
 import { images } from '../../assets/images';
 import { ColorIcons } from '../../assets/icons';
 import './Login.scss';
+import { useDispatch } from 'react-redux';
+import { signInAction } from '../../state/data/auth/authAction';
 
 const { Title } = AppTypography;
 
@@ -21,9 +23,13 @@ const pageStyle = {
 };
 
 const Login = (props) => {
+  const [signingIn, setSigningIn] = useState();
+  const dispatch = useDispatch();
 
   const handleFormSubmit = (data) => {
-
+    // setSigningIn(true);
+    const { username, password } = data;
+    dispatch(signInAction(username, password));
   }
 
   return (
@@ -53,7 +59,8 @@ const Login = (props) => {
                 <AppInput.Password icon={<ColorIcons.KeyOutlined/>} allowClear={true}
                                    placeholderID="ID_PASSWORD"/>
               </AppForm.Item>
-              <AppButton className="btn-sign-in w-full" type="primary" htmlType="submit">
+              <AppButton className="btn-sign-in w-full" type="primary" htmlType="submit"
+                         loading={signingIn}>
                 <FormattedMessage id="ID_SIGN_IN"/>
               </AppButton>
             </AppSpace>

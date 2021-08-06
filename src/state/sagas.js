@@ -1,13 +1,13 @@
-import { all, takeEvery } from 'redux-saga/effects';
+import { all, spawn, takeEvery } from 'redux-saga/effects';
 import { collectionContain, isEmpty, TypeChecker } from '../utils/helpers';
 import { ConsoleLogger } from '../utils/loggers';
 import sagaLogger from './_middleware/saga/sagaLogger';
-import { languageSaga } from './ui/language/languageSaga';
-import { signInSaga } from './data/auth/authSaga';
+import languageSaga from './ui/language/languageSaga';
+import authSaga from './data/auth/authSaga';
 
 const sagas = [  // define all application sagas here
   languageSaga,
-  signInSaga
+  authSaga
 ];
 
 function* newSagaWatcher(actionType, handler) {
