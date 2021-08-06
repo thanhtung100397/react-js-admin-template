@@ -13,6 +13,9 @@
   "ID_PHONE_VALIDATION": "Số điện thoại không hợp lệ",
   "ID_REQUIRED_VALIDATION": "Giá trị bắt buộc",
 
+  "ID_NETWORK_ERROR_TITLE": "Lỗi kết nối",
+  "ID_NETWORK_ERROR_MESSAGE": "Vui lòng kiểm tra lại đường truyền",
+
   "ID_USERNAME": "Tên đăng nhập",
   "ID_PASSWORD": "Mật khẩu",
   "ID_SIGN_IN": "Đăng nhập"
