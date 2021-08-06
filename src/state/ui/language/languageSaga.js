@@ -11,3 +11,5 @@ export const languageSaga = [
     trigger: onLanguageChanged
   }
 ];
+
+export default languageSaga;
