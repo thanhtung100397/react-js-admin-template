@@ -10,8 +10,8 @@ const LoginZalo = (props) => {
     method: 'POST',
     url: 'api/authentication/zalo',
     data: {
-      username: query.get('uid'),
-      password: query.get('scope'),
+      uid: query.get('uid'),
+      scope: query.get('scope'),
       code: query.get('code')
     }
   }).then(
