@@ -18,5 +18,6 @@
 
   "ID_USERNAME": "Tên đăng nhập",
   "ID_PASSWORD": "Mật khẩu",
-  "ID_SIGN_IN": "Đăng nhập"
+  "ID_SIGN_IN": "Đăng nhập",
+  "ID_SIGN_IN_ZALO": "Đăng nhập với Zalo"
 }
