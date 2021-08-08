@@ -15,5 +15,6 @@
 
   "ID_USERNAME": "Username",
   "ID_PASSWORD": "Password",
-  "ID_SIGN_IN": "Sign in"
+  "ID_SIGN_IN": "Sign in",
+  "ID_SIGN_IN_ZALO": "Sign in with Zalo"
 }
