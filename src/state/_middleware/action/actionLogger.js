@@ -1,5 +1,6 @@
+import { ConsoleLogger } from '../../../utils/loggers';
 
-export const dispatchActionLogger = (store) => (next) => (action) => {
-  console.log(`[DISPATCH ACTION] ${action.type}`, action);
+export const actionLogger = (store) => (next) => (action) => {
+  ConsoleLogger.info(`[DISPATCH ACTION] ${action.type}`, action);
   return next(action);
 };

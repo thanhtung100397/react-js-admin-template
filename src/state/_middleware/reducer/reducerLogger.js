@@ -1,14 +1,24 @@
 import { isInitialActionType } from '../../actionTypes';
+import { ConsoleLogger } from '../../../utils/loggers';
 
-const reducerLogger = (reducerId, action, prevState, nextState) => {
-  if (isInitialActionType(action.type)) {
-    return;
+const ReducerLogger = {
+  info: (reducerId, action, prevState, nextState) => {
+    if (isInitialActionType(action.type)) {
+      return;
+    }
+    ConsoleLogger.info(`[REDUCER TRIGGERED] ${reducerId}`, {
+      action: action,
+      prevState: prevState,
+      nextState: nextState
+    });
+  },
+  error: (reducerId, action, prevState, error) => {
+    ConsoleLogger.error(`[REDUCER ERROR] ${reducerId}`, {
+      action: action,
+      prevState: prevState,
+      error: error
+    });
   }
-  console.log(`[REDUCER TRIGGERED] ${reducerId}`, {
-    action: action,
-    prevState: prevState,
-    nextState: nextState
-  });
 };
 
-export default reducerLogger;
+export default ReducerLogger;
