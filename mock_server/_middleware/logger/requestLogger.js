@@ -1,9 +1,11 @@
 const moment = require('moment');
+const { ConsoleLogger } = require('../../helpers/loggers')
 
 const DATE_FORMAT = 'DD-MM-yyyy HH:mm:ss';
 
 const logRequest = (req) => {
-  console.log(
+  ConsoleLogger.info(
+    `>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n` +
     `>>> API REQUEST (${moment(new Date()).format(DATE_FORMAT)})\n` +
     `>>> id: ${req.headers['request-id']}\n` +
     `>>> ip: ${req.ip}\n` +
@@ -11,7 +13,7 @@ const logRequest = (req) => {
     `>>> params: ${JSON.stringify(req.params)}\n` +
     `>>> body: ${JSON.stringify(req.body)}\n` +
     `>>> headers: ${JSON.stringify(req.headers)}\n` +
-    `>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n`
+    `>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n`
   );
 };
 
@@ -39,14 +41,15 @@ const fetchResponseBody = async (res) => {
 }
 
 const logResponse = async (req, res, resBodyPromise) => {
-  console.log(
+  ConsoleLogger.info(
+    `<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n` +
     `<<< API RESPONSE (${moment(new Date()).format(DATE_FORMAT)})\n` +
     `<<< id: ${req.headers['request-id']}\n` +
     `<<< uri: ${req.method} ${req.originalUrl}\n` +
     `<<< httpStatus: ${res.statusCode} ${res.statusMessage}\n` +
     `<<< body: ${await resBodyPromise}\n` +
     `<<< headers: ${JSON.stringify(res.getHeaders())}\n` +
-    `<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n`
+    `<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n`
   );
 };
 
