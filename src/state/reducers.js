@@ -1,16 +1,17 @@
 import { combineReducers } from 'redux';
 import { isEmpty, collectionContain, TypeChecker } from '../utils/helpers';
-import reducerLogger from './_middleware/reducer/reducerLogger';
-import { ConsoleLogger } from '../utils/loggers';
+import ReducerLogger from './_middleware/reducer/reducerLogger';
 import languageReducer from './ui/language/languageReducer';
-import signInReducers from './data/auth/authReducer';
+import signInReducers from './data/auth/signIn/signInReducer';
 
 const reducers = { // define all application reducers here
   ui: {
     language: languageReducer
   },
   data: {
-    auth: signInReducers
+    auth: {
+      info: signInReducers
+    }
   }
 };
 
@@ -20,11 +21,14 @@ const createAppReducer = (reducer) => {
     if (!isEmpty(targetReducers) && !collectionContain(targetReducers, reducer)) {
       return state;
     }
-    let nextState = reducer(state, action);
-    if (ConsoleLogger.enable) {
-      reducerLogger(reducer.name, action, state, nextState);
+    try {
+      let nextState = reducer(state, action);
+      ReducerLogger.info(reducer.name, action, state, nextState);
+      return nextState;
+    } catch (error) {
+      ReducerLogger.error(reducer.name, action, state, error);
+      return state;
     }
-    return nextState;
   }
 };
 

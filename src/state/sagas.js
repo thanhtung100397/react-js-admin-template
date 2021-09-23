@@ -1,26 +1,31 @@
-import { all, spawn, takeEvery } from 'redux-saga/effects';
+import { all, takeEvery, call } from 'redux-saga/effects';
 import { collectionContain, isEmpty, TypeChecker } from '../utils/helpers';
-import { ConsoleLogger } from '../utils/loggers';
-import sagaLogger from './_middleware/saga/sagaLogger';
+import SagaLogger from './_middleware/saga/sagaLogger';
 import languageSaga from './ui/language/languageSaga';
-import authSaga from './data/auth/authSaga';
+import signInSaga from './data/auth/signIn/signInSaga';
 
 const sagas = [  // define all application sagas here
   languageSaga,
-  authSaga
+  signInSaga
 ];
 
+const sagaErrorHandlerWrapper = (handler, saga) => function* (action) {
+  try {
+    yield call(saga, action);
+  } catch (err) {
+    SagaLogger.error(handler.name, action, err);
+  }
+}
+
 function* newSagaWatcher(actionType, handler) {
-  yield takeEvery(actionType, function* (action) {
+  yield takeEvery(actionType, sagaErrorHandlerWrapper(handler, function* (action) {
     let targetSagas = action.target?.sagas;
     if (!isEmpty(targetSagas) && !collectionContain(targetSagas, handler)) {
       return;
     }
+    SagaLogger.info(handler.name, action);
     yield handler(action);
-    if (ConsoleLogger.enable) {
-      sagaLogger(handler.name, action);
-    }
-  })
+  }));
 }
 
 function* initAppSaga(saga) {

@@ -14,7 +14,7 @@ import { images } from '../../assets/images';
 import { ColorIcons } from '../../assets/icons';
 import './Login.scss';
 import { useDispatch } from 'react-redux';
-import { signInAction } from '../../state/data/auth/authAction';
+import { signInAction } from '../../state/data/auth/signIn/signInAction';
 
 const { Title } = AppTypography;
 

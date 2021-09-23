@@ -12,7 +12,6 @@ export const networkInterceptor = (apiInstance) => {
       return response;
     },
     (error) => {
-      console.log('HELLO ERR', isNetworkError(error));
       if (isNetworkError(error)) {
         AppNotification.error(<FormattedMessage id="ID_NETWORK_ERROR_TITLE"/>, <FormattedMessage id="ID_NETWORK_ERROR_MESSAGE"/>)
       }
