@@ -1,4 +1,3 @@
-const { AppResponses } = require('../../constants/responses');
 const { db } = require('../../database/dbClient');
 
 exports.authApis = (app) => {
@@ -11,9 +10,6 @@ exports.authApis = (app) => {
       //     username: username,
       //     password: password
       //   });
-      res.jsonResponse({
-        response: AppResponses.OK,
-        data: null
-      })
+      res.jsonResponse(null);
     });
 };
