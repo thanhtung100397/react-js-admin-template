@@ -5,6 +5,7 @@
   "dependencies": {
     "env-cmd": "^10.1.0",
     "express": "^4.17.1",
+    "lodash": "^4.17.21",
     "nodemon": "^2.0.12",
     "sqlite3": "^5.0.2"
   },
@@ -13,7 +14,5 @@
     "start:dev": "env-cmd -f .env.development nodemon src/app.js",
     "start:prod": "env-cmd -f .env.production nodemon src/app.js"
   },
-  "devDependencies": {
-
-  }
+  "devDependencies": {}
 }
