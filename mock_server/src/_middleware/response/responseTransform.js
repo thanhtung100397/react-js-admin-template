@@ -4,10 +4,10 @@ exports.jsonResponseTransform = (req, res, next) => {
   res.jsonResponse = function (content) {
     let { response, data } = content;
     if (!response) {
-      response = AppResponses.OK();
+      response = AppResponses.OK;
       data = content;
     }
-    baseJsonResponse(res, response, data);
+    baseJsonResponse(req, res, response, data);
   };
   next();
 };

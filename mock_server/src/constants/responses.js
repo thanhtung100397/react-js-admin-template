@@ -1,7 +1,15 @@
 const { findTranslatedMessage } = require('../translations/appTranslations');
+const { TypeChecker } = require('../helpers/typeChecker');
 
-exports.baseJsonResponse = (res, response, data) => {
-  console.log(response);
+const extractRequestLanguage = (request) => {
+  return request.query['lang'];
+};
+
+exports.baseJsonResponse = (req, res, response, data) => {
+  if (TypeChecker.isFunction(response)) {
+    const language = extractRequestLanguage(req);
+    response = response(language);
+  }
   res.status(response.httpStatus)
     .json({
       code: response.code,
