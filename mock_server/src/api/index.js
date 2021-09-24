@@ -1,7 +1,9 @@
 const { authApis } = require('./auth/authApis');
+const { userApis} = require('./user/userApis');
 
 const appApis = [
-  authApis
+  authApis,
+  userApis
 ];
 
 exports.initAppApis = (app) => {
