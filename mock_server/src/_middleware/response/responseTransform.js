@@ -5,7 +5,7 @@ exports.jsonResponseTransform = (req, res, next) => {
     let response, data;
     if (content) {
       response = content.response;
-      data = response.dashed;
+      data = content.data;
     }
     if (!response) {
       response = AppResponses.OK;
