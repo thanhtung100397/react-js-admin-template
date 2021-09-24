@@ -10,3 +10,7 @@ exports.errorHandler = (err, req, res, next) => {
   baseJsonResponse(req, res, response, data);
   next();
 };
+
+exports.notFoundHandler = (req, res, next) => {
+  baseJsonResponse(req, res, AppResponses.API_NOT_FOUND);
+};

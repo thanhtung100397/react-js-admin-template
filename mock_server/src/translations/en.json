@@ -1,4 +1,5 @@
 {
   "ID_SUCCESS": "Success",
-  "ID_UNEXPECTED_ERROR": "Unexpected error"
+  "ID_UNEXPECTED_ERROR": "Unexpected error",
+  "ID_API_NOT_FOUND": "API not found"
 }

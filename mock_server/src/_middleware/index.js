@@ -2,7 +2,7 @@ const { requestId } = require('./info/requestId');
 const { requestLogger } = require('./logger/requestLogger');
 const bodyParser = require('body-parser');
 const { jsonResponseTransform } = require('./response/responseTransform');
-const { errorHandler } = require('./error/errorHandler');
+const { errorHandler, notFoundHandler } = require('./error/errorHandler');
 
 const appPreMiddlewares = [
   requestId,
@@ -12,7 +12,8 @@ const appPreMiddlewares = [
 ];
 
 const appPostMiddlewares = [
-  errorHandler
+  errorHandler,
+  notFoundHandler// MUST put this on the VERY BOTTOM
 ];
 
 exports.initAppPreMiddlewares = (app) => {

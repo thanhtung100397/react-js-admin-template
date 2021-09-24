@@ -28,5 +28,10 @@ exports.AppResponses = {
     httpStatus: 500,
     code: 500,
     msg: findTranslatedMessage('ID_UNEXPECTED_ERROR', lang),
+  }),
+  API_NOT_FOUND: (lang) => ({
+    httpStatus: 404,
+    code: 4041,
+    msg: findTranslatedMessage('ID_API_NOT_FOUND', lang),
   })
 };
