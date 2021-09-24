@@ -4,7 +4,7 @@ const { initAppApis } = require('./api');
 const app = express();
 
 // config
-const port = process.env.REACT_APP_MOCK_SERVER_PORT || 8000;
+const port = process.env.SERVER_PORT || 8000;
 
 // pre middleware config
 initAppPreMiddlewares(app);

@@ -1,5 +1,5 @@
 const moment = require('moment');
-const { ConsoleLogger } = require('../../helpers/loggers')
+const { ConsoleLogger } = require('../../helpers/loggers');
 
 const DATE_FORMAT = 'DD-MM-yyyy HH:mm:ss';
 

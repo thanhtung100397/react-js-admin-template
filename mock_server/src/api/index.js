@@ -1,4 +1,4 @@
-const { authApis } = require('./auth/authApis')
+const { authApis } = require('./auth/authApis');
 
 const appApis = [
   authApis

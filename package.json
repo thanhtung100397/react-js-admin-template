@@ -34,10 +34,7 @@
     "start:prod": "env-cmd -f .env.production react-scripts start",
     "build:prod": "env-cmd -f .env.production react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "mock-server": "env-cmd -f .env nodemon mock_server/app.js",
-    "mock-server:dev": "env-cmd -f .env.development nodemon mock_server/app.js",
-    "mock-server:prod": "env-cmd -f .env.production nodemon mock_server/app.js"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -58,9 +55,5 @@
     ]
   },
   "devDependencies": {
-    "env-cmd": "^10.1.0",
-    "express": "^4.17.1",
-    "nodemon": "^2.0.12",
-    "sqlite3": "^5.0.2"
   }
 }

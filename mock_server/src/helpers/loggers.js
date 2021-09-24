@@ -1,5 +1,5 @@
 
-const ENABLE_LOGGER = process.env.REACT_APP_ENABLE_MOCK_SERVER_CONSOLE_LOGGER || true;
+const ENABLE_LOGGER = process.env.ENABLE_CONSOLE_LOGGER || true;
 
 exports.ConsoleLogger = {
   enable: process.env.REACT_APP_ENABLE_MOCK_SERVER_CONSOLE_LOGGER || true,
