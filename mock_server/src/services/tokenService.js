@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
 const uuid = require('uuid');
 
-const TOKEN_SIGNED_KEY = process.env.JWT_SECRET;
-const TOKEN_SIGNED_ALGORITHMS = process.env.JWT_ALGORITHMS;
-const ACCESS_TOKEN_EXPIRATION_SECONDS = process.env.ACCESS_TOKEN_EXPIRATION_SECONDS;
-const REFRESH_TOKEN_EXPIRATION_SECONDS = process.env.REFRESH_TOKEN_EXPIRATION_SECONDS;
+const TOKEN_SIGNED_KEY = process.env.JWT_SECRET || 'Secret';
+const TOKEN_SIGNED_ALGORITHMS = process.env.JWT_ALGORITHMS || 'HS256';
+const ACCESS_TOKEN_EXPIRATION_SECONDS = parseInt(process.env.ACCESS_TOKEN_EXPIRATION_SECONDS || 0);
+const REFRESH_TOKEN_EXPIRATION_SECONDS = parseInt(process.env.REFRESH_TOKEN_EXPIRATION_SECONDS || 0);
 
 const generateTokenId = () => {
   return uuid.v4();
