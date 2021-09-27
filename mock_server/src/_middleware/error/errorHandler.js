@@ -1,17 +1,43 @@
 const { AppResponse, AppResponses, baseJsonResponse } = require('../../constants/responses');
 const { ConsoleLogger } = require('../../helpers/loggers');
 
+const errorHandlers = [
+  {
+    shouldHandle: (err) => err instanceof AppResponse,// handle when: throw AppResponse.FOO
+    handle: (err) => {
+      return {
+        response: err,
+        data: err.data
+      }
+    }
+  },
+  {
+    shouldHandle: (err) => err.response,// handle when: throw { response: AppResponse.FOO, data: ...}
+    handle: (err) => {
+      return {
+        response: err.response,
+        data: err.data
+      }
+    }
+  }
+];
+
 exports.errorHandler = (err, req, res, next) => {
   if (err) {
-    let { response, data } = err;
-    if (!response && err instanceof AppResponse) {
-      response = err;
+    let resData;
+    for (const errorHandler of errorHandlers) {
+      if (errorHandler.shouldHandle(err, req, res)) {
+        resData = errorHandler.handle(err, req, res);
+        break;
+      }
     }
-    if (!response) {
+    if (!resData) {
       ConsoleLogger.error('Unexpected error', err);
-      response = AppResponses.UNEXPECTED_ERROR;
+      resData = {
+        response: AppResponses.UNEXPECTED_ERROR
+      }
     }
-    baseJsonResponse(req, res, response, data);
+    baseJsonResponse(req, res, resData.response, resData.data);
   }
 };
 
