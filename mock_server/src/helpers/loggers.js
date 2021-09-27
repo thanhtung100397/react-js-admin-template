@@ -48,7 +48,7 @@ const isLoggerEnable = (type) => {
   if (!ENABLE_ALL_LOGGER) {
     return false;
   }
-  return LoggerType[type];
+  return LoggerType[type]? LoggerType[type].enable : true;
 };
 
 const formatLoggerMessage = (type, rawMessage) => {
@@ -91,5 +91,14 @@ exports.RequestLogger = {
 };
 
 exports.QueryLogger = {
-
+  logQuery: (query, params, results, startTime, endTime) => isLoggerEnable(LoggerType.QUERY) && console.info(
+    `\n##############################################################################################################\n` +
+    `>>> Query (${moment(startTime).format(LOGGER_DATE_FORMAT)})\n` +
+    query +
+    `\n>>> Params\n` +
+    JSON.stringify(params) +
+    `\n<<< Results (${moment(endTime).format(LOGGER_DATE_FORMAT)})\n` +
+    JSON.stringify(results) +
+    `\n##############################################################################################################\n`
+  )
 };

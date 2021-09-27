@@ -22,13 +22,13 @@ exports.authApis = [
       if (!userInfo) {
         throw AppResponses.WRONG_USERNAME_OR_PASSWORD
       }
-      console.log(userInfo);
       if (userInfo.banned) {
         throw AppResponses.USER_BANNED;
       }
       const tokenPair = newTokenPair(userInfo);
       res.jsonResponse({
-        ...userInfo,
+        id: userInfo.id,
+        username: userInfo.username,
         ...tokenPair,
         accessTokenExpiration: ACCESS_TOKEN_EXPIRATION_SECONDS,
         refreshTokenExpiration: REFRESH_TOKEN_EXPIRATION_SECONDS
