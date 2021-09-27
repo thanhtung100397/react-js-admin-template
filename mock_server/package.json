@@ -8,7 +8,7 @@
     "express-jwt": "^6.1.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
-    "nodemon": "2.0.7", /* seem the latest version stuck hot reload on window. so use this version */
+    "nodemon": "2.0.7",
     "sqlite3": "^5.0.2"
   },
   "scripts": {
