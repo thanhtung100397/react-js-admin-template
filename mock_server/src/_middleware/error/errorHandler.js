@@ -3,15 +3,12 @@ const { ConsoleLogger } = require('../../helpers/loggers');
 
 exports.errorHandler = (err, req, res, next) => {
   if (err) {
-    let response, data;
-    if (err instanceof AppResponse) {
+    let { response, data } = err;
+    if (!response && err instanceof AppResponse) {
       response = err;
-    } else {
-      response = err.response;
-      data = err.data;
     }
     if (!response) {
-      ConsoleLogger.error(err);
+      ConsoleLogger.error('Unexpected error', err);
       response = AppResponses.UNEXPECTED_ERROR;
     }
     baseJsonResponse(req, res, response, data);

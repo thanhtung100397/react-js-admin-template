@@ -1,52 +1,57 @@
 const { findTranslatedMessage } = require('../translations/appTranslations');
-const { TypeChecker } = require('../helpers/typeChecker');
 
 const extractRequestLanguage = (request) => {
   return request.query['lang'];
 };
 
 class AppResponse {
-  constructor(httpStatus, code, msg) {
+  constructor(httpStatus, code, msgId) {
     this.httpStatus = httpStatus;
     this.code = code;
-    this.msg = msg;
+    this.msgId = msgId;
+  }
+
+  getMessage(lang) {
+    return findTranslatedMessage(this.msgId, lang);
   }
 }
 
 exports.AppResponse = AppResponse;
 
 exports.baseJsonResponse = (req, res, response, data) => {
-  if (TypeChecker.isFunction(response)) {
-    const language = extractRequestLanguage(req);
-    response = response(language);
-  }
+  const inputLang = extractRequestLanguage(req);
   res.status(response.httpStatus)
     .json({
       code: response.code,
-      msg: response.msg,
+      msg: response.getMessage(inputLang),
       data: data
     });
 };
 
 exports.AppResponses = {
-  OK: (lang) => new AppResponse(
+  OK: new AppResponse(
     200,
     200,
-    findTranslatedMessage('ID_SUCCESS', lang)
+    'ID_SUCCESS'
   ),
-  UNEXPECTED_ERROR: (lang) => new AppResponse(
+  UNEXPECTED_ERROR: new AppResponse(
     500,
     500,
-    findTranslatedMessage('ID_UNEXPECTED_ERROR', lang)
+    'ID_UNEXPECTED_ERROR'
   ),
-  API_NOT_FOUND: (lang) => new AppResponse(
+  API_NOT_FOUND: new AppResponse(
     404,
     4041,
-    findTranslatedMessage('ID_API_NOT_FOUND', lang)
+    'ID_API_NOT_FOUND'
   ),
-  WRONG_USERNAME_OR_PASSWORD: (lang) => new AppResponse(
+  WRONG_USERNAME_OR_PASSWORD: new AppResponse(
     401,
     4011,
-    findTranslatedMessage('ID_WRONG_USERNAME_OR_PASSWORD', lang)
+    'ID_WRONG_USERNAME_OR_PASSWORD'
+  ),
+  USER_BANNED: new AppResponse(
+    401,
+    4012,
+    'ID_USER_BANNED'
   )
 };
