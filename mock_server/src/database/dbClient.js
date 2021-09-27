@@ -1,7 +1,7 @@
 const sqlite3 = require('sqlite3').verbose();
 const { ConsoleLogger } = require('../helpers/loggers');
 
-const DB_FILENAME = 'mock_server/mock-database.db';
+const DB_FILENAME = 'mock-database.db';
 const DB_MODE = sqlite3.OPEN_READWRITE;
 
 let dbInstance;
