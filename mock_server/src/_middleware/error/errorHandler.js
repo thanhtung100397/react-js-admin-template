@@ -1,14 +1,21 @@
-const { AppResponses, baseJsonResponse } = require('../../constants/responses');
+const { AppResponse, AppResponses, baseJsonResponse } = require('../../constants/responses');
 const { ConsoleLogger } = require('../../helpers/loggers');
 
 exports.errorHandler = (err, req, res, next) => {
-  let { response, data } = err;
-  if (!response) {
-    ConsoleLogger.error(err);
-    response = AppResponses.UNEXPECTED_ERROR;
+  if (err) {
+    let response, data;
+    if (err instanceof AppResponse) {
+      response = err;
+    } else {
+      response = err.response;
+      data = err.data;
+    }
+    if (!response) {
+      ConsoleLogger.error(err);
+      response = AppResponses.UNEXPECTED_ERROR;
+    }
+    baseJsonResponse(req, res, response, data);
   }
-  baseJsonResponse(req, res, response, data);
-  next();
 };
 
 exports.notFoundHandler = (req, res, next) => {
