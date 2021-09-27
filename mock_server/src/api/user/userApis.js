@@ -1,11 +1,14 @@
 const { db } = require('../../database/dbClient');
 
-exports.userApis = (app) => {
-  app.get('/api/user/info',
-    (req, res) => {
+exports.userApis = [
+  {
+    method: 'GET',
+    path: '/api/user/info',
+    handle: async (req, res) => {
       res.jsonResponse({
         name: 'abc',
         age: 1
       })
-    });
-};
+    }
+  }
+];

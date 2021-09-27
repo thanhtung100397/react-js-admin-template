@@ -1,15 +1,38 @@
+const {
+  newTokenPair,
+  ACCESS_TOKEN_EXPIRATION_SECONDS,
+  REFRESH_TOKEN_EXPIRATION_SECONDS
+} = require('../../services/tokenService');
 const { db } = require('../../database/dbClient');
+const { AppResponses } = require('../../constants/responses');
 
-exports.authApis = (app) => {
-  app.post('/api/authentication/username-password',
-    (req, res) => {
+exports.authApis = [
+  {
+    method: 'POST',
+    path: '/api/authentication/username-password',
+    handle: async (req, res) => {
       const { username, password } = req.body;
-      // let result = await db.getOne(
-      //   'SELECT * FROM user WHERE username = $username AND password = $password',
-      //   {
-      //     username: username,
-      //     password: password
-      //   });
-      res.jsonResponse(null);
-    });
-};
+      const userInfo = await db.getOne(
+        'SELECT id, username, banned FROM user WHERE username = $username AND password = $password',
+        {
+          $username: username,
+          $password: password
+        }
+      );
+      if (!userInfo) {
+        throw AppResponses.WRONG_USERNAME_OR_PASSWORD
+      }
+      console.log(userInfo);
+      if (userInfo.banned) {
+        throw AppResponses.USER_BANNED;
+      }
+      const tokenPair = newTokenPair(userInfo);
+      res.jsonResponse({
+        ...userInfo,
+        ...tokenPair,
+        accessTokenExpiration: ACCESS_TOKEN_EXPIRATION_SECONDS,
+        refreshTokenExpiration: REFRESH_TOKEN_EXPIRATION_SECONDS
+      });
+    }
+  }
+];
