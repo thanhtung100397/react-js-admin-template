@@ -1,0 +1,2 @@
+exports.DEFAULT_PAGE_SIZE=20;
+exports.MAX_PAGE_SIZE=50;

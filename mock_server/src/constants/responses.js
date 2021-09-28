@@ -1,4 +1,5 @@
 const { findTranslatedMessage } = require('../translations/appTranslations');
+const { DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE } = require('../constants/constants');
 
 const extractRequestLanguage = (request) => {
   return request.query['lang'];
@@ -17,6 +18,33 @@ class AppResponse {
 }
 
 exports.AppResponse = AppResponse;
+
+exports.pagination = (req) => {
+  let { pageIndex, pageSize } = req.query;
+  pageIndex = parseInt(pageIndex);
+  pageSize = parseInt(pageSize);
+
+  if (!pageIndex || pageIndex < 0) {
+    pageIndex = 0;
+  }
+  if (!pageSize || pageSize < 0) {
+    pageSize = DEFAULT_PAGE_SIZE;
+  }
+  if (pageSize > MAX_PAGE_SIZE) {
+    pageSize = MAX_PAGE_SIZE;
+  }
+  return {
+    offset: pageIndex * pageSize,
+    limit: pageSize
+  }
+};
+
+exports.basePageResult = (offset, limit, items, totalItems) => ({
+  pageIndex: offset / limit,
+  pageSize: limit,
+  totalItems: totalItems,
+  items: items
+});
 
 exports.baseJsonResponse = (req, res, response, data) => {
   const inputLang = extractRequestLanguage(req);
@@ -48,6 +76,11 @@ exports.AppResponses = {
     404,
     4041,
     'ID_API_NOT_FOUND'
+  ),
+  USER_NOT_FOUND: new AppResponse(
+    404,
+    4042,
+    'ID_USER_NOT_FOUND'
   ),
 
   // 401x
