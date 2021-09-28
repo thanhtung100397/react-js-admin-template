@@ -3,5 +3,7 @@
   "ID_UNEXPECTED_ERROR": "Có lỗi xảy ra",
   "ID_API_NOT_FOUND": "API không tồn tại",
   "ID_WRONG_USERNAME_OR_PASSWORD": "Sai tên đăng nhập hoặc mật khẩu",
-  "ID_USER_BANNED": "Người dùng đã bị thu hồi quyền truy cập"
+  "ID_USER_BANNED": "Người dùng đã bị thu hồi quyền truy cập",
+  "ID_EXPIRED_TOKEN": "Token hết hiệu lực",
+  "ID_INVALID_TOKEN": "Token không hợp lệ"
 }

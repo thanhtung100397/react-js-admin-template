@@ -1,24 +1,35 @@
 const { AppResponse, AppResponses, baseJsonResponse } = require('../../constants/responses');
 const { ConsoleLogger } = require('../../helpers/loggers');
 
+const { UnauthorizedError } = require('express-jwt');
+const { TokenExpiredError } = require('jsonwebtoken');
+
 const errorHandlers = [
   {
+    shouldHandle: (err) => err instanceof UnauthorizedError && err.inner instanceof TokenExpiredError,
+    handle: (err) => ({
+        response: AppResponses.EXPIRED_TOKEN,
+    })
+  },
+  {
+    shouldHandle: (err) => err instanceof UnauthorizedError && err.code === 'invalid_token',
+    handle: (err) => ({
+      response: AppResponses.INVALID_TOKEN,
+    })
+  },
+  {
     shouldHandle: (err) => err instanceof AppResponse,// handle when: throw AppResponse.FOO
-    handle: (err) => {
-      return {
+    handle: (err) => ({
         response: err,
         data: err.data
-      }
-    }
+    })
   },
   {
     shouldHandle: (err) => err.response,// handle when: throw { response: AppResponse.FOO, data: ...}
-    handle: (err) => {
-      return {
+    handle: (err) => ({
         response: err.response,
         data: err.data
-      }
-    }
+    })
   }
 ];
 
@@ -31,7 +42,7 @@ exports.errorHandler = (err, req, res, next) => {
         break;
       }
     }
-    if (!resData) {
+    if (!resData || !resData.response) {
       ConsoleLogger.error('Unexpected error', err);
       resData = {
         response: AppResponses.UNEXPECTED_ERROR

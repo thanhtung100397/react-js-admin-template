@@ -3,5 +3,7 @@
   "ID_UNEXPECTED_ERROR": "Unexpected error",
   "ID_API_NOT_FOUND": "API not found",
   "ID_WRONG_USERNAME_OR_PASSWORD": "Wrong username or password",
-  "ID_USER_BANNED": "User banned"
+  "ID_USER_BANNED": "User banned",
+  "ID_EXPIRED_TOKEN": "Token is expired",
+  "ID_INVALID_TOKEN": "Token is invalid"
 }

@@ -1,6 +1,5 @@
 const jwt = require('express-jwt');
 const { TOKEN_SIGNED_KEY, TOKEN_SIGNED_ALGORITHMS } = require('../../services/tokenService');
-const {} = require('')
 
 exports.jwtVerify = jwt({
   secret: TOKEN_SIGNED_KEY,
