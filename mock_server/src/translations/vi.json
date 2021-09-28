@@ -7,5 +7,6 @@
   "ID_EXPIRED_TOKEN": "Token hết hiệu lực",
   "ID_INVALID_TOKEN": "Token không hợp lệ",
   "ID_ENDPOINT_AUTHORIZATION_REQUIRED": "Endpoint yêu cầu xác thực",
-  "ID_REFRESH_TOKEN_AUTHORIZATION_REJECTED": "Refresh token không được phép xác thực"
+  "ID_REFRESH_TOKEN_AUTHORIZATION_REJECTED": "Refresh token không được phép xác thực",
+  "ID_USER_NOT_FOUND": "Không tìm thấy người dùng"
 }
