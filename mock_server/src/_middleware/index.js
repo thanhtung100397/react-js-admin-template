@@ -1,3 +1,4 @@
+const { corsConfig } = require('./cors/corsConfig');
 const { requestId } = require('./info/requestId');
 const { jwtVerify } = require('./auth/requestAuthen');
 const { rejectToken } = require('./auth/rejectToken');
@@ -7,6 +8,7 @@ const { jsonResponseTransform } = require('./response/responseTransform');
 const { errorHandler, notFoundHandler } = require('./error/errorHandler');
 
 const appPreMiddlewares = [
+  corsConfig,
   requestId,
   jwtVerify,
   rejectToken,
