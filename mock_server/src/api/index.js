@@ -1,6 +1,7 @@
 const { TypeChecker } = require('../helpers/typeChecker');
-
+const { updateNoAuthRequiredPaths } = require('../_middleware/auth/requestAuthen');
 const { ConsoleLogger } = require('../helpers/loggers');
+
 const { authApis } = require('./auth/authApis');
 const { userApis } = require('./user/userApis');
 
@@ -13,12 +14,12 @@ const appApis = [
 ];
 
 const initApi = (app, api) => {
-  let { method, path, handle } = api;
+  let { method, path, handle, authRequired } = api;
   if (!method) {
     method = DEFAULT_METHOD;
   }
-  method = method.toLowerCase();
-  if (!ALLOWED_METHODS.has(method)) {
+  const lcMethod = method.toLowerCase();
+  if (!ALLOWED_METHODS.has(lcMethod)) {
     ConsoleLogger.warn(`Invalid api method (${method} ${path}), skip api registration`);
     return;
   }
@@ -30,7 +31,7 @@ const initApi = (app, api) => {
     ConsoleLogger.warn(`Missing api handler (${method} ${path}), skip api registration`);
     return;
   }
-  app[method](
+  app[lcMethod](
     path,
     (req, res, next) => {
       const handleResult = handle(req, res);
@@ -39,18 +40,37 @@ const initApi = (app, api) => {
       }
     }
   );
-  ConsoleLogger.info(`${method} ${path} registered`)
+  ConsoleLogger.info(`${method} ${path} ${authRequired ? '(auth) ' : ''}registered`);
+  return true;
 };
 
-const initGroupApis = (app, groupApis) => {
+const initGroupApis = (app, groupApis, noAuthRequiredPaths) => {
   groupApis.forEach((groupApi) => {
     if (!groupApi) {
       return;
     }
-    initApi(app, groupApi);
+    if (initApi(app, groupApi)) {
+      if (!groupApi.authRequired) {
+        addNoAuthRequiredPaths(noAuthRequiredPaths, groupApi.path, groupApi.method);
+      }
+    }
   });
 };
 
+const addNoAuthRequiredPaths = (containers, path, method) => {
+  let pathConfigs = containers[path];
+  if (!pathConfigs) {
+    pathConfigs = new Set();
+    containers[path] = pathConfigs;
+  }
+  pathConfigs.add(method);
+};
+
 exports.initAppApis = (app) => {
-  appApis.forEach((groupApis) => initGroupApis(app, groupApis));
+  const noAuthRequiredPaths = {};
+  appApis.forEach((groupApis) => initGroupApis(app, groupApis, noAuthRequiredPaths));
+  updateNoAuthRequiredPaths(Object.keys(noAuthRequiredPaths).map((key) => ({
+    url: key,
+    methods: [...noAuthRequiredPaths[key]]
+  })));
 };
