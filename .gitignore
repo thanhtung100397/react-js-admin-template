@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /mock_server/node_modules
+/mock_server/mock-database.db
 /.pnp
 .pnp.js
 
