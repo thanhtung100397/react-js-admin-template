@@ -75,5 +75,10 @@ exports.AppResponses = {
     401,
     4015,
     'ID_ENDPOINT_AUTHORIZATION_REQUIRED'
-  )
+  ),
+  REFRESH_TOKEN_AUTHORIZATION_REJECTED: new AppResponse(
+    401,
+    4016,
+    'ID_REFRESH_TOKEN_AUTHORIZATION_REJECTED'
+  ),
 };

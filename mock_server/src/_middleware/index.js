@@ -1,5 +1,6 @@
 const { requestId } = require('./info/requestId');
 const { jwtVerify } = require('./auth/requestAuthen');
+const { rejectToken } = require('./auth/rejectToken');
 const { requestLogger } = require('./logger/requestLogger');
 const bodyParser = require('body-parser');
 const { jsonResponseTransform } = require('./response/responseTransform');
@@ -8,6 +9,7 @@ const { errorHandler, notFoundHandler } = require('./error/errorHandler');
 const appPreMiddlewares = [
   requestId,
   jwtVerify,
+  rejectToken,
   bodyParser.json(),
   requestLogger,
   jsonResponseTransform

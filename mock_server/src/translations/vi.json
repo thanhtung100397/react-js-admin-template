@@ -6,5 +6,6 @@
   "ID_USER_BANNED": "Người dùng đã bị thu hồi quyền truy cập",
   "ID_EXPIRED_TOKEN": "Token hết hiệu lực",
   "ID_INVALID_TOKEN": "Token không hợp lệ",
-  "ID_ENDPOINT_AUTHORIZATION_REQUIRED": "Endpoint yêu cầu xác thực"
+  "ID_ENDPOINT_AUTHORIZATION_REQUIRED": "Endpoint yêu cầu xác thực",
+  "ID_REFRESH_TOKEN_AUTHORIZATION_REJECTED": "Refresh token không được phép xác thực"
 }

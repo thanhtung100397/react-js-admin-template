@@ -10,16 +10,23 @@ const generateTokenId = () => {
   return uuid.v4();
 };
 
-const tokenCustomClaims = (userInfo) => {
+const tokenCustomClaims = (payload) => {
   return {
-    userId: userInfo.id,
-    username: userInfo.username
+    userId: payload.id,
+    username: payload.username
   }
 };
 
-const newAccessToken = (userInfo, tokenId = generateTokenId()) => {
+const verifyToken = (token) => {
+  return jwt.verify(token, TOKEN_SIGNED_KEY, {
+    algorithms: TOKEN_SIGNED_ALGORITHMS
+  })
+};
+exports.verifyToken = verifyToken;
+
+const newAccessToken = (payload, tokenId = generateTokenId()) => {
   return jwt.sign(
-    tokenCustomClaims(userInfo),
+    tokenCustomClaims(payload),
     TOKEN_SIGNED_KEY,
     {
       jwtid: tokenId,
@@ -28,10 +35,14 @@ const newAccessToken = (userInfo, tokenId = generateTokenId()) => {
     }
   );
 };
+exports.newAccessToken = newAccessToken;
 
-const newRefreshToken = (userInfo, accessTokenId) => {
+const newRefreshToken = (payload, accessTokenId) => {
   return jwt.sign(
-    tokenCustomClaims(userInfo),
+    {
+      ...tokenCustomClaims(payload),
+      ati: accessTokenId
+    },
     TOKEN_SIGNED_KEY,
     {
       jwtid: uuid.v4(),
@@ -40,18 +51,15 @@ const newRefreshToken = (userInfo, accessTokenId) => {
     }
   );
 };
+exports.newRefreshToken = newRefreshToken;
 
-exports.newTokenPair = (userInfo) => {
+exports.newTokenPair = (payload) => {
   const accessTokenId = generateTokenId();
   return {
-    accessToken: newAccessToken(userInfo, accessTokenId),
-    refreshToken: newRefreshToken(userInfo, accessTokenId)
+    accessToken: newAccessToken(payload, accessTokenId),
+    refreshToken: newRefreshToken(payload, accessTokenId)
   }
 };
-
-exports.newAccessToken = newAccessToken;
-
-exports.newRefreshToken = newRefreshToken;
 
 exports.TOKEN_SIGNED_KEY = TOKEN_SIGNED_KEY;
 exports.TOKEN_SIGNED_ALGORITHMS = TOKEN_SIGNED_ALGORITHMS;

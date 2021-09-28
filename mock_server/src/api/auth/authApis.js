@@ -1,5 +1,5 @@
 const {
-  newTokenPair,
+  newTokenPair, verifyToken, newAccessToken,
   ACCESS_TOKEN_EXPIRATION_SECONDS,
   REFRESH_TOKEN_EXPIRATION_SECONDS
 } = require('../../services/tokenService');
@@ -33,6 +33,23 @@ exports.authApis = [
         accessTokenExpiration: ACCESS_TOKEN_EXPIRATION_SECONDS,
         refreshTokenExpiration: REFRESH_TOKEN_EXPIRATION_SECONDS
       });
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/authentication/refresh-token',
+    authRequired: false,
+    handle: async (req, res) => {
+      const { refreshToken } = req.body;
+      const tokenPayload = verifyToken(refreshToken);
+      res.jsonResponse({
+        id: tokenPayload.id,
+        username: tokenPayload.username,
+        accessToken: newAccessToken(tokenPayload),
+        refreshToken: refreshToken,
+        accessTokenExpiration: ACCESS_TOKEN_EXPIRATION_SECONDS,
+        refreshTokenExpiration: REFRESH_TOKEN_EXPIRATION_SECONDS
+      })
     }
   }
 ];
