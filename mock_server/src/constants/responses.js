@@ -70,5 +70,10 @@ exports.AppResponses = {
     401,
     4014,
     'ID_INVALID_TOKEN'
+  ),
+  ENDPOINT_AUTHORIZATION_REQUIRED: new AppResponse(
+    401,
+    4015,
+    'ID_ENDPOINT_AUTHORIZATION_REQUIRED'
   )
 };

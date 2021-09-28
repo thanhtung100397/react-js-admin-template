@@ -18,6 +18,12 @@ const errorHandlers = [
     })
   },
   {
+    shouldHandle: (err) => err instanceof UnauthorizedError && err.code === 'credentials_required',
+    handle: (err) => ({
+      response: AppResponses.ENDPOINT_AUTHORIZATION_REQUIRED,
+    })
+  },
+  {
     shouldHandle: (err) => err instanceof AppResponse,// handle when: throw AppResponse.FOO
     handle: (err) => ({
         response: err,
