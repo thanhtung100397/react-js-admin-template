@@ -13,6 +13,9 @@
   "ID_PHONE_VALIDATION": "Input is not valid phone number",
   "ID_REQUIRED_VALIDATION": "Input required",
 
+  "ID_NETWORK_ERROR_TITLE": "Network connection error",
+  "ID_NETWORK_ERROR_MESSAGE": "Please check your network connection",
+
   "ID_USERNAME": "Username",
   "ID_PASSWORD": "Password",
   "ID_SIGN_IN": "Sign in",
