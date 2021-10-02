@@ -1,12 +1,18 @@
 import axios from 'axios';
 import { requestLoggerInterceptor, responseLoggerInterceptor } from './_interceptor/logger/loggerInterceptor';
 import { networkInterceptor } from './_interceptor/network/networkInterceptor';
+import { getLanguage } from './ui/language/languageService';
 
 export const CancelToken = axios.CancelToken;
 
+const fixedParams = {
+  lang: getLanguage()
+};
+
 const newApiClient = (baseUrl) => {
   let apiInstance = axios.create({
-    baseURL: baseUrl
+    baseURL: baseUrl,
+    params: fixedParams
   });
   requestLoggerInterceptor(apiInstance);
   responseLoggerInterceptor(apiInstance);
