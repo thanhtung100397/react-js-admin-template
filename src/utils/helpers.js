@@ -56,6 +56,10 @@ export const printToString = (value) => {
   }
 };
 
+export const getObjField = (obj, field, defaultValue) => {
+  return _.get(obj, field, defaultValue);
+};
+
 export const objHasField = (obj, path) => {
  return _.hasIn(obj, path);
 };
@@ -64,7 +68,7 @@ export const setObjField = (obj, path, value, ifFieldExist) => {
   if (ifFieldExist && !objHasField(obj, path)) {
     return;
   }
-  _.set(obj, path, value);
+  return _.set(obj, path, value);
 };
 
 export const isEmpty = (value) => {

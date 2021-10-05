@@ -12,7 +12,7 @@ const initMiddlewares = () => {
   ];
   middlewares.push(actionLogger);
   return middlewares;
-}
+};
 
 const store = createStore(
   appReducers,

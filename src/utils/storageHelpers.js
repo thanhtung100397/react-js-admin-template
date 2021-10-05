@@ -14,4 +14,4 @@ export const LocalStorage = {
   remove: (key) => localStorage.removeItem(key),
   clear: () => localStorage.clear(),
   has: (key) => Boolean(this.get(key, false))
-}
+};
