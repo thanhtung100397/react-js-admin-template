@@ -56,7 +56,14 @@ export const printToString = (value) => {
   }
 };
 
-export const setObjField = (obj, path, value) => {
+export const objHasField = (obj, path) => {
+ return _.hasIn(obj, path);
+};
+
+export const setObjField = (obj, path, value, ifFieldExist) => {
+  if (ifFieldExist && !objHasField(obj, path)) {
+    return;
+  }
   _.set(obj, path, value);
 };
 
