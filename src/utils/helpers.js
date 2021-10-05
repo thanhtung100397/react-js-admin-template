@@ -56,8 +56,8 @@ export const printToString = (value) => {
   }
 };
 
-export const setObjValue = (obj, path, value) => {
-  return _.set(obj, path, value);
+export const setObjField = (obj, path, value) => {
+  _.set(obj, path, value);
 };
 
 export const isEmpty = (value) => {
@@ -92,11 +92,11 @@ export const assign = (des, ...src) => {
 
 export const extractFields = (des, fieldNames) => {
   return _.pick(des, fieldNames);
-}
+};
 
 export const removeFields = (des, fieldNames) => {
   return _.omit(des, fieldNames);
-}
+};
 
 export const newSet = (...values) => {
   return new Set(values);

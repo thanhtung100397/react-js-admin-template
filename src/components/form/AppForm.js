@@ -4,7 +4,7 @@ import { baseProps, fromBaseProps } from '../base';
 import { ConsoleLogger } from '../../utils/loggers';
 import AppFormItem from './AppFormItem';
 import './AppForm.scss';
-import { setObjValue } from '../../utils/helpers';
+import { setObjField } from '../../utils/helpers';
 
 const propTypes = {
   ...baseProps,
@@ -31,7 +31,7 @@ const collectFormData = (itemRefs) => {
     .forEach((itemKey) => {
       let item = itemRefs.current[itemKey];
       if (item.name) {
-        setObjValue(result, item.name, item.ref.getValue())
+        setObjField(result, item.name, item.ref.getValue())
       }
     });
   return result;
