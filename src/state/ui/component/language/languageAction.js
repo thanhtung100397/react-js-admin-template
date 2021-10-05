@@ -1,5 +1,5 @@
-import { CHANGE_LANGUAGE } from '../../actionTypes';
-import { newSet } from '../../../utils/helpers';
+import { CHANGE_LANGUAGE } from '../../../actionTypes';
+import { newSet } from '../../../../utils/helpers';
 import languageReducer from './languageReducer';
 import { onLanguageChanged } from './languageSaga';
 

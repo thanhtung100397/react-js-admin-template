@@ -1,16 +1,19 @@
 import { combineReducers } from 'redux';
 import { isEmpty, collectionContain, TypeChecker } from '../utils/helpers';
 import ReducerLogger from './_middleware/reducer/reducerLogger';
-import languageReducer from './ui/language/languageReducer';
-import signInReducers from './data/auth/signIn/signInReducer';
+import languageReducer from './ui/component/language/languageReducer';
+import authReducers from './data/api/auth/signIn/signInReducer';
 
 const reducers = { // define all application reducers here
   ui: {
-    language: languageReducer
+    language: languageReducer,
+    page: {
+
+    }
   },
   data: {
-    auth: {
-      info: signInReducers
+    api: {
+      auth: authReducers
     }
   }
 };
@@ -42,7 +45,7 @@ const initAppReducer = (reducer) => {
       if (appReducer) {
         groupReducers[key] = appReducer;
       }
-    })
+    });
     return combineReducers(groupReducers);
   }
 };

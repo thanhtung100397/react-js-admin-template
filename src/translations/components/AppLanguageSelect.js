@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { baseProps, fromBaseProps } from '../../components/base';
-import { changeLanguageAction } from '../../state/ui/language/languageAction';
+import { changeLanguageAction } from '../../state/ui/component/language/languageAction';
 import { Translations } from '../../constants/constants';
 import AppSelect from '../../components/select/AppSelect';
 import './AppLanguageSelect.scss';

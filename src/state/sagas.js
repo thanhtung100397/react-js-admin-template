@@ -1,8 +1,8 @@
 import { all, takeEvery, call } from 'redux-saga/effects';
 import { collectionContain, isEmpty, TypeChecker } from '../utils/helpers';
 import SagaLogger from './_middleware/saga/sagaLogger';
-import languageSaga from './ui/language/languageSaga';
-import signInSaga from './data/auth/signIn/signInSaga';
+import languageSaga from './ui/component/language/languageSaga';
+import signInSaga from './data/api/auth/signIn/signInSaga';
 
 const sagas = [  // define all application sagas here
   languageSaga,
@@ -15,7 +15,7 @@ const sagaErrorHandlerWrapper = (handler, saga) => function* (action) {
   } catch (err) {
     SagaLogger.error(handler.name, action, err);
   }
-}
+};
 
 function* newSagaWatcher(actionType, handler) {
   yield takeEvery(actionType, sagaErrorHandlerWrapper(handler, function* (action) {

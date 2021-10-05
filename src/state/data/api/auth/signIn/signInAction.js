@@ -1,7 +1,7 @@
-import { SIGN_IN, SIGN_IN_SUCCESS, SIGN_IN_FAILURE } from '../../../actionTypes';
-import { newSet } from '../../../../utils/helpers';
-import signInReducers from './signInReducer';
+import { SIGN_IN, SIGN_IN_SUCCESS, SIGN_IN_FAILURE } from '../../../../actionTypes';
+import { newSet } from '../../../../../utils/helpers';
 import { onSignIn } from './signInSaga';
+import signInReducers from './signInReducer';
 
 export const signInAction = (username, password) => ({
   type: SIGN_IN,
