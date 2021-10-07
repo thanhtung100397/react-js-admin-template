@@ -27,10 +27,7 @@ const Login = (props) => {
   const dispatch = useDispatch();
 
   const handleFormSubmit = (data) => {
-    // setSigningIn(true);
-    dispatch(signInAction.FETCH_API({
-      body: data
-    }));
+    dispatch(signInAction.FETCH_API(data));
   };
 
   return (

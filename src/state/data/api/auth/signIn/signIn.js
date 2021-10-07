@@ -3,16 +3,16 @@ import { createApiSagas } from '../../apiSaga';
 import { createApiReducer } from '../../apiReducer';
 import { signIn } from '../../../../../services/data/auth/signIn/signInService';
 
-const UNIQUE_ID = 'SIGN_IN';
+const UNIQUE_ID = 'DATA.API.AUTH.SIGN_IN';
 
-const apiCall = async ({body, headers, params}) => {
-  const { username, password } = body;
+const apiCall = async (data) => {
+  const { username, password } = data;
   return await signIn(username, password);
 };
 
-const signInReducer = createApiReducer(UNIQUE_ID);
+const signInAction = createApiActions(UNIQUE_ID);
 
-const signInAction = createApiActions(UNIQUE_ID, signInReducer);
+const signInReducer = createApiReducer(UNIQUE_ID);
 
 const signInSaga = createApiSagas(UNIQUE_ID, apiCall, signInAction);
 
