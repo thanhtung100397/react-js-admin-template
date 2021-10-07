@@ -52,7 +52,7 @@ const Login = (props) => {
                             name="username" label={<FormattedMessage id="ID_USERNAME"/>}
                             validateRules={[ValidationRule.REQUIRED]}>
                 <AppInput.Text icon={<ColorIcons.UserOutlined/>} allowClear={true}
-                               placeholderID="ID_USERNAME"/>
+                               placeholderID="ID_USERNAME" autoComplete="off"/>
               </AppForm.Item>
               <AppForm.Item layoutDirection="vertical"
                             name="password" label={<FormattedMessage id="ID_PASSWORD"/>}

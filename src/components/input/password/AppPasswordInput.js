@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { baseProps, fromBaseProps } from '../../base';
-import { fromInputProps, inputPropTypes } from '../base';
+import { fromInputProps, inputPropTypes, AutoComplete } from '../base';
 import { useIntl } from 'react-intl';
 import { useAppFormItem } from '../../form/AppFormItem';
 import { Input } from 'antd';
@@ -18,6 +18,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  autoComplete: AutoComplete.OFF
 };
 
 const AppPasswordInput = (props) => {
