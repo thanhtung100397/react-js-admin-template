@@ -1,7 +1,5 @@
 import { put } from 'redux-saga/effects';
-import {
-  API_FETCHING_ACTION
-} from './apiAction';
+import { API_FETCHING_ACTION } from '../../actionTypes';
 import { TypeChecker } from '../../../utils/helpers';
 import { isSuccess } from '../../../services/apiHelpers';
 

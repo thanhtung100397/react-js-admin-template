@@ -1,7 +1,7 @@
 import { getCode, getData, getHeaders, getHttpStatus, getMessage, isSuccess } from '../../../services/apiHelpers';
 import {
   API_FETCHING_ACTION, API_RESPONSE_SUCCESS_ACTION, API_RESPONSE_FAILURE_ACTION, API_FETCHING_ERROR_ACTION
-} from './apiAction';
+} from '../../actionTypes';
 import { updateState, updateStateField } from '../../stateHelpers';
 
 export const FETCHING_FLAG_FIELD = 'fetchingState';
@@ -59,16 +59,11 @@ export const createApiReducer = (uniqueId) => {
     [API_FETCHING_ERROR_ACTION(uniqueId)]: (state, action) => updateState(state, apiFetchingErrorToState(action.payload))
   };
 
-  return {
-    meta: {
-      id: uniqueId
-    },
-    reducer: (state = defaultState, action) => {
-      const handler = reducerHandler[action.type];
-      if (handler) {
-        return handler(state, action);
-      }
-      return state;
+  return (state = defaultState, action) => {
+    const handler = reducerHandler[action.type];
+    if (handler) {
+      return handler(state, action);
     }
+    return state;
   };
 };

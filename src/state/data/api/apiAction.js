@@ -1,8 +1,6 @@
-
-export const API_FETCHING_ACTION = (prefix) => `${prefix}_API_FETCH_ACTION`;
-export const API_RESPONSE_SUCCESS_ACTION = (prefix) => `${prefix}_API_RESPONSE_SUCCESS_ACTION`;
-export const API_RESPONSE_FAILURE_ACTION = (prefix) => `${prefix}_API_RESPONSE_FAILURE_ACTION`;
-export const API_FETCHING_ERROR_ACTION = (prefix) => `${prefix}_API_FETCHING_ERROR_ACTION`;
+import {
+  API_FETCHING_ACTION, API_RESPONSE_SUCCESS_ACTION, API_RESPONSE_FAILURE_ACTION, API_FETCHING_ERROR_ACTION
+} from '../../actionTypes';
 
 export const createApiActions = (uniqueId, apiReducer) => {
   return {
