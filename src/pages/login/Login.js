@@ -64,11 +64,6 @@ const Login = (props) => {
                          loading={signingIn}>
                 <FormattedMessage id="ID_SIGN_IN"/>
               </AppButton>
-              <AppButton className="btn-sign-in-zalo w-full"
-                         href={"https://oauth.zaloapp.com/v3/auth?app_id=" + process.env.REACT_APP_LOGIN_ZALO_APP_ID + "&redirect_uri=" + process.env.REACT_APP_LOGIN_ZALO_REDIRECT_URL}
-                         loading={signingIn}>
-                <FormattedMessage id="ID_SIGN_IN_ZALO"/>
-              </AppButton>
             </AppSpace>
           </AppForm>
         </div>
