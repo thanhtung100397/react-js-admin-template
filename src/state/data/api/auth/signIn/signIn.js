@@ -1,7 +1,6 @@
 import { createApiActions } from '../../apiAction';
 import { createApiSagas } from '../../apiSaga';
 import { createApiReducer } from '../../apiReducer';
-import { SIGN_IN } from '../../../../actionTypes';
 import { signIn } from '../../../../../services/data/auth/signIn/signInService';
 
 const UNIQUE_ID = 'SIGN_IN';
