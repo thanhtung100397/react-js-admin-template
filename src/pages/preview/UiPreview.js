@@ -10,11 +10,12 @@ import AppInput from '../../components/input/AppInput';
 import AppSelect from '../../components/select/AppSelect';
 import AppForm from '../../components/form/AppForm';
 import AppButton from '../../components/button/AppButton';
+import AppImage from '../../components/image/AppImage';
 import { Icons } from '../../assets/icons';
 import { ValidationRule } from '../../constants/validationRules';
 import { delay } from '../../utils/helpers';
-import './UiPreview.scss';
 import { toRomanNumber } from '../../utils/numberHelpers';
+import './UiPreview.scss';
 
 const { Row, Col } = AppGrid;
 const { Title, Text, Link } = AppTypography;
@@ -24,6 +25,13 @@ const ROW_GUTTER = 24;
 const ITEM_SPACE = 20;
 const ROOT_TITLE_LEVEL = 2;
 const MAX_TITLE_LEVEL = 5;
+
+const APP_IMAGE_FIXED_SIZE = 156;
+const APP_IMAGE_URL = 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg';
+const APP_IMAGE_PLACEHOLDER_URL = `https://via.placeholder.com/${APP_IMAGE_FIXED_SIZE}`;
+const APP_IMAGE_BROKEN_URL = 'https://foo.bar/image.png';
+const APP_IMAGE_ERROR_PLACEHOLDER_URL = `https://via.placeholder.com/${APP_IMAGE_FIXED_SIZE}/FF0000/FFFFFF/?text=Broken`;
+const APP_IMAGE_FALLBACK_URL = 'https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg';
 
 const LONG_DUMMY_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt " +
   "ut labore et dolore magna aliqua";
@@ -1060,6 +1068,123 @@ const groups = [
                 </div>
               </>
             ))
+          }
+        </Col>
+      </Row>
+    )
+  },
+  {
+    title: 'App Image',
+    content: (
+      <Row gutter={ROW_GUTTER} vStretch={true}>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+          {
+            contentCard('Basic usage', 'Basic use of image',
+              <AppSpace size={ITEM_SPACE}>
+                <AppImage src={APP_IMAGE_URL}/>
+                <Row gutter={ROW_GUTTER} vStretch={true}>
+                  <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
+                    <AppImage src={APP_IMAGE_URL} width="100%" height="100%"/>
+                  </Col>
+                  <Col xs={14} sm={14} md={14} lg={14} xl={14} xxl={14}>
+                    <AppImage src={APP_IMAGE_URL} width="100%" height="100%"/>
+                  </Col>
+                </Row>
+              </AppSpace>
+            )
+          }
+        </Col>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+          {
+            contentCard('Shape options', 'All supported image shape: cirle and rounded',
+              <AppSpace size={ITEM_SPACE}>
+                <Row gutter={ROW_GUTTER} vStretch={true}>
+                  <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}
+                       flexContainer={true} className="flex-column vh-align-center">
+                    <AppImage src={APP_IMAGE_URL} circle={true}/>
+                  </Col>
+                  <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}
+                       flexContainer={true} className="flex-column vh-align-center">
+                    <AppImage src={APP_IMAGE_URL} circle={true}
+                              width={APP_IMAGE_FIXED_SIZE} height={APP_IMAGE_FIXED_SIZE}/>
+                  </Col>
+                </Row>
+                <Row gutter={ROW_GUTTER} vStretch={true}>
+                  <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}
+                       flexContainer={true} className="flex-column vh-align-center">
+                    <AppImage src={APP_IMAGE_URL} round={true}/>
+                  </Col>
+                  <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}
+                       flexContainer={true} className="flex-column vh-align-center">
+                    <AppImage src={APP_IMAGE_URL} round={true}
+                              width={APP_IMAGE_FIXED_SIZE} height={APP_IMAGE_FIXED_SIZE}/>
+                  </Col>
+                </Row>
+              </AppSpace>
+            )
+          }
+        </Col>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+          {
+            contentCard('Placeholder options', 'All supported placeholder options: when no image and when load image error',
+              <AppSpace size={ITEM_SPACE}>
+                <Row gutter={ROW_GUTTER} vStretch={true}>
+                  <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}
+                       flexContainer={true} className="flex-column vh-align-center">
+                    <AppImage round={true} width={APP_IMAGE_FIXED_SIZE} height={APP_IMAGE_FIXED_SIZE}/>
+                  </Col>
+                  <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}
+                       flexContainer={true} className="flex-column vh-align-center">
+                    <AppImage placeholder={APP_IMAGE_PLACEHOLDER_URL} round={true}
+                              width={APP_IMAGE_FIXED_SIZE} height={APP_IMAGE_FIXED_SIZE}/>
+                  </Col>
+                </Row>
+                <Row gutter={ROW_GUTTER} vStretch={true}>
+                  <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}
+                       flexContainer={true} className="flex-column vh-align-center">
+                    <AppImage src={APP_IMAGE_BROKEN_URL} round={true}
+                              width={APP_IMAGE_FIXED_SIZE} height={APP_IMAGE_FIXED_SIZE}/>
+                  </Col>
+                  <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}
+                       flexContainer={true} className="flex-column vh-align-center">
+                    <AppImage src={APP_IMAGE_BROKEN_URL} errorPlaceholder={APP_IMAGE_ERROR_PLACEHOLDER_URL}
+                              onError={(event) => console.log('Image load error', event)}
+                              round={true} width={APP_IMAGE_FIXED_SIZE} height={APP_IMAGE_FIXED_SIZE}/>
+                  </Col>
+                </Row>
+              </AppSpace>
+            )
+          }
+        </Col>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+          {
+            contentCard('Other options', 'Other options: image preview, fallback image, bordered',
+              <AppSpace size={ITEM_SPACE}>
+                <Row gutter={ROW_GUTTER} vStretch={true}>
+                  <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}
+                       flexContainer={true} className="flex-column vh-align-center">
+                    <AppImage src={APP_IMAGE_URL} enablePreview={true} round={true}
+                              width={APP_IMAGE_FIXED_SIZE} height={APP_IMAGE_FIXED_SIZE}/>
+                  </Col>
+                  <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}
+                       flexContainer={true} className="flex-column vh-align-center">
+                    <AppImage src={APP_IMAGE_BROKEN_URL} fallback={APP_IMAGE_FALLBACK_URL}
+                              enablePreview={true} round={true}
+                              width={APP_IMAGE_FIXED_SIZE} height={APP_IMAGE_FIXED_SIZE}/>
+                  </Col>
+                  <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}
+                       flexContainer={true} className="flex-column vh-align-center">
+                    <AppImage src={APP_IMAGE_URL} bordered={true} round={true}
+                              width={APP_IMAGE_FIXED_SIZE} height={APP_IMAGE_FIXED_SIZE}/>
+                  </Col>
+                  <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}
+                       flexContainer={true} className="flex-column vh-align-center">
+                    <AppImage src={APP_IMAGE_URL} imageFit="contain" bordered={true} round={true}
+                              width={APP_IMAGE_FIXED_SIZE} height={APP_IMAGE_FIXED_SIZE}/>
+                  </Col>
+                </Row>
+              </AppSpace>
+            )
           }
         </Col>
       </Row>
