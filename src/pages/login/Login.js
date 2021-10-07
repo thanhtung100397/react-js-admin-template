@@ -14,7 +14,7 @@ import { images } from '../../assets/images';
 import { ColorIcons } from '../../assets/icons';
 import './Login.scss';
 import { useDispatch } from 'react-redux';
-import { signInAction } from '../../state/data/api/auth/signIn/signInAction';
+import { signInAction } from '../../state/data/api/auth/signIn/signIn';
 
 const { Title } = AppTypography;
 
@@ -28,9 +28,10 @@ const Login = (props) => {
 
   const handleFormSubmit = (data) => {
     // setSigningIn(true);
-    const { username, password } = data;
-    dispatch(signInAction(username, password));
-  }
+    dispatch(signInAction.FETCH_API({
+      body: data
+    }));
+  };
 
   return (
     <AppContainer className="login-page wh-full" style={pageStyle}>
