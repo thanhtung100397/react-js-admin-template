@@ -14,6 +14,7 @@ import { Icons } from '../../assets/icons';
 import { ValidationRule } from '../../constants/validationRules';
 import { delay } from '../../utils/helpers';
 import './UiPreview.scss';
+import { toRomanNumber } from '../../utils/numberHelpers';
 
 const { Row, Col } = AppGrid;
 const { Title, Text, Link } = AppTypography;
@@ -55,9 +56,16 @@ const getTitleLevel = (depth = 0) => {
   return level;
 };
 
+const getTitleNumbering = (depth, index) => {
+  if (depth === 0) {
+    return toRomanNumber(index + 1);
+  }
+  return index + 1;
+};
+
 const newGroup = (index, group, depth = 0) => (
   <div key={index} className="group-container">
-    <Title className="group-title" level={getTitleLevel(depth)}>{group.title}</Title>
+    <Title className="group-title" level={getTitleLevel(depth)}>{getTitleNumbering(depth, index)}. {group.title}</Title>
     {group.content}
     <div className="group-items-container">
       {
@@ -70,10 +78,10 @@ const newGroup = (index, group, depth = 0) => (
 
 const groups = [
   {
-    title: 'I. App Typography',
+    title: 'App Typography',
     items: [
       {
-        title: '1. App Title',
+        title: 'App Title',
         content: (
           <Row gutter={ROW_GUTTER} vStretch={true}>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
@@ -152,7 +160,7 @@ const groups = [
         )
       },
       {
-        title: '2. App Text',
+        title: 'App Text',
         content: (
           <Row gutter={ROW_GUTTER} vStretch={true}>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
@@ -231,7 +239,7 @@ const groups = [
         )
       },
       {
-        title: '3. App Link',
+        title: 'App Link',
         content: (
           <Row gutter={ROW_GUTTER} vStretch={true}>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
@@ -313,10 +321,10 @@ const groups = [
     ]
   },
   {
-    title: 'II. App Input',
+    title: 'App Input',
     items: [
       {
-        title: '1. App Text Input',
+        title: 'App Text Input',
         content: (
           <Row gutter={ROW_GUTTER} vStretch={true}>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
@@ -355,7 +363,7 @@ const groups = [
         )
       },
       {
-        title: '2. App Password Input',
+        title: 'App Password Input',
         content: (
           <Row gutter={ROW_GUTTER} vStretch={true}>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
@@ -393,7 +401,7 @@ const groups = [
         )
       },
       {
-        title: '3. App Text Area Input',
+        title: 'App Text Area Input',
         content: (
           <Row gutter={ROW_GUTTER} vStretch={true}>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
@@ -446,7 +454,7 @@ const groups = [
         )
       },
       {
-        title: '4. App Number Input',
+        title: 'App Number Input',
         content: (
           <Row gutter={ROW_GUTTER} vStretch={true}>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
@@ -488,7 +496,7 @@ const groups = [
     ]
   },
   {
-    title: 'III. App Select',
+    title: 'App Select',
     content: (
       <Row gutter={ROW_GUTTER} vStretch={true}>
         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
@@ -698,7 +706,7 @@ const groups = [
     )
   },
   {
-    title: 'IV. App Form',
+    title: 'App Form',
     content: (
       <Row gutter={ROW_GUTTER} vStretch={true}>
         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}
