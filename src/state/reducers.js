@@ -1,49 +1,72 @@
 import { combineReducers } from 'redux';
-import { isEmpty, collectionContain, TypeChecker } from '../utils/helpers';
+import { TypeChecker } from '../utils/helpers';
 import ReducerLogger from './_middleware/reducer/reducerLogger';
 import languageReducer from './ui/component/language/languageReducer';
-import authReducers from './data/api/auth/signIn/signInReducer';
+import { signInReducer } from './data/api/auth/signIn/signIn';
+import { stringJoin } from '../utils/stringHelpers';
 
 const reducers = { // define all application reducers here
   ui: {
     language: languageReducer,
-    page: {
-
-    }
   },
   data: {
     api: {
-      auth: authReducers
+      auth: {
+        signIn: signInReducer
+      }
     }
   }
 };
 
-const createAppReducer = (reducer) => {
+const createAppReducer = ({reducer, meta}, name) => {
   return (state, action) => {
-    let targetReducers = action.target?.reducers;
-    if (!isEmpty(targetReducers) && !collectionContain(targetReducers, reducer)) {
+    let reducerMatcher = action.target?.reducer;
+    if (meta && reducerMatcher && !reducerMatcher(meta)) {
       return state;
     }
     try {
       let nextState = reducer(state, action);
-      ReducerLogger.info(reducer.name, action, state, nextState);
+      ReducerLogger.info(name, action, state, nextState);
       return nextState;
     } catch (error) {
-      ReducerLogger.error(reducer.name, action, state, error);
+      ReducerLogger.error(name, action, state, error);
       return state;
     }
   }
 };
 
-const initAppReducer = (reducer) => {
-  if (TypeChecker.isFunction(reducer)) {
-    return createAppReducer(reducer);
-  } else if (TypeChecker.isObject(reducer) && !TypeChecker.isEmpty(reducer)) {
+const extractReducerWithMeta = (appReducer) => {
+  if (TypeChecker.isFunction(appReducer)) {
+    return {
+      reducer: appReducer,
+      meta: {}
+    };
+  }
+  if (TypeChecker.isFunction(appReducer.reducer)) {
+    return appReducer;
+  }
+};
+
+const isReducerContainer = (appReducer) => {
+  return TypeChecker.isObject(appReducer) && !TypeChecker.isEmpty(appReducer)
+};
+
+const initAppReducer = (appReducer, name) => {
+  if (!appReducer) {
+    return;
+  }
+
+  const reducerWithMeta = extractReducerWithMeta(appReducer);
+  if (reducerWithMeta) {
+    return createAppReducer(reducerWithMeta, name);
+  }
+
+  if (isReducerContainer(appReducer)) {
     let groupReducers = {};
-    Object.keys(reducer).forEach((key) => {
-      let appReducer = initAppReducer(reducer[key]);
-      if (appReducer) {
-        groupReducers[key] = appReducer;
+    Object.keys(appReducer).forEach((key) => {
+      let reducer = initAppReducer(appReducer[key], stringJoin('.', name, key));
+      if (reducer) {
+        groupReducers[key] = reducer;
       }
     });
     return combineReducers(groupReducers);
