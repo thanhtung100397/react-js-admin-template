@@ -62,7 +62,7 @@ const getOptionValue = (option, filterOptionProp) => {
 
 const getInputValue = (value) => {
   return value;
-}
+};
 
 const AppSelect = (props) => {
   const {
@@ -114,7 +114,7 @@ const AppSelect = (props) => {
     } else {
       return props.placeholder;
     }
-  }, [props.placeholder, props.placeholderID]);
+  }, [props.placeholder, props.placeholderID, intl]);
 
   const prefixNode = useMemo(() => {
     if (props.icon) {
