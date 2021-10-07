@@ -13,7 +13,6 @@ const ImageFit = {
 
 const propTypes = {
   ...baseProps,
-  src: PropTypes.node,
   alt: PropTypes.string,
   placeholder: PropTypes.node,
   errorPlaceholder: PropTypes.string,
@@ -59,7 +58,11 @@ const AppImage = (props) => {
     } else {
       setSrc(props.errorPlaceholder);
     }
-  }, [props.onError, props.fallback, props.errorPlaceholder, showFallback]);
+    const errorCallback = props.onError;
+    if (errorCallback) {
+      errorCallback(event);
+    }
+  }, [props.fallback, props.errorPlaceholder, showFallback, props.onError]);
 
   const placeholder = useMemo(() => {
     return (
@@ -77,7 +80,7 @@ const AppImage = (props) => {
         'image-fit-contain': props.imageFit === ImageFit.CONTAIN,
         'no-image': !src
       }
-    ), [props.className, props.circle, src]);
+    ), [props.circle, props.round, props.bordered, props.imageFit, src]);
 
   return (
     // due to className of ant design image not work as expected
