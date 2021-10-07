@@ -13,7 +13,7 @@ class AppIntl {
     if (this.languagueId !== currentLanguageId) {
       this.languagueId = currentLanguageId;
       this.intl = createIntl({
-        locale: this.locale,
+        locale: this.languagueId,
         messages: Translations[currentLanguageId]?.src
       }, appIntlCache);
     }
