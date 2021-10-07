@@ -971,7 +971,7 @@ const groups = [
                                         message: 'This task not found',
                                         validate: async (value) => {
                                           await delay(2000);
-                                          throw "Unexpected error occurred, please try again";
+                                          throw new Error('Unexpected error occurred, please try again');
                                         }
                                       }]}
                                     showSuccessValidateStatus={true}>
