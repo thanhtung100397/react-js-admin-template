@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { TypeChecker } from '../utils/helpers';
 import ReducerLogger from './_middleware/reducer/reducerLogger';
 import { stringJoin } from '../utils/stringHelpers';
-import languageReducer from './ui/component/language/languageReducer';
+import languageReducer from './ui/language/languageReducer';
 import { signInReducer } from './data/api/auth/signIn/signIn';
 
 const reducers = { // define all application reducers here

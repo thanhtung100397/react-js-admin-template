@@ -1,6 +1,6 @@
-import { CHANGE_LANGUAGE } from '../../../actionTypes';
-import { getLanguage } from '../../../../services/ui/language/languageService';
-import { StateHelpers } from '../../../../utils/stateHelpers';
+import { CHANGE_LANGUAGE_ACTION } from '../../actionTypes';
+import { getLanguage } from '../../../services/ui/language/languageService';
+import { StateHelpers } from '../../../utils/stateHelpers';
 
 const DEFAULT_STATE = {
   languageId: getLanguage()
@@ -8,7 +8,7 @@ const DEFAULT_STATE = {
 
 const languageReducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
-    case CHANGE_LANGUAGE:
+    case CHANGE_LANGUAGE_ACTION:
       return StateHelpers.updateFields(state, action.payload, ['languageId']);
 
     default:
