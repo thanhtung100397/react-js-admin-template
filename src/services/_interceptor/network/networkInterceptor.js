@@ -1,4 +1,3 @@
-import React from 'react';
 import AppNotification from '../../../components/notification/AppNotification';
 import { appIntl } from '../../../translations/provider/TranslationsProvider';
 
