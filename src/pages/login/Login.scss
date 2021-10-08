@@ -1,6 +1,5 @@
 .login-page {
-  background-position: center;
-  background-repeat: no-repeat;
+  background: no-repeat center;
   background-size: cover;
   align-items: center;
   justify-content: center;
@@ -15,6 +14,12 @@
 
   .app-card {
     min-width: 250px;
+
+    .login-form-info {
+      padding: 10px;
+      border-left: red solid 3px;
+      max-width: 250px;
+    }
 
     .login-form-container {
 
