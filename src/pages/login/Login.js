@@ -14,7 +14,8 @@ import { images } from '../../assets/images';
 import { ColorIcons } from '../../assets/icons';
 import './Login.scss';
 import { useDispatch } from 'react-redux';
-import { signInAction } from '../../state/data/api/auth/signIn/signIn';
+import { SignInAction } from '../../state/data/api/auth/signIn/signIn';
+import { useApiFetchingWatcher } from '../../state/data/api/apiHook';
 
 const { Title } = AppTypography;
 
@@ -23,11 +24,15 @@ const pageStyle = {
 };
 
 const Login = (props) => {
-  const [signingIn, setSigningIn] = useState();
+  const [signInAction, setSignInAction] = useState();
   const dispatch = useDispatch();
 
+  const signInWatcher = useApiFetchingWatcher(signInAction);
+
   const handleFormSubmit = (data) => {
-    dispatch(signInAction.FETCH_API(data));
+    const signInAction = SignInAction.FETCH_API(data);
+    setSignInAction(signInAction);
+    dispatch(signInAction);
   };
 
   return (
@@ -58,7 +63,7 @@ const Login = (props) => {
                                    placeholderID="ID_PASSWORD"/>
               </AppForm.Item>
               <AppButton className="btn-sign-in w-full" type="primary" htmlType="submit"
-                         loading={signingIn}>
+                         loading={signInWatcher.isInProgress}>
                 <FormattedMessage id="ID_SIGN_IN"/>
               </AppButton>
             </AppSpace>
