@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useApiFetchingWatcher } from '../../state/data/api/apiHook';
 import { FormattedMessage } from 'react-intl';
 import AppContainer from '../../containers/container/AppContainer';
 import AppSpace from '../../containers/space/AppSpace';
@@ -12,10 +14,8 @@ import AppButton from '../../components/button/AppButton';
 import { ValidationRule } from '../../constants/validationRules';
 import { images } from '../../assets/images';
 import { ColorIcons } from '../../assets/icons';
-import './Login.scss';
-import { useDispatch } from 'react-redux';
 import { SignInAction } from '../../state/data/api/auth/signIn/signIn';
-import { useApiFetchingWatcher } from '../../state/data/api/apiHook';
+import './Login.scss';
 
 const { Title } = AppTypography;
 
