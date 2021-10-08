@@ -9,14 +9,14 @@ const onApiFetching = (apiCall, apiAction) => function* (action) {
   }
   const res = yield apiCall(action.payload || {});
   if (isSuccess(res)) {
-    yield put(apiAction.API_RESPONSE_SUCCESS(res));
+    yield put(apiAction.API_RESPONSE_SUCCESS(res, action.id));
   } else {
-    yield put(apiAction.API_RESPONSE_FAILURE(res));
+    yield put(apiAction.API_RESPONSE_FAILURE(res, action.id));
   }
 };
 
-const handleApiFetchingError = (apiAction) => function* (error) {
-  yield put(apiAction.API_FETCHING_ERROR(error));
+const handleApiFetchingError = (apiAction) => function* (error, action) {
+  yield put(apiAction.API_FETCHING_ERROR(error, action.id));
 };
 
 export const createApiSagas = (uniqueId, apiCall, apiAction) => {
