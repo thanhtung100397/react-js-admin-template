@@ -11,6 +11,7 @@ import AppSelect from '../../components/select/AppSelect';
 import AppForm from '../../components/form/AppForm';
 import AppButton from '../../components/button/AppButton';
 import AppImage from '../../components/image/AppImage';
+import AppAlert from '../../components/alert/AppAlert';
 import { Icons } from '../../assets/icons';
 import { ValidationRule } from '../../constants/validationRules';
 import { delay } from '../../utils/helpers';
@@ -23,6 +24,7 @@ const { Option } = AppSelect;
 
 const ROW_GUTTER = 24;
 const ITEM_SPACE = 20;
+const TINY_ITEM_SPACE = 10;
 const ROOT_TITLE_LEVEL = 2;
 const MAX_TITLE_LEVEL = 5;
 
@@ -32,6 +34,8 @@ const APP_IMAGE_PLACEHOLDER_URL = `https://via.placeholder.com/${APP_IMAGE_FIXED
 const APP_IMAGE_BROKEN_URL = 'https://foo.bar/image.png';
 const APP_IMAGE_ERROR_PLACEHOLDER_URL = `https://via.placeholder.com/${APP_IMAGE_FIXED_SIZE}/FF0000/FFFFFF/?text=Broken`;
 const APP_IMAGE_FALLBACK_URL = 'https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg';
+
+const SHORT_DUMMY_TEXT = "Lorem ipsum dolor sit amet";
 
 const LONG_DUMMY_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt " +
   "ut labore et dolore magna aliqua";
@@ -1183,6 +1187,108 @@ const groups = [
                               width={APP_IMAGE_FIXED_SIZE} height={APP_IMAGE_FIXED_SIZE}/>
                   </Col>
                 </Row>
+              </AppSpace>
+            )
+          }
+        </Col>
+      </Row>
+    )
+  },
+  {
+    title: 'App Alert',
+    content: (
+      <Row gutter={ROW_GUTTER} vStretch={true}>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+          {
+            contentCard('Basic usage', 'Basic use of alert',
+              <AppSpace size={ITEM_SPACE}>
+                <AppAlert type="success" message="Alert type success"/>
+                <AppAlert type="info" message="Alert type info"/>
+                <AppAlert type="warning" message="Alert type warning"/>
+                <AppAlert type="error" message="Alert type error"/>
+              </AppSpace>
+            )
+          }
+        </Col>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+          {
+            contentCard('Alert action', 'Alert custom action',
+              <AppSpace size={ITEM_SPACE}>
+                <AppAlert type="info" message="Alert with custom actions (horizontal)"
+                          action={
+                            <AppSpace layoutDirection="horizontal" size={TINY_ITEM_SPACE}>
+                              <AppButton onClick={() => AppNotification.info('Action 1', 'Action 1 clicked')}>Action 1</AppButton>
+                              <AppButton onClick={() => AppNotification.info('Action 2', 'Action 2 clicked')}>Action 2</AppButton>
+                            </AppSpace>
+                          }/>
+                <AppAlert type="info" message="Alert with custom actions (vertical)"
+                          action={
+                            <AppSpace layoutDirection="vertical" size={TINY_ITEM_SPACE}>
+                              <AppButton onClick={() => AppNotification.info('Action 1', 'Action 1 clicked')}>Action 1</AppButton>
+                              <AppButton onClick={() => AppNotification.info('Action 2', 'Action 2 clicked')}>Action 2</AppButton>
+                            </AppSpace>
+                          }/>
+                <AppAlert type="info" message="Alert with custom action and close action" closable={true}
+                          action={
+                            <AppButton type="primary" onClick={() => AppNotification.info('Action 1', 'Action 1 clicked')}>Action 1</AppButton>
+                          }/>
+              </AppSpace>
+            )
+          }
+        </Col>
+        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
+          {
+            contentCard('Alert expanded', 'Aler with icon and description',
+              <AppSpace size={ITEM_SPACE}>
+                <Row gutter={ROW_GUTTER}>
+                  <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                    <AppSpace className="w-full" size={ITEM_SPACE}>
+                      <AppAlert type="success" showIcon={true} message="Alert type success with icon"/>
+                      <AppAlert type="info" showIcon={true} message="Alert type info with icon"/>
+                    </AppSpace>
+                  </Col>
+                  <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                    <AppSpace className="w-full" size={ITEM_SPACE}>
+                      <AppAlert type="warning" showIcon={true} message="Alert type warning with icon"/>
+                      <AppAlert type="error" showIcon={true} message="Alert type error with icon"/>
+                    </AppSpace>
+                  </Col>
+                </Row>
+                <Row gutter={ROW_GUTTER}>
+                  <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                    <AppSpace className="w-full" size={ITEM_SPACE}>
+                      <AppAlert type="success" showIcon={true} message="Alert type success expanded with icon"
+                                description={LONG_DUMMY_TEXT}/>
+                      <AppAlert type="info" showIcon={true} message="Alert type info expanded with icon"
+                                description={LONG_DUMMY_TEXT}/>
+                    </AppSpace>
+                  </Col>
+                  <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                    <AppSpace className="w-full" size={ITEM_SPACE}>
+                      <AppAlert type="warning" showIcon={true} message="Alert type warning expanded with icon"
+                                description={LONG_DUMMY_TEXT}/>
+                      <AppAlert type="error" showIcon={true} message="Alert type error expanded with icon"
+                                description={LONG_DUMMY_TEXT}/>
+                    </AppSpace>
+                  </Col>
+                </Row>
+              </AppSpace>
+            )
+          }
+        </Col>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+          {
+            contentCard('Other options', 'All other options of this component',
+              <AppSpace size={ITEM_SPACE}>
+                <AppAlert type="info" closable={true} message="Alert with close action"/>
+                <AppAlert type="info" closable={true} closeText="Close" message="Alert with close action as text"/>
+                <AppAlert type="info" closable={true} message="Alert with on close action handler"
+                          onClose={() => AppNotification.info('Alert close', 'triggered alert onClose()')}/>
+                <AppAlert type="info" closable={true} message="Alert with after close action handler"
+                          afterClose={() => AppNotification.info('Alert after close', 'triggered alert afterClose()')}/>
+                <AppAlert type="info" showIcon={true} icon={<Icons.GlobalOutlined/>} message="Alert type info with custom icon"/>
+                <AppAlert type="info" showIcon={true} icon={<Icons.GlobalOutlined/>}
+                          message="Alert type info expanded with custom icon" description={LONG_DUMMY_TEXT}/>
               </AppSpace>
             )
           }
