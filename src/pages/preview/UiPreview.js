@@ -101,19 +101,19 @@ const groups = [
                 contentCard('Level', 'All component levels',
                   <>
                     <Title>
-                      1. Lorem ipsum dolor sit amet
+                      1. {SHORT_DUMMY_TEXT}
                     </Title>
                     <Title level={2}>
-                      2. Lorem ipsum dolor sit amet
+                      2. {SHORT_DUMMY_TEXT}
                     </Title>
                     <Title level={3}>
-                      3. Lorem ipsum dolor sit amet
+                      3. {SHORT_DUMMY_TEXT}
                     </Title>
                     <Title level={4}>
-                      4. Lorem ipsum dolor sit amet
+                      4. {SHORT_DUMMY_TEXT}
                     </Title>
                     <Title level={5}>
-                      5. Lorem ipsum dolor sit amet
+                      5. {SHORT_DUMMY_TEXT}
                     </Title>
                   </>
                 )
@@ -124,16 +124,16 @@ const groups = [
                 contentCard('Text Style', 'All supported component text style',
                   <>
                     <Title level={5} bold={true}>
-                      (Bold) Lorem ipsum dolor sit amet
+                      (Bold) {SHORT_DUMMY_TEXT}
                     </Title>
                     <Title level={5} italic={true}>
-                      (Italic) Lorem ipsum dolor sit amet
+                      (Italic) {SHORT_DUMMY_TEXT}
                     </Title>
                     <Title level={5} underline={true}>
-                      (Underline) Lorem ipsum dolor sit amet
+                      (Underline) {SHORT_DUMMY_TEXT}
                     </Title>
                     <Title level={5} disabled={true}>
-                      (Disabled) Lorem ipsum dolor sit amet
+                      (Disabled) {SHORT_DUMMY_TEXT}
                     </Title>
                   </>
                 )
@@ -147,22 +147,22 @@ const groups = [
                       lorem ipsum dolor sit amet (First Caps)
                     </Title>
                     <Title level={5} allCaps={true}>
-                      (All Caps) Lorem ipsum dolor sit amet
+                      (All Caps) {SHORT_DUMMY_TEXT}
                     </Title>
                     <Title level={5} ellipsis={true}>
                       (Ellipsis) {LONG_DUMMY_TEXT}
                     </Title>
                     <Title level={5} copyable={true}>
-                      (Copyable) Lorem ipsum dolor sit amet
+                      (Copyable) {SHORT_DUMMY_TEXT}
                     </Title>
                     <Title level={5} strikethrough={true}>
-                      (Strike Through) Lorem ipsum dolor sit amet
+                      (Strike Through) {SHORT_DUMMY_TEXT}
                     </Title>
                     <Title level={5} highlight={true}>
-                      (Highlight) Lorem ipsum dolor sit amet
+                      (Highlight) {SHORT_DUMMY_TEXT}
                     </Title>
                     <Title level={5} onClick={() => AppNotification.success('Click Message', 'Title clicked')}>
-                      (Click listener) Lorem ipsum dolor sit amet
+                      (Click listener) {SHORT_DUMMY_TEXT}
                     </Title>
                   </>
                 )
@@ -345,9 +345,9 @@ const groups = [
                   <AppSpace size={ITEM_SPACE}>
                     <AppInput.Text/>
                     <AppInput.Text placeholder="(Placeholder) Enter text"/>
-                    <AppInput.Text value="(Value) Lorem ipsum dolor sit amet"
+                    <AppInput.Text value={`(Value) ${SHORT_DUMMY_TEXT}`}
                                    placeholder="Enter text"/>
-                    <AppInput.Text defaultValue="(Default Value) Lorem ipsum dolor sit amet"
+                    <AppInput.Text defaultValue={`(Default Value) ${SHORT_DUMMY_TEXT}`}
                                    placeholder="Enter text"/>
                   </AppSpace>
                 )
@@ -579,7 +579,7 @@ const groups = [
                 </AppSelect>
                 <AppSelect placeholder="(Placeholder) Pick or enter tags (max tag text length= 10)"
                            mode="tags" maxTagTextLength={10}>
-                  <Option value="Lorem ipsum dolor sit amet">Lorem ipsum dolor sit amet</Option>
+                  <Option value={SHORT_DUMMY_TEXT}>{SHORT_DUMMY_TEXT}</Option>
                   <Option value="Consectetur adipiscing elit">Consectetur adipiscing elit</Option>
                   <Option value="Sed do eiusmod tempor incididunt">Sed do eiusmod tempor incididunt</Option>
                   <Option value="Ut labore et dolore magna aliqua">Ut labore et dolore magna aliqua</Option>
@@ -783,7 +783,7 @@ const groups = [
                           <Col span={24}>
                             <AppForm.Item label="Field 2" labelCol={{span: 4}} inputCol={{span: 20}}
                                           validateStatus="success" validateMessage="Look good! can submit">
-                              <AppInput.Text defaultValue="Lorem ipsum dolor sit amet"
+                              <AppInput.Text defaultValue={SHORT_DUMMY_TEXT}
                                              placeholder="Enter value"/>
                             </AppForm.Item>
                           </Col>
