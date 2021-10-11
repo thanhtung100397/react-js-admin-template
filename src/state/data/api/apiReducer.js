@@ -1,4 +1,6 @@
-import { getCode, getData, getHeaders, getHttpStatus, getMessage, isSuccess } from '../../../services/apiHelpers';
+import {
+  getCode, getData, getHeaders, getHttpStatus, getMessage, isSuccess, getErrorMessage
+} from '../../../services/apiHelpers';
 import {
   API_FETCHING_ACTION, API_RESPONSE_SUCCESS_ACTION, API_RESPONSE_FAILURE_ACTION, API_FETCHING_ERROR_ACTION
 } from '../../actionTypes';
@@ -15,10 +17,11 @@ export const FetchingStatus = {
 export const apiResToState = (res) => ({
   [FETCHING_STATUS_FIELD]: FetchingStatus.IDLE,
   isSuccess: isSuccess(res),
+  isFailure: !this.isSuccess, // this field is NOT redundant
   httpStatus: getHttpStatus(res),
   headers: getHeaders(res),
   code: getCode(res),
-  msg: getMessage(res),
+  message: getMessage(res),
   data: getData(res),
   error: undefined
 });
@@ -26,10 +29,11 @@ export const apiResToState = (res) => ({
 export const apiFetchingErrorToState = (error) => ({
   [FETCHING_STATUS_FIELD]: FetchingStatus.ERROR,
   isSuccess: false,
+  isFailure: false, // this field is NOT redundant
   httpStatus: undefined,
   headers: undefined,
   code: undefined,
-  msg: undefined,
+  message: getErrorMessage(error),
   data: undefined,
   error: error
 });
