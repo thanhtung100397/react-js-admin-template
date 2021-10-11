@@ -16,7 +16,7 @@ const sagaHandlerWrapper = (handler, errorHandler) => function* (action) {
   } catch (err) {
     SagaLogger.error(action.type, action, err);
     if (errorHandler) {
-      yield errorHandler(err);
+      yield errorHandler(err, action);
     }
   }
 };
