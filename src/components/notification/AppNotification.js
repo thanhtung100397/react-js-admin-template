@@ -1,4 +1,5 @@
 import { notification } from 'antd';
+import { APP_NOTIFICATION_DEFAULT_DURATION_IN_SECONDS } from '../../constants/constants';
 import './AppNotification.scss';
 
 const NotificationType = {
@@ -10,7 +11,7 @@ const NotificationType = {
 
 const defaultConfig = {
   className: 'app-notification',
-  duration: 2, // time in seconds before notification is closed
+  duration: APP_NOTIFICATION_DEFAULT_DURATION_IN_SECONDS, // time in seconds before notification is closed
   placement: 'topRight', // position of notification, values 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'
 };
 
