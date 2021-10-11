@@ -1,3 +1,4 @@
+import { CUSTOM_ERROR_MESSAGE_FIELD } from './apiClient';
 
 export const isSuccess = (res) => {
   return res.httpStatus === 200;
@@ -21,4 +22,8 @@ export const getMessage = (res) => {
 
 export const getData = (res) => {
   return res.data?.data;
+};
+
+export const getErrorMessage = (error) => {
+  return error[CUSTOM_ERROR_MESSAGE_FIELD] || error.message;
 };
