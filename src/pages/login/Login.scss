@@ -15,12 +15,6 @@
   .app-card {
     min-width: 250px;
 
-    .login-form-info {
-      padding: 10px;
-      border-left: red solid 3px;
-      max-width: 250px;
-    }
-
     .login-form-container {
 
       .sign-in-title {
@@ -31,8 +25,12 @@
         margin-bottom: 24px;
       }
 
+      .sign-in-alert {
+        margin-bottom: 10px;
+      }
+
       .app-input {
-        width: 250px;
+        width: 100%;
       }
 
       .btn-sign-in {

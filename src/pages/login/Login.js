@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { useApiFetchingWatcher } from '../../state/data/api/apiHook';
+import { useApiFetchingWatcher, useApiResultWatcher } from '../../state/data/api/apiHook';
 import { FormattedMessage } from 'react-intl';
 import AppContainer from '../../containers/container/AppContainer';
 import AppSpace from '../../containers/space/AppSpace';
@@ -11,13 +11,14 @@ import AppTypography from '../../components/typography/AppTypography';
 import AppForm from '../../components/form/AppForm';
 import AppInput from '../../components/input/AppInput';
 import AppButton from '../../components/button/AppButton';
+import AppAlert from '../../components/alert/AppAlert';
 import { ValidationRule } from '../../constants/validationRules';
 import { images } from '../../assets/images';
 import { ColorIcons } from '../../assets/icons';
 import { SignInAction } from '../../state/data/api/auth/signIn/signIn';
 import './Login.scss';
 
-const { Title, Text } = AppTypography;
+const { Title } = AppTypography;
 
 const pageStyle = {
   backgroundImage: `url(${images.img_started_background})`
@@ -28,6 +29,7 @@ const Login = (props) => {
   const dispatch = useDispatch();
 
   const signInWatcher = useApiFetchingWatcher(signInAction);
+  const signInResultWatcher = useApiResultWatcher(signInAction);
 
   const handleFormSubmit = (data) => {
     const signInAction = SignInAction.FETCH_API(data);
@@ -35,15 +37,16 @@ const Login = (props) => {
     dispatch(signInAction);
   };
 
+  const signInAlert = useMemo(() => (
+    (signInWatcher.isError || signInResultWatcher.isFailure) &&
+    <AppAlert className="w-full sign-in-alert" showIcon={true}
+              type="error" message={signInResultWatcher.message}/>
+  ), [signInWatcher.isError, signInResultWatcher]);
+
   return (
     <AppContainer className="login-page wh-full" style={pageStyle}>
       <AppLanguageSelect icon={<ColorIcons.GlobalOutlined/>} borderless={false}/>
       <AppSpace size={16}>
-        <AppCard noBodyPadding={true}>
-          <div className="login-form-info">
-            <Text className="message">Error: asndiasnd ansdinasd ahdisajd asjdiajsd asdsjfsdjfi</Text>
-          </div>
-        </AppCard>
         <AppCard>
           <div className="login-form-container d-flex flex-column h-align-center">
             <AppImage className="logo-image"
@@ -54,6 +57,7 @@ const Login = (props) => {
             <Title className="sign-in-title" level={4} allCaps={true}>
               <FormattedMessage id="ID_SIGN_IN"/>
             </Title>
+            {signInAlert}
             <AppForm onSubmit={handleFormSubmit}>
               <AppSpace className="w-full" size={12}>
                 <AppForm.Item layoutDirection="vertical"
