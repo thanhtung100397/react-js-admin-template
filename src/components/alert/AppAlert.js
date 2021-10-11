@@ -33,6 +33,9 @@ const defaultProps = {
 };
 
 const appAlertText = (type, text) => {
+  if (!text) {
+    return;
+  }
   return <AppText className={`alert-text-${type}`}>{text}</AppText>
 };
 
