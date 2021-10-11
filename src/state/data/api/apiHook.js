@@ -14,6 +14,6 @@ export const useApiFetchingWatcher = (action = {}) => {
   }), [fetchingStatus]);
 };
 
-export const useApiResultWatcher = (action) => {
-
+export const useApiResultWatcher = (action = {}) => {
+  return useSelector((state) => getObjField(state, `${action.path}.${action.id}`)) || {};
 };
