@@ -20,4 +20,20 @@
     border: 1px solid $error-color;
     background-color: $error-shadow-color;
   }
+
+  .alert-text-success {
+    color: $success-text-color;
+  }
+
+  .alert-text-info {
+    color: $info-text-color;
+  }
+
+  .alert-text-warning {
+    color: $warning-text-color;
+  }
+
+  .alert-text-error {
+    color: $error-text-color;
+  }
 }

@@ -17,15 +17,19 @@ $app-image-border-color: #eeeeee;
 
 $app-disabled-color: #cccccc;
 
+$info-text-color: #1890ff;
 $info-color: #91d5ff;
 $info-shadow-color: #{$info-color + '33'};
 
+$success-text-color: #52c41a;
 $success-color: #52c41a;
 $success-shadow-color: #{$success-color + '33'};
 
+$warning-text-color: #faad14;
 $warning-color: #faad14;
 $warning-shadow-color: #{$warning-color + '33'};
 
+$error-text-color: #ff4d4f;
 $error-color: #ff4d4f;
 $error-shadow-color: #{$error-color + '33'};
 
