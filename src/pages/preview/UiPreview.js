@@ -1286,6 +1286,7 @@ const groups = [
                           onClose={() => AppNotification.info('Alert close', 'triggered alert onClose()')}/>
                 <AppAlert type="info" closable={true} message="Alert with after close action handler"
                           afterClose={() => AppNotification.info('Alert after close', 'triggered alert afterClose()')}/>
+                <AppAlert type="info" autoTextColor={false} message="Alert without auto text color"/>
                 <AppAlert type="info" showIcon={true} icon={<Icons.GlobalOutlined/>} message="Alert type info with custom icon"/>
                 <AppAlert type="info" showIcon={true} icon={<Icons.GlobalOutlined/>}
                           message="Alert type info expanded with custom icon" description={LONG_DUMMY_TEXT}/>
