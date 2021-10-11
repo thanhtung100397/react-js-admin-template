@@ -1,0 +1,23 @@
+@import '../../colors.module';
+
+.app-alert {
+  &.ant-alert-success {
+    border: 1px solid $success-color;
+    background-color: $success-shadow-color;
+  }
+
+  &.ant-alert-info {
+    border: 1px solid $info-color;
+    background-color: $info-shadow-color;
+  }
+
+  &.ant-alert-warning {
+    border: 1px solid $warning-color;
+    background-color: $warning-shadow-color;
+  }
+
+  &.ant-alert-error {
+    border: 1px solid $error-color;
+    background-color: $error-shadow-color;
+  }
+}
