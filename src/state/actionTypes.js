@@ -5,6 +5,9 @@ export const isInitialActionType = (type) => {
 
 const actionPrefixFormat = (prefix) => `${prefix}.`;
 
+// global action
+export const UNEXPECTED_REDUCER_ERROR_ACTION = 'UNEXPECTED_REDUCER_ERROR_ACTION';
+
 // ui actions
 export const CHANGE_LANGUAGE_ACTION = `${actionPrefixFormat('UI.LANGUAGE')}CHANGE_LANGUAGE_ACTION`;
 

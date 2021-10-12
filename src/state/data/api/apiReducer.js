@@ -2,7 +2,7 @@ import {
   getCode, getData, getHeaders, getHttpStatus, getMessage, isSuccess, getErrorMessage, getErrorType
 } from '../../../services/apiHelpers';
 import {
-  API_FETCHING_ACTION, API_RESPONSE_SUCCESS_ACTION, API_RESPONSE_FAILURE_ACTION, API_FETCHING_ERROR_ACTION
+  API_FETCHING_ACTION, API_RESPONSE_SUCCESS_ACTION, API_RESPONSE_FAILURE_ACTION, API_FETCHING_ERROR_ACTION, UNEXPECTED_REDUCER_ERROR_ACTION
 } from '../../actionTypes';
 import { updateState, updateStateField } from '../../stateHelpers';
 
@@ -58,7 +58,11 @@ export const createApiReducer = (uniqueId) => {
     [API_FETCHING_ERROR_ACTION(uniqueId)]: (state, action) =>
       updateStateField(state, action.id,
         updateState(state[action.id], apiFetchingErrorToState(action.payload))
-      )
+      ),
+    [UNEXPECTED_REDUCER_ERROR_ACTION]: (state, action) =>
+      updateStateField(state, action.id,
+        updateState(state[action.id], apiFetchingErrorToState(action.payload))
+      ),
   };
 
   return (state = {}, action) => {

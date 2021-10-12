@@ -4,6 +4,7 @@ import ReducerLogger from './_middleware/reducer/reducerLogger';
 import { stringJoin } from '../utils/stringHelpers';
 import languageReducer from './ui/language/languageReducer';
 import { signInReducer } from './data/api/auth/signIn/signIn';
+import { UNEXPECTED_REDUCER_ERROR_ACTION } from './actionTypes';
 
 const reducers = { // define all application reducers here
   ui: {
@@ -19,7 +20,7 @@ const reducers = { // define all application reducers here
 };
 
 const createAppReducer = (reducer, name) => {
-  return (state, action) => {
+  return function reducerWrapper(state, action) {
     try {
       let nextState = reducer(state, action);
       if (nextState !== state) {
@@ -28,7 +29,11 @@ const createAppReducer = (reducer, name) => {
       return nextState;
     } catch (error) {
       ReducerLogger.error(name, action, state, error);
-      return state;
+      return reducerWrapper(state, {
+        ...action,
+        type: UNEXPECTED_REDUCER_ERROR_ACTION,
+        payload: error
+      });
     }
   }
 };
