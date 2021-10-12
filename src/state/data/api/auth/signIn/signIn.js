@@ -1,6 +1,6 @@
-import { createApiActions } from '../../apiAction';
-import { createApiSagas } from '../../apiSaga';
-import { createApiReducer } from '../../apiReducer';
+import { createApiActions } from '../../../../_base/api/apiAction';
+import { createApiSagas } from '../../../../_base/api/apiSaga';
+import { createApiReducer } from '../../../../_base/api/apiReducer';
 import { signIn } from '../../../../../services/data/auth/signIn/signInService';
 
 const UNIQUE_ID = 'data.api.auth.signIn';
