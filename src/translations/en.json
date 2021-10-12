@@ -19,6 +19,15 @@
   "ID_NETWORK_ERROR_SERVER_REFUSED_CONNECTION_TITLE": "Server connection error",
   "ID_NETWORK_ERROR_SERVER_REFUSED_CONNECTION_MESSAGE": "Server refused requested connection",
 
+  "ID_API_RESPONSE_SUCCESS_TITLE": "Success ({httpStatus} {httpStatusText} - {code})",
+  "ID_API_RESPONSE_SUCCESS_DEFAULT_MESSAGE": "Request processed successfully",
+
+  "ID_API_RESPONSE_FAILURE_TITLE": "Failure ({httpStatus} {httpStatusText} - {code})",
+  "ID_API_RESPONSE_FAILURE_DEFAULT_MESSAGE": "Failed to process request",
+
+  "ID_API_UNEXPECTED_ERROR_DEFAULT_TITLE": "Unexpected error",
+  "ID_API_UNEXPECTED_ERROR_DEFAULT_MESSAGE": "Unexpected error occured while processing request",
+
   "ID_USERNAME": "Username",
   "ID_PASSWORD": "Password",
   "ID_SIGN_IN": "Sign in",

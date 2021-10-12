@@ -19,6 +19,15 @@
   "ID_NETWORK_ERROR_SERVER_REFUSED_CONNECTION_TITLE": "Lỗi kết nối máy chủ",
   "ID_NETWORK_ERROR_SERVER_REFUSED_CONNECTION_MESSAGE": "Máy chủ từ chối yêu cầu kết nối",
 
+  "ID_API_RESPONSE_SUCCESS_TITLE": "Thành công ({httpStatus} {httpStatusText} - {code})",
+  "ID_API_RESPONSE_SUCCESS_DEFAULT_MESSAGE": "Xử lý yêu cầu thành công",
+
+  "ID_API_RESPONSE_FAILURE_TITLE": "Thất bại ({httpStatus} {httpStatusText} - {code})",
+  "ID_API_RESPONSE_FAILURE_DEFAULT_MESSAGE": "Xử lý yêu cầu thất bại",
+
+  "ID_API_UNEXPECTED_ERROR_TITLE": "Có lỗi xảy ra",
+  "ID_API_UNEXPECTED_ERROR_DEFAULT_MESSAGE": "Xử lý yêu cầu gặp lỗi",
+
   "ID_USERNAME": "Tên đăng nhập",
   "ID_PASSWORD": "Mật khẩu",
   "ID_SIGN_IN": "Đăng nhập",

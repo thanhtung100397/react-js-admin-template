@@ -1,4 +1,3 @@
-import AppNotification from '../../../components/notification/AppNotification';
 import { appIntl } from '../../../translations/provider/TranslationsProvider';
 import { hasInternetConnection } from '../../../utils/browserHelpers';
 import { CUSTOM_ERROR_MESSAGE_FIELD, CUSTOM_ERROR_TYPE_FIELD } from '../../apiClient';
@@ -22,7 +21,6 @@ export const networkInterceptor = (apiInstance) => {
           errorTitle = appIntl.getMessage({id: 'ID_NETWORK_ERROR_NO_INTERNET_TITLE'});
           errorMessage = appIntl.getMessage({id: 'ID_NETWORK_ERROR_NO_INTERNET_MESSAGE'});
         }
-        AppNotification.error(errorTitle, errorMessage);
         error[CUSTOM_ERROR_TYPE_FIELD] = errorTitle;
         error[CUSTOM_ERROR_MESSAGE_FIELD] = errorMessage;
       }
