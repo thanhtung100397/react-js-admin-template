@@ -21,19 +21,36 @@
     background-color: $error-shadow-color;
   }
 
-  .alert-text-success {
-    color: $success-text-color;
+  .ant-alert-message, .ant-alert-description {
+    .app-typography {
+      &.alert-text-success {
+        color: $success-text-color;
+      }
+
+      &.alert-text-info {
+        color: $info-text-color;
+      }
+
+      &.alert-text-warning {
+        color: $warning-text-color;
+      }
+
+      &.alert-text-error {
+        color: $error-text-color;
+      }
+    }
   }
 
-  .alert-text-info {
-    color: $info-text-color;
+  .ant-alert-message {
+    .app-typography {
+      font-size: 16px;
+    }
   }
 
-  .alert-text-warning {
-    color: $warning-text-color;
-  }
-
-  .alert-text-error {
-    color: $error-text-color;
+  .ant-alert-description {
+    .app-typography {
+      font-size: 14px;
+      line-height: 22px;
+    }
   }
 }

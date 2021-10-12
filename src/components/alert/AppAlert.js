@@ -36,6 +36,9 @@ const appAlertText = (type, text) => {
   if (!text) {
     return;
   }
+  if (React.isValidElement(text)) {
+    return text;
+  }
   return <AppText className={`alert-text-${type}`}>{text}</AppText>
 };
 
