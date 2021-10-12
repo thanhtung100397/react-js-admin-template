@@ -27,7 +27,7 @@ exports.authApis = [
       }
       const tokenPair = newTokenPair(userInfo);
       res.jsonResponse({
-        id: userInfo.id,
+        userId: userInfo.id,
         username: userInfo.username,
         ...tokenPair,
         accessTokenExpiration: ACCESS_TOKEN_EXPIRATION_SECONDS,
