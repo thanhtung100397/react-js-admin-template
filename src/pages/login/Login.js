@@ -32,7 +32,7 @@ const Login = (props) => {
   const signInResultWatcher = useApiResultWatcher(signInAction);
 
   const handleFormSubmit = (data) => {
-    const signInAction = SignInAction.FETCH_API(data);
+    const signInAction = SignInAction.FETCH_API(data, false);
     setSignInAction(signInAction);
     dispatch(signInAction);
   };

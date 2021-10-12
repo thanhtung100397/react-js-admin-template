@@ -19,17 +19,23 @@ const onApiFetching = (apiCall, apiActions) => function* (action) {
 };
 
 function* handleApiResponseSuccess(res, apiActions, action) {
-  showApiResSuccessNotification(res);
+  if (action.showNoti) {
+    showApiResSuccessNotification(res);
+  }
   yield put(apiActions.API_RESPONSE_SUCCESS(res, action.id));
 }
 
 function* handleApiResponseFailure(res, apiActions, action) {
-  showApiResFailureNotification(res);
+  if (action.showNoti) {
+    showApiResFailureNotification(res);
+  }
   yield put(apiActions.API_RESPONSE_FAILURE(res, action.id));
 }
 
 const handleApiFetchingError = (apiActions) => function* (error, action) {
-  showApiErrorNotification(error);
+  if (action.showNoti) {
+    showApiErrorNotification(error);
+  }
   yield put(apiActions.API_FETCHING_ERROR(error, action.id));
 };
 

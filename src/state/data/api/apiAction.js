@@ -6,10 +6,11 @@ import {
 
 export const createApiActions = (uniqueId) => {
   return {
-    FETCH_API: (data) => ({
+    FETCH_API: (data, showNoti = true) => ({
       type: API_FETCHING_ACTION(uniqueId),
       id: uuid.v4(),
       path: uniqueId,
+      showNoti: showNoti,
       payload: data
     }),
 
