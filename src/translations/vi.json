@@ -14,7 +14,7 @@
   "ID_REQUIRED_VALIDATION": "Giá trị bắt buộc",
 
   "ID_NETWORK_ERROR_NO_INTERNET_TITLE": "Lỗi kết nối",
-  "ID_NETWORK_ERROR_NO_INTERNET_MESSAGE": "Vui lòng kiểm tra lại đường truyền",
+  "ID_NETWORK_ERROR_NO_INTERNET_MESSAGE": "Không có kết nối mạng",
 
   "ID_NETWORK_ERROR_SERVER_REFUSED_CONNECTION_TITLE": "Lỗi kết nối máy chủ",
   "ID_NETWORK_ERROR_SERVER_REFUSED_CONNECTION_MESSAGE": "Máy chủ từ chối yêu cầu kết nối",

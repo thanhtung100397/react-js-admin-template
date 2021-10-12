@@ -14,7 +14,7 @@
   "ID_REQUIRED_VALIDATION": "Input required",
 
   "ID_NETWORK_ERROR_NO_INTERNET_TITLE": "Network connection error",
-  "ID_NETWORK_ERROR_NO_INTERNET_MESSAGE": "Please check your network connection",
+  "ID_NETWORK_ERROR_NO_INTERNET_MESSAGE": "There is no network connection",
 
   "ID_NETWORK_ERROR_SERVER_REFUSED_CONNECTION_TITLE": "Server connection error",
   "ID_NETWORK_ERROR_SERVER_REFUSED_CONNECTION_MESSAGE": "Server refused requested connection",
