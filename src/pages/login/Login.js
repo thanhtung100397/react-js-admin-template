@@ -58,7 +58,7 @@ const Login = (props) => {
               <FormattedMessage id="ID_SIGN_IN"/>
             </Title>
             {signInAlert}
-            <AppForm onSubmit={handleFormSubmit}>
+            <AppForm className="w-full" onSubmit={handleFormSubmit}>
               <AppSpace className="w-full" size={12}>
                 <AppForm.Item layoutDirection="vertical"
                               name="username" label={<FormattedMessage id="ID_USERNAME"/>}
