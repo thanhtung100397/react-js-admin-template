@@ -5,7 +5,8 @@ import { getLanguage } from './ui/language/languageService';
 
 export const CancelToken = axios.CancelToken;
 
-export const CUSTOM_ERROR_MESSAGE_FIELD = 'customMesasge';
+export const CUSTOM_ERROR_TYPE_FIELD = 'customErrorType';
+export const CUSTOM_ERROR_MESSAGE_FIELD = 'customErrorMessage';
 
 const fixedParams = {
   lang: getLanguage()

@@ -1,5 +1,5 @@
 import {
-  getCode, getData, getHeaders, getHttpStatus, getMessage, isSuccess, getErrorMessage
+  getCode, getData, getHeaders, getHttpStatus, getMessage, isSuccess, getErrorMessage, getErrorType
 } from '../../../services/apiHelpers';
 import {
   API_FETCHING_ACTION, API_RESPONSE_SUCCESS_ACTION, API_RESPONSE_FAILURE_ACTION, API_FETCHING_ERROR_ACTION
@@ -23,7 +23,8 @@ export const apiResToState = (res) => ({
   code: getCode(res),
   message: getMessage(res),
   data: getData(res),
-  error: undefined
+  error: undefined,
+  errorType: undefined
 });
 
 export const apiFetchingErrorToState = (error) => ({
@@ -35,7 +36,8 @@ export const apiFetchingErrorToState = (error) => ({
   code: undefined,
   message: getErrorMessage(error),
   data: undefined,
-  error: error
+  error: error,
+  errorType: getErrorType(error)
 });
 
 export const createApiReducer = (uniqueId) => {
