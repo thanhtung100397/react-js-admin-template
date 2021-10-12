@@ -1,11 +1,15 @@
 import { CUSTOM_ERROR_MESSAGE_FIELD, CUSTOM_ERROR_TYPE_FIELD } from './apiClient';
 
 export const isSuccess = (res) => {
-  return res.httpStatus === 200;
+  return getHttpStatus(res) === 200;
 };
 
 export const getHttpStatus = (res) => {
-  return res.httpStatus;
+  return res.status;
+};
+
+export const getHttpStatusText = (res) => {
+  return res.statusText;
 };
 
 export const getHeaders = (res) => {
