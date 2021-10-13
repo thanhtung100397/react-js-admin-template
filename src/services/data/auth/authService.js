@@ -43,3 +43,10 @@ export const saveAuthInfo = ({userId, username, accessToken, refreshToken}) => {
   LocalStorage.save(STORAGE_AUTH_ACCESS_TOKEN_KEY, accessToken);
   LocalStorage.save(STORAGE_AUTH_REFRESH_TOKEN_KEY, refreshToken);
 };
+
+export const deleteAuthInfo = () => {
+  LocalStorage.remove(STORAGE_AUTH_USER_ID_KEY);
+  LocalStorage.remove(STORAGE_AUTH_USERNAME_KEY);
+  LocalStorage.remove(STORAGE_AUTH_ACCESS_TOKEN_KEY);
+  LocalStorage.remove(STORAGE_AUTH_REFRESH_TOKEN_KEY);
+};

@@ -2,10 +2,14 @@ import { all, takeEvery } from 'redux-saga/effects';
 import { TypeChecker } from '../utils/helpers';
 import SagaLogger from './_middleware/saga/sagaLogger';
 import languageSaga from './ui/language/languageSaga';
-import { signInSaga } from './data/api/auth/signIn/signIn';
+import authSagas from './data/api/auth/authSaga';
+import { signInSaga } from './data/api/auth/signIn/signIn'
 
 const sagas = [  // define all application sagas here
   languageSaga,
+
+  authSagas,
+
   signInSaga
 ];
 
