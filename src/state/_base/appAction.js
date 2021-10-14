@@ -1,4 +1,12 @@
+import uuid from 'uuid';
 
-export const createActions = (uniqueId) => {
-  
+const newAppAction = (storePath, actionType, payload) => ({
+  storePath: storePath,
+  type: actionType,
+  id: uuid.v4(),
+  payload: payload
+});
+
+export const createActions = (actions) => {
+
 };

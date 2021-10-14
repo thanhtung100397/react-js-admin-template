@@ -123,3 +123,13 @@ export const collectionContain = (collection, value) => {
   }
   return false;
 };
+
+export const arrToObj = (arr, mapper = (item, index) => [index, item]) => {
+  const resultObj = {};
+  arr.forEach((arrItem, index) => {
+    const [key, value] = mapper(arrItem, index);
+
+    resultObj[key] = value;
+  });
+  return resultObj;
+};
