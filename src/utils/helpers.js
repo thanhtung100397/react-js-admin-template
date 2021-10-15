@@ -124,12 +124,14 @@ export const collectionContain = (collection, value) => {
   return false;
 };
 
-export const arrToObj = (arr, mapper = (item, index) => [index, item]) => {
+export const arrToObj = (arr, keyMapper = (item, index) => index,
+                         valueMapper = (item, index) => item) => {
   const resultObj = {};
   arr.forEach((arrItem, index) => {
-    const [key, value] = mapper(arrItem, index);
-
-    resultObj[key] = value;
+    const key = keyMapper(arrItem, index);
+    if (key) {
+      resultObj[key] = valueMapper(arrItem, index);
+    }
   });
   return resultObj;
 };
