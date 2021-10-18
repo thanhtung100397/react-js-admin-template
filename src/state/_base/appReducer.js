@@ -1,12 +1,14 @@
 import ReducerLogger from '../_middleware/reducer/reducerLogger';
-import { UNEXPECTED_REDUCER_ERROR_ACTION } from '../actionTypes';
+import { isInitialActionType, UNEXPECTED_REDUCER_ERROR_ACTION } from '../actionTypes';
+import { checkActionStorePathValid } from './appAction';
 
 const appReducer = (reducer, storePath) => {
   return (state, action) => {
-    let nextState = reducer(state, action);
-    if (nextState !== state) {
-      ReducerLogger.info(storePath, action, state, nextState);
+    if (!checkActionStorePathValid(action, storePath) && !isInitialActionType()) {
+      return state;
     }
+    let nextState = reducer(state, action);
+    ReducerLogger.info(storePath, action, state, nextState);
     return nextState;
   }
 };
