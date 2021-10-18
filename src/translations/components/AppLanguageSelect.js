@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useAppLanguage } from '../../state/ui/language/languageHook';
 import PropTypes from 'prop-types';
 import { baseProps, fromBaseProps } from '../../components/base';
-import { changeLanguageAction } from '../../state/ui/language/languageAction';
+import LanguageActions from '../../state/ui/language/languageAction';
 import { Translations } from '../../constants/constants';
 import AppSelect from '../../components/select/AppSelect';
 import './AppLanguageSelect.scss';
@@ -21,7 +22,7 @@ const defaultProps = {
 const AppLanguageSelect = (props) => {
   const [currentValue, setCurrentValue] = useState();
 
-  const currentLanguageID = useSelector((state) => state.ui?.language?.languageId)
+  const currentLanguageID = useAppLanguage();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const AppLanguageSelect = (props) => {
 
   const handleOnChange = (languageId) => {
     setCurrentValue(languageId);
-    dispatch(changeLanguageAction(languageId));
+    dispatch(LanguageActions.CHANGE_LANGUAGE_ACTION(languageId));
   };
 
   const languageOptions = useMemo(() => {
