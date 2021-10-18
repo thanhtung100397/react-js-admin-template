@@ -1,12 +1,18 @@
 import uuid from 'uuid';
 
-const newAppAction = (storePath, actionType, payload) => ({
-  storePath: storePath,
-  type: actionType,
-  id: uuid.v4(),
-  payload: payload
-});
+const newAppAction = (action) => {
+  const { type, storePath, ...others } = action;
+  return {
+    id: uuid.v4(),
+    type: type,
+    storePath: storePath,
+    ...others
+  };
+};
 
 export const createActions = (actions) => {
-
+  return arrToObj(actions,
+    (action) => action.type,
+    (item) => newAppAction(action)
+  );
 };
