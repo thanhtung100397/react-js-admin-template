@@ -1,6 +1,6 @@
-import { all, takeEvery } from 'redux-saga/effects';
+import { all } from 'redux-saga/effects';
+import { createSagaWatcher } from './_base/appSaga';
 import { TypeChecker } from '../utils/helpers';
-import SagaLogger from './_middleware/saga/sagaLogger';
 import languageSaga from './ui/language/languageSaga';
 import authSagas from './data/api/auth/authSaga';
 import { signInSaga } from './data/api/auth/signIn/signIn'
@@ -13,22 +13,6 @@ const sagas = [  // define all application sagas here
   signInSaga
 ];
 
-const sagaHandlerWrapper = (handler, errorHandler) => function* (action) {
-  try {
-    SagaLogger.info(action.type, action);
-    yield handler(action);
-  } catch (err) {
-    SagaLogger.error(action.type, action, err);
-    if (errorHandler) {
-      yield errorHandler(err, action);
-    }
-  }
-};
-
-function* newSagaWatcher(actionType, handler, errorHandler) {
-  yield takeEvery(actionType, sagaHandlerWrapper(handler, errorHandler));
-}
-
 function* initAppSaga(saga) {
   if (TypeChecker.isArray(saga)) {
     let childSagas = [];
@@ -39,7 +23,7 @@ function* initAppSaga(saga) {
     }
     yield all(childSagas);
   } else if (TypeChecker.isObject(saga)) {
-    yield newSagaWatcher(saga.action, saga.trigger, saga.onError);
+    yield createSagaWatcher(saga.action, saga.trigger, saga.onError);
   }
 }
 
