@@ -135,3 +135,13 @@ export const arrToObj = (arr, keyMapper = (item, index) => index,
   });
   return resultObj;
 };
+
+export const objToObj = (obj, keyMapper = (key) => key, valueMapper = (value) => value) => {
+  return Object.keys(obj).reduce((target, key) => {
+    const targetKey = keyMapper(key);
+    if (key) {
+      target[targetKey] = valueMapper(obj[key]);
+    }
+    return target;
+  }, {});
+};
