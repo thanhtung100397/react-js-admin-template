@@ -1,15 +1,18 @@
-import uuid from 'uuid';
 import { objToObj, TypeChecker } from '../../utils/helpers';
+import { uuidV4 } from '../../utils/idHelpers';
 
 const STORE_PATH_FIELD_NAME = "storePath";
 
-const newAppAction = (action) => { // TODO wrong app action init
-  const { storePath, ...others } = action;
-  return {
-    id: uuid.v4(),
-    [STORE_PATH_FIELD_NAME]: storePath,
-    ...others
-  };
+const baseAppAction = (data) => ({
+  ...data,
+  id: uuidV4()
+});
+
+const newAppAction = (action) => {
+  if (TypeChecker.isFunction(action)) {
+    return (...args) => baseAppAction(action(args));
+  }
+  return baseAppAction(action);
 };
 
 export const checkActionStorePathValid = (action, sourceStorePath) => {
