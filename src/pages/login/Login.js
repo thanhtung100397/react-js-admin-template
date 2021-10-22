@@ -15,7 +15,7 @@ import AppAlert from '../../components/alert/AppAlert';
 import { ValidationRule } from '../../constants/validationRules';
 import { images } from '../../assets/images';
 import { ColorIcons } from '../../assets/icons';
-import { SignInAction } from '../../state/data/api/auth/signIn/signIn';
+import { SignInAction } from '../../state/data/api/auth/signIn/signInAction';
 import './Login.scss';
 
 const { Title } = AppTypography;

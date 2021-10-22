@@ -1,38 +1,41 @@
-import uuid from 'uuid';
 import {
   API_FETCHING_ACTION, API_RESPONSE_SUCCESS_ACTION,
   API_RESPONSE_FAILURE_ACTION, API_FETCHING_ERROR_ACTION
 } from '../../actionTypes';
+import { createAppActions, getActionId } from '../appAction';
 
-export const createApiActions = (uniqueId) => {
-  return {
+export const getFetchActionId = (action) => action.fetchActionId;
+
+export const isShowNotification = (action) => action.showNoti;
+
+export const createApiActions = (storePath) => {
+  return createAppActions({
     FETCH_API: (data, showNoti = true) => ({
-      type: API_FETCHING_ACTION(uniqueId),
-      id: uuid.v4(),
-      path: uniqueId,
+      type: API_FETCHING_ACTION(storePath),
+      storePath: storePath,
       showNoti: showNoti,
       payload: data
     }),
 
-    API_RESPONSE_SUCCESS: (res, actionId) => ({
-      type: API_RESPONSE_SUCCESS_ACTION(uniqueId),
-      id: actionId,
-      path: uniqueId,
+    API_RESPONSE_SUCCESS: (res, fetchAction) => ({
+      type: API_RESPONSE_SUCCESS_ACTION(storePath),
+      storePath: storePath,
+      fetchActionId: getActionId(fetchAction),
       payload: res
     }),
 
-    API_RESPONSE_FAILURE: (res, actionId) => ({
-      type: API_RESPONSE_FAILURE_ACTION(uniqueId),
-      id: actionId,
-      path: uniqueId,
+    API_RESPONSE_FAILURE: (res, fetchAction) => ({
+      type: API_RESPONSE_FAILURE_ACTION(storePath),
+      storePath: storePath,
+      fetchActionId: getActionId(fetchAction),
       payload: res
     }),
 
-    API_FETCHING_ERROR: (error, actionId) => ({
-      type: API_FETCHING_ERROR_ACTION(uniqueId),
-      id: actionId,
-      path: uniqueId,
+    API_FETCHING_ERROR: (error, fetchAction) => ({
+      type: API_FETCHING_ERROR_ACTION(storePath),
+      storePath: storePath,
+      fetchActionId: getActionId(fetchAction),
       payload: error
     })
-  }
+  });
 };

@@ -6,6 +6,8 @@ import {
   UNEXPECTED_REDUCER_ERROR_ACTION
 } from '../../actionTypes';
 import { updateState, updateStateField } from '../../stateHelpers';
+import { getActionId } from '../appAction';
+import { getFetchActionId } from './apiAction';
 
 export const FETCHING_STATUS_FIELD = 'fetchingStatus';
 
@@ -46,28 +48,28 @@ export const apiFetchingErrorToState = (error) => ({
   errorType: getErrorType(error)
 });
 
-export const createApiReducer = (uniqueId) => {
+export const createApiReducer = () => {
 
   const reducerHandler = {
-    [API_FETCHING_ACTION(uniqueId)]: (state, action) =>
-      updateStateField(state, action.id,
-        updateStateField(state[action.id], FETCHING_STATUS_FIELD, FetchingStatus.IN_PROGRESS)
+    [API_FETCHING_ACTION]: (state, action) =>
+      updateStateField(state, getActionId(action),
+        updateStateField(state[getActionId(action)], FETCHING_STATUS_FIELD, FetchingStatus.IN_PROGRESS)
       ),
-    [API_RESPONSE_SUCCESS_ACTION(uniqueId)]: (state, action) =>
-      updateStateField(state, action.id,
-        updateState(state[action.id], apiResToState(action.payload))
+    [API_RESPONSE_SUCCESS_ACTION]: (state, action) =>
+      updateStateField(state, getFetchActionId(action),
+        updateState(state[getFetchActionId(action)], apiResToState(action.payload))
       ),
-    [API_RESPONSE_FAILURE_ACTION(uniqueId)]: (state, action) =>
-      updateStateField(state, action.id,
-        updateState(state[action.id], apiResToState(action.payload))
+    [API_RESPONSE_FAILURE_ACTION]: (state, action) =>
+      updateStateField(state, getFetchActionId(action),
+        updateState(state[getFetchActionId(action)], apiResToState(action.payload))
       ),
-    [API_FETCHING_ERROR_ACTION(uniqueId)]: (state, action) =>
-      updateStateField(state, action.id,
-        updateState(state[action.id], apiFetchingErrorToState(action.payload))
+    [API_FETCHING_ERROR_ACTION]: (state, action) =>
+      updateStateField(state, getFetchActionId(action),
+        updateState(state[getFetchActionId(action)], apiFetchingErrorToState(action.payload))
       ),
     [UNEXPECTED_REDUCER_ERROR_ACTION]: (state, action) =>
-      updateStateField(state, action.id,
-        updateState(state[action.id], apiFetchingErrorToState(action.payload))
+      updateStateField(state, getFetchActionId(action),
+        updateState(state[getFetchActionId(action)], apiFetchingErrorToState(action.payload))
       ),
   };
 
