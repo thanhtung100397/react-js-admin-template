@@ -3,7 +3,7 @@ import { createAppReducer } from './_base/appReducer';
 import { TypeChecker } from '../utils/helpers';
 import { stringJoin } from '../utils/stringHelpers';
 import languageReducer from './ui/language/languageReducer';
-import { signInReducer } from './data/api/auth/signIn/signIn';
+import signInReducer from './data/api/auth/signIn/signInReducer';
 
 const reducers = { // define all application reducers here
   ui: {

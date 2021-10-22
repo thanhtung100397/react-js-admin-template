@@ -1,10 +1,11 @@
 import ReducerLogger from '../_middleware/reducer/reducerLogger';
 import { isInitialActionType, UNEXPECTED_REDUCER_ERROR_ACTION } from '../actionTypes';
-import { checkActionStorePathValid } from './appAction';
+import { checkActionGroupValid } from './appAction';
 
-const appReducer = (reducer, storePath) => {
+const appReducer = (reducer, storePath, targetActionGroups) => {
+  const targetActionGroupsSet = targetActionGroups? new Set(targetActionGroups) : undefined;
   return (state, action) => {
-    if (!checkActionStorePathValid(action, storePath) && !isInitialActionType()) {
+    if (!checkActionGroupValid(action, targetActionGroupsSet) && !isInitialActionType()) {
       return state;
     }
     let nextState = reducer(state, action);
@@ -28,6 +29,6 @@ const appReducerWrapper = (appReducer, storePath) => {
   }
 };
 
-export const createAppReducer = (reducer, storePath) => {
-  return appReducerWrapper(appReducer(reducer, storePath), storePath);
+export const createAppReducer = (reducer, storePath, targetActionGroups) => {
+  return appReducerWrapper(appReducer(reducer, storePath, targetActionGroups), storePath);
 };

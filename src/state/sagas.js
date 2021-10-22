@@ -3,7 +3,7 @@ import { createSagaWatcher } from './_base/appSaga';
 import { TypeChecker } from '../utils/helpers';
 import languageSaga from './ui/language/languageSaga';
 import authSagas from './data/api/auth/authSaga';
-import { signInSaga } from './data/api/auth/signIn/signIn'
+import signInSaga from './data/api/auth/signIn/signInSaga'
 
 const sagas = [  // define all application sagas here
   languageSaga,
