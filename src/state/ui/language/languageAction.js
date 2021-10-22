@@ -1,12 +1,12 @@
 import { createAppActions } from '../../_base/appAction';
 import { CHANGE_LANGUAGE_ACTION } from '../../actionTypes';
 
-export const LANGUAGE_STORE_PATH = 'ui.language';
+export const ACTION_GROUP = 'APP_UI_LANGUAGE';
 
 const LanguageActions = createAppActions({
   CHANGE_LANGUAGE_ACTION: (languageId) => ({
     type: CHANGE_LANGUAGE_ACTION,
-    storePath: LANGUAGE_STORE_PATH,
+    group: ACTION_GROUP,
     payload: {
       languageId: languageId
     }
