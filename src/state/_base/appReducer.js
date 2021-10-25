@@ -2,33 +2,52 @@ import ReducerLogger from '../_middleware/reducer/reducerLogger';
 import { isInitialActionType, UNEXPECTED_REDUCER_ERROR_ACTION } from '../actionTypes';
 import { checkActionGroupValid } from './appAction';
 
-const appReducer = (reducer, storePath, targetActionGroups) => {
-  const targetActionGroupsSet = targetActionGroups? new Set(targetActionGroups) : undefined;
-  return (state, action) => {
-    if (!checkActionGroupValid(action, targetActionGroupsSet) && !isInitialActionType()) {
+export const getStorePath = (appReducer) => {
+  return appReducer.storePath;
+};
+
+export const getTargetActions = (appReducer) => {
+  return appReducer.targetActions;
+};
+
+export const getReducer = (appReducer) => {
+  return appReducer.reducer;
+};
+
+const reducerWrapper = (appReducer, reducer) => {
+  const reducerHandler = (state, action) => {
+    if (!checkActionGroupValid(action, getTargetActions(appReducer)) && !isInitialActionType()) {
       return state;
     }
     let nextState = reducer(state, action);
     ReducerLogger.info(storePath, action, state, nextState);
     return nextState;
-  }
-};
-
-const appReducerWrapper = (appReducer, storePath) => {
+  };
   return (state, action) => {
     try {
-      return appReducer(state, action);
+      return reducerHandler(state, action);
     } catch (e) {
       ReducerLogger.error(storePath, action, state, e);
-      return appReducer(state, {
+      return reducerHandler(state, {
         ...action,
         type: UNEXPECTED_REDUCER_ERROR_ACTION,
         payload: e
       })
     }
-  }
+  };
 };
 
-export const createAppReducer = (reducer, storePath, targetActionGroups) => {
-  return appReducerWrapper(appReducer(reducer, storePath, targetActionGroups), storePath);
+export class AppReducer {
+  constructor(reducer, targetActions) {
+    this.targetActions = targetActions;
+    this.reducer = reducerWrapper(this, reducer);
+  }
+
+  setStorePath(storePath) {
+    this.storePath = storePath;
+  }
+}
+
+export const createAppReducer = (reducer, targetActionGroups) => {
+  return new AppReducer(reducer, targetActionGroups);
 };

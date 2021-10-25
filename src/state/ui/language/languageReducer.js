@@ -2,6 +2,8 @@ import { CHANGE_LANGUAGE_ACTION } from '../../actionTypes';
 import { getLanguage } from '../../../services/ui/language/languageService';
 import { StateHelpers } from '../../../utils/stateHelpers';
 
+export const ALLOWED_ACTION_GROUPS = ['APP_UI_LANGUAGE'];
+
 const DEFAULT_STATE = {
   languageId: getLanguage()
 };
