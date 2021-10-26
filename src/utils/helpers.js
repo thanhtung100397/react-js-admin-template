@@ -136,11 +136,12 @@ export const arrToObj = (arr, keyMapper = (item, index) => index,
   return resultObj;
 };
 
-export const objToObj = (obj, keyMapper = (key) => key, valueMapper = (value) => value) => {
+export const objToObj = (obj, keyMapper = (key, value) => key, valueMapper = (value, key) => value) => {
   return Object.keys(obj).reduce((target, key) => {
-    const targetKey = keyMapper(key);
-    if (key) {
-      target[targetKey] = valueMapper(obj[key]);
+    const value = obj[key];
+    const targetKey = keyMapper(key, value);
+    if (targetKey) {
+      target[targetKey] = valueMapper(value, key);
     }
     return target;
   }, {});
