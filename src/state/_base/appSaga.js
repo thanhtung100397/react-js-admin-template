@@ -1,7 +1,7 @@
 import { takeEvery } from 'redux-saga/effects';
 import SagaLogger from '../_middleware/saga/sagaLogger';
 import { TypeChecker } from '../../utils/helpers';
-import { getActionStorePath, getActionType } from './appAction';
+import { getActionType, getActionGroup } from './appAction';
 
 const appSagaWrapper = (handler, errorHandler) => function* (action) {
   try {
@@ -18,7 +18,7 @@ const appSagaWrapper = (handler, errorHandler) => function* (action) {
 const checkSagaActionFunc = (targetAction) => {
   return (action) =>
     getActionType(action) === getActionType(targetAction) &&
-    getActionStorePath(action) === getActionStorePath(targetAction);
+    getActionGroup(action) === getActionGroup(targetAction);
 };
 
 const createSagaActionWatcher = (targetAction) => {

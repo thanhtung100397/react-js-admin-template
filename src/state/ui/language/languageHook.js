@@ -1,8 +1,9 @@
 import { useSelector } from 'react-redux';
 import { stringJoin } from '../../../utils/stringHelpers';
-import { LANGUAGE_STORE_PATH } from './languageAction';
 import { getObjField } from '../../../utils/helpers';
+import { getStorePath } from '../../_base/appReducer';
+import languageReducer from './languageReducer';
 
 export const useAppLanguage = () => {
-  return useSelector((state) => getObjField(state, stringJoin('.', LANGUAGE_STORE_PATH, 'languageId')));
+  return useSelector((state) => getObjField(state, stringJoin('.', getStorePath(languageReducer), 'languageId')));
 };

@@ -22,12 +22,12 @@ const isReducerContainer = (reducer) => {
   return TypeChecker.isObject(reducer) && !TypeChecker.isEmpty(reducer)
 };
 
-const initReducerFromAppReducer = (appReducer) => {
+const initReducerFromAppReducer = (appReducer, storePath) => {
   appReducer.setStorePath(storePath);
   return getReducer(reducer);
 };
 
-const initReducerFromReducerFunction = (reducerFunc) => {
+const initReducerFromReducerFunction = (reducerFunc, storePath) => {
   const appReducer = createAppReducer(reducerFunc);
   appReducer.setStorePath(storePath);
   return getReducer(appReducer);
@@ -35,9 +35,9 @@ const initReducerFromReducerFunction = (reducerFunc) => {
 
 const initAppReducer = (reducer, storePath) => {
   if (reducer instanceof AppReducer) {
-    return initReducerFromAppReducer(reducer);
+    return initReducerFromAppReducer(reducer, storePath);
   } else if (TypeChecker.isFunction(reducer)) {
-    return initReducerFromReducerFunction(reducer);
+    return initReducerFromReducerFunction(reducer, storePath);
   } else if (isReducerContainer(reducer)) {
     let groupReducers = {};
     Object.keys(reducer).forEach((key) => {

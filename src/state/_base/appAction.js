@@ -1,9 +1,11 @@
 import { objToObj, TypeChecker } from '../../utils/helpers';
 import { uuidV4 } from '../../utils/idHelpers';
 
-const baseAppAction = (data) => ({
+const baseAppAction = (data, actionGroup, defaultActionType) => ({
   ...data,
-  id: uuidV4()
+  id: data.id || uuidV4(),
+  type: data.type || defaultActionType,
+  group: data.group || actionGroup,
 });
 
 export const getActionId = (action) => action.id;
@@ -11,6 +13,8 @@ export const getActionId = (action) => action.id;
 export const getActionType = (action) => action.type;
 
 export const getActionGroup = (action) => action.group;
+
+export const getActionPayload = (action) => action.payload;
 
 export const checkActionGroupValid = (action, allowedGroupsSet) => {
   if (!allowedGroupsSet || !allowedGroupsSet.size) {
@@ -20,17 +24,17 @@ export const checkActionGroupValid = (action, allowedGroupsSet) => {
   return allowedGroupsSet.has(actionGroup);
 };
 
-const newAppAction = (action) => {
+const newAppAction = (action, actionGroup, actionKey) => {
   if (TypeChecker.isFunction(action)) {
-    return (...args) => baseAppAction(action(args));
+    return (...args) => baseAppAction(action(args), actionGroup, actionKey);
   }
-  return baseAppAction(action);
+  return baseAppAction(action, actionGroup, actionKey);
 };
 
-export const createAppActions = (actions) => {
+export const createAppActions = (actions, actionGroup) => {
   return objToObj(
     actions,
     (key) => key,
-    (value) => newAppAction(value)
+    (value, key) => newAppAction(value, actionGroup, key)
   );
 };

@@ -20,14 +20,14 @@ const reducerWrapper = (appReducer, reducer) => {
       return state;
     }
     let nextState = reducer(state, action);
-    ReducerLogger.info(storePath, action, state, nextState);
+    ReducerLogger.info(getStorePath(appReducer), action, state, nextState);
     return nextState;
   };
   return (state, action) => {
     try {
       return reducerHandler(state, action);
     } catch (e) {
-      ReducerLogger.error(storePath, action, state, e);
+      ReducerLogger.error(getStorePath(appReducer), action, state, e);
       return reducerHandler(state, {
         ...action,
         type: UNEXPECTED_REDUCER_ERROR_ACTION,
