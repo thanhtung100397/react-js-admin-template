@@ -1,5 +1,6 @@
 import { CHANGE_LANGUAGE_ACTION } from '../../actionTypes';
 import { saveLanguage } from '../../../services/ui/language/languageService';
+import { ACTION_GROUP } from './languageAction';
 
 export function* onLanguageChanged(action) {
   yield saveLanguage(action.payload?.languageId);
@@ -7,7 +8,10 @@ export function* onLanguageChanged(action) {
 
 export const languageSaga = [
   {
-    action: CHANGE_LANGUAGE_ACTION,
+    action: {
+      type: CHANGE_LANGUAGE_ACTION,
+      group: ACTION_GROUP
+    },
     trigger: onLanguageChanged
   }
 ];

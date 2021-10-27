@@ -12,4 +12,6 @@ const actions = {
   })
 };
 
-export default LanguageActions = createAppActions(actions, ACTION_GROUP);
+const LanguageActions = createAppActions(actions, ACTION_GROUP);
+
+export default LanguageActions;
