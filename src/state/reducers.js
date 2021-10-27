@@ -3,7 +3,7 @@ import { AppReducer, createAppReducer, getReducer } from './_base/appReducer';
 import { TypeChecker } from '../utils/helpers';
 import { stringJoin } from '../utils/stringHelpers';
 import languageReducer from './ui/language/languageReducer';
-import signInReducer from './data/api/auth/signIn/signInReducer';
+import { signInReducer } from './data/api/auth/signIn/signInApi';
 
 const reducers = { // define all application reducers here
   ui: {
@@ -24,7 +24,7 @@ const isReducerContainer = (reducer) => {
 
 const initReducerFromAppReducer = (appReducer, storePath) => {
   appReducer.setStorePath(storePath);
-  return getReducer(reducer);
+  return getReducer(appReducer);
 };
 
 const initReducerFromReducerFunction = (reducerFunc, storePath) => {

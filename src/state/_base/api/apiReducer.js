@@ -6,10 +6,11 @@ import {
   UNEXPECTED_REDUCER_ERROR_ACTION
 } from '../../actionTypes';
 import { updateState, updateStateField } from '../../stateHelpers';
-import { getActionId } from '../appAction';
+import { getActionId, getActionType } from '../appAction';
 import { getFetchActionId } from './apiAction';
+import { createAppReducer } from '../appReducer';
 
-export const FETCHING_STATUS_FIELD = 'fetchingStatus';
+export const API_FETCHING_STATUS_FIELD = 'fetchingStatus';
 
 export const FetchingStatus = {
   IDLE: 'IDLE',
@@ -20,7 +21,7 @@ export const FetchingStatus = {
 export const apiResToState = (res) => {
   const success = isSuccess(res);
   return {
-    [FETCHING_STATUS_FIELD]: FetchingStatus.IDLE,
+    [API_FETCHING_STATUS_FIELD]: FetchingStatus.IDLE,
     isSuccess: success,
     isFailure: !success, // this field is NOT redundant
     httpStatus: getHttpStatus(res),
@@ -35,7 +36,7 @@ export const apiResToState = (res) => {
 };
 
 export const apiFetchingErrorToState = (error) => ({
-  [FETCHING_STATUS_FIELD]: FetchingStatus.ERROR,
+  [API_FETCHING_STATUS_FIELD]: FetchingStatus.ERROR,
   isSuccess: undefined,
   isFailure: undefined, // this field is NOT redundant
   httpStatus: undefined,
@@ -48,36 +49,39 @@ export const apiFetchingErrorToState = (error) => ({
   errorType: getErrorType(error)
 });
 
-export const createApiReducer = () => {
+export const createApiReducer = (targetActionGroup) => {
 
-  const reducerHandler = {
-    [API_FETCHING_ACTION]: (state, action) =>
-      updateStateField(state, getActionId(action),
-        updateStateField(state[getActionId(action)], FETCHING_STATUS_FIELD, FetchingStatus.IN_PROGRESS)
-      ),
-    [API_RESPONSE_SUCCESS_ACTION]: (state, action) =>
-      updateStateField(state, getFetchActionId(action),
-        updateState(state[getFetchActionId(action)], apiResToState(action.payload))
-      ),
-    [API_RESPONSE_FAILURE_ACTION]: (state, action) =>
-      updateStateField(state, getFetchActionId(action),
-        updateState(state[getFetchActionId(action)], apiResToState(action.payload))
-      ),
-    [API_FETCHING_ERROR_ACTION]: (state, action) =>
-      updateStateField(state, getFetchActionId(action),
-        updateState(state[getFetchActionId(action)], apiFetchingErrorToState(action.payload))
-      ),
-    [UNEXPECTED_REDUCER_ERROR_ACTION]: (state, action) =>
-      updateStateField(state, getFetchActionId(action),
-        updateState(state[getFetchActionId(action)], apiFetchingErrorToState(action.payload))
-      ),
-  };
+  const reducer = (state = {}, action) => {
+    switch (getActionType(action)) {
+      case API_FETCHING_ACTION:
+        return updateStateField(state, getActionId(action),
+          updateStateField(state[getActionId(action)], API_FETCHING_STATUS_FIELD, FetchingStatus.IN_PROGRESS)
+        );
 
-  return (state = {}, action) => {
-    const handler = reducerHandler[action.type];
-    if (handler) {
-      return handler(state, action);
+      case API_RESPONSE_SUCCESS_ACTION:
+        return updateStateField(state, getFetchActionId(action),
+          updateState(state[getFetchActionId(action)], apiResToState(action.payload))
+        );
+
+      case API_RESPONSE_FAILURE_ACTION:
+        return updateStateField(state, getFetchActionId(action),
+          updateState(state[getFetchActionId(action)], apiResToState(action.payload))
+        );
+
+      case API_FETCHING_ERROR_ACTION:
+        return updateStateField(state, getFetchActionId(action),
+          updateState(state[getFetchActionId(action)], apiFetchingErrorToState(action.payload))
+        );
+
+      case UNEXPECTED_REDUCER_ERROR_ACTION:
+        return updateStateField(state, getFetchActionId(action),
+          updateState(state[getFetchActionId(action)], apiFetchingErrorToState(action.payload))
+        );
+
+      default:
+        return state;
     }
-    return state;
   };
+
+  return createAppReducer(reducer, targetActionGroup);
 };
