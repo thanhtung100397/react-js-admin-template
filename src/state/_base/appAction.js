@@ -26,7 +26,7 @@ export const checkActionGroupValid = (action, allowedGroupsSet) => {
 
 const newAppAction = (action, actionGroup, actionKey) => {
   if (TypeChecker.isFunction(action)) {
-    return (...args) => baseAppAction(action(args), actionGroup, actionKey);
+    return (...args) => baseAppAction(action(...args), actionGroup, actionKey);
   }
   return baseAppAction(action, actionGroup, actionKey);
 };
