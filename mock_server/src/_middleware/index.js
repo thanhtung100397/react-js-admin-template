@@ -1,4 +1,5 @@
 const { corsConfig } = require('./cors/corsConfig');
+const { requestDelay } = require('./delay/apiDelay');
 const { requestId } = require('./info/requestId');
 const { jwtVerify } = require('./auth/requestAuthen');
 const { rejectToken } = require('./auth/rejectToken');
@@ -9,6 +10,7 @@ const { errorHandler, notFoundHandler } = require('./error/errorHandler');
 
 const appPreMiddlewares = [
   corsConfig,
+  requestDelay,
   requestId,
   jwtVerify,
   rejectToken,
