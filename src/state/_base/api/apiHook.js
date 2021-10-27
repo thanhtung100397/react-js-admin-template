@@ -1,12 +1,28 @@
-import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { getObjField } from '../../../utils/helpers';
-import { FETCHING_STATUS_FIELD, FetchingStatus } from './apiReducer';
+import { useState, useCallback, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import { API_FETCHING_STATUS_FIELD, FetchingStatus } from './apiReducer';
+import { useAppSelector } from '../appHook';
+import { getActionId } from '../appAction';
 
-export const useApiFetchingWatcher = (action = {}) => {
+export const useApiCall = (ApiActions, apiReducer) => {
+  const dispatch = useDispatch();
+  const [apiActionId, setApiActionId] = useState();
 
-  const fetchingStatus = useSelector((state) => getObjField(state, `${action.path}.${action.id}.${FETCHING_STATUS_FIELD}`));
+  const callApi = useCallback((...params) => {
+    const apiAction = ApiActions.FETCH_API(...params);
+    setApiActionId(getActionId(apiAction));
+    dispatch(apiAction);
+  }, [dispatch, ApiActions]);
 
+  const apiFetchingWatcher = useApiFetchingWatcher(apiReducer, apiActionId);
+
+  const apiResultWatcher = useApiResultWatcher(apiReducer, apiActionId);
+
+  return [callApi, apiFetchingWatcher, apiResultWatcher]
+};
+
+export const useApiFetchingWatcher = (apiReducer, apiActionId) => {
+  const fetchingStatus = useAppSelector(apiReducer, `${apiActionId}.${API_FETCHING_STATUS_FIELD}`);
   return useMemo(() => ({
     isIdle: !fetchingStatus || fetchingStatus === FetchingStatus.IDLE,
     isInProgress: fetchingStatus === FetchingStatus.IN_PROGRESS,
@@ -14,6 +30,7 @@ export const useApiFetchingWatcher = (action = {}) => {
   }), [fetchingStatus]);
 };
 
-export const useApiResultWatcher = (action = {}) => {
-  return useSelector((state) => getObjField(state, `${action.path}.${action.id}`)) || {};
+export const useApiResultWatcher = (apiReducer, apiActionId) => {
+  const apiResult = useAppSelector(apiReducer, apiActionId);
+  return useMemo(() => apiResult || {}, [apiResult]);
 };
