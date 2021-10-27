@@ -1,9 +1,6 @@
+const { extractRequestLanguage } = require('./requests');
 const { findTranslatedMessage } = require('../translations/appTranslations');
 const { DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE } = require('../constants/constants');
-
-const extractRequestLanguage = (request) => {
-  return request.query['lang'];
-};
 
 class AppResponse {
   constructor(httpStatus, code, msgId) {
