@@ -1,6 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-import { useApiFetchingWatcher, useApiResultWatcher } from '../../state/_base/api/apiHook';
+import React, { useMemo } from 'react';
+import { useApiCall } from '../../state/_base/api/apiHook';
 import { FormattedMessage } from 'react-intl';
 import AppContainer from '../../containers/container/AppContainer';
 import AppSpace from '../../containers/space/AppSpace';
@@ -15,7 +14,7 @@ import AppAlert from '../../components/alert/AppAlert';
 import { ValidationRule } from '../../constants/validationRules';
 import { images } from '../../assets/images';
 import { ColorIcons } from '../../assets/icons';
-import { SignInAction } from '../../state/data/api/auth/signIn/signInAction';
+import { SignInActions, signInReducer } from '../../state/data/api/auth/signIn/signInApi';
 import './Login.scss';
 
 const { Title } = AppTypography;
@@ -25,23 +24,17 @@ const pageStyle = {
 };
 
 const Login = (props) => {
-  const [signInAction, setSignInAction] = useState();
-  const dispatch = useDispatch();
-
-  const signInWatcher = useApiFetchingWatcher(signInAction);
-  const signInResultWatcher = useApiResultWatcher(signInAction);
+  const [callSignInApi, signInApiWatcher, signInApiResultWatcher] = useApiCall(SignInActions, signInReducer);
 
   const handleFormSubmit = (data) => {
-    const signInAction = SignInAction.FETCH_API(data, false);
-    setSignInAction(signInAction);
-    dispatch(signInAction);
+    callSignInApi(data, false);
   };
 
   const signInAlert = useMemo(() => (
-    (signInWatcher.isError || signInResultWatcher.isFailure) &&
+    (signInApiWatcher.isError || signInApiResultWatcher.isFailure) &&
     <AppAlert className="w-full sign-in-alert" showIcon={true}
-              type="error" message={signInResultWatcher.message}/>
-  ), [signInWatcher.isError, signInResultWatcher]);
+              type="error" message={signInApiResultWatcher.message}/>
+  ), [signInApiWatcher.isError, signInApiResultWatcher]);
 
   return (
     <AppContainer className="login-page wh-full" style={pageStyle}>
@@ -73,7 +66,7 @@ const Login = (props) => {
                                      placeholderID="ID_PASSWORD"/>
                 </AppForm.Item>
                 <AppButton className="btn-sign-in w-full" type="primary" htmlType="submit"
-                           loading={signInWatcher.isInProgress}>
+                           loading={signInApiWatcher.isInProgress}>
                   <FormattedMessage id="ID_SIGN_IN"/>
                 </AppButton>
               </AppSpace>
