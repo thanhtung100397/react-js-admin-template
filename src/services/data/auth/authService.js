@@ -27,7 +27,7 @@ export const getAuthRefreshToken = () => {
 
 export const getAuthInfo = () => {
   if (!isAuth()) {
-    return;
+    return {};
   }
   return {
     userId: getAuthUserId(),
