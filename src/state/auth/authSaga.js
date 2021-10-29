@@ -1,5 +1,5 @@
-import { USER_SIGN_IN_ACTION, USER_SIGN_OUT_ACTION } from '../../../actionTypes';
-import { saveAuthInfo, deleteAuthInfo } from '../../../../services/data/auth/authService';
+import { USER_SIGN_IN_ACTION, USER_SIGN_OUT_ACTION } from '../actionTypes';
+import { saveAuthInfo, deleteAuthInfo } from '../../services/data/auth/authService';
 import { ACTION_GROUP } from './authAction';
 
 function* saveUserAuthInfo(action) {
