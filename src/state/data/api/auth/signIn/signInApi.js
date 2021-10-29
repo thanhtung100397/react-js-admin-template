@@ -10,8 +10,8 @@ const apiCall = async (data) => {
   return await signIn(username, password, delay);
 };
 
-export const SignInActions = createApiActions(ACTION_GROUP);
+export const SignInApiActions = createApiActions(ACTION_GROUP);
 
-export const signInReducer = createApiReducer();
+export const signInApiReducer = createApiReducer();
 
-export const signInSaga = createApiSagas(ACTION_GROUP, apiCall, SignInActions);
+export const signInApiSaga = createApiSagas(ACTION_GROUP, apiCall, SignInApiActions);
