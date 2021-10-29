@@ -3,16 +3,24 @@ import { AppReducer, createAppReducer, getReducer } from './_base/appReducer';
 import { TypeChecker } from '../utils/helpers';
 import { stringJoin } from '../utils/stringHelpers';
 import languageReducer from './ui/language/languageReducer';
-import { signInReducer } from './data/api/auth/signIn/signInApi';
+import { signInApiReducer } from './data/api/auth/signIn/signInApi';
+import { authInfoReducer } from './auth/info/authInfoReducer';
+import { signOutReducer } from './auth/signOut/signOutReducer';
+import { signInReducer } from './auth/signIn/signInReducer';
 
 const reducers = { // define all application reducers here
   ui: {
     language: languageReducer,
   },
+  auth: {
+    signIn: signInReducer,
+    signOut: signOutReducer,
+    info: authInfoReducer
+  },
   data: {
     api: {
       auth: {
-        signIn: signInReducer
+        signIn: signInApiReducer
       }
     }
   }
