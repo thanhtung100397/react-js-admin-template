@@ -3,6 +3,12 @@ export const isInitialActionType = (type) => {
   return type.startsWith('@@redux');
 };
 
+export const ActionStatus = {
+  IN_PROGRESS: 'IN_PROGRESS',
+  SUCCESS: 'SUCCESS',
+  FAILURE: 'FAILURE'
+};
+
 // global action
 export const UNEXPECTED_REDUCER_ERROR_ACTION = 'UNEXPECTED_REDUCER_ERROR_ACTION';
 
@@ -11,7 +17,12 @@ export const CHANGE_LANGUAGE_ACTION = 'CHANGE_LANGUAGE_ACTION';
 
 // auth action
 export const USER_SIGN_IN_ACTION = 'USER_SIGN_IN_ACTION';
+export const USER_SIGN_IN_SUCCESS_ACTION = 'USER_SIGN_IN_SUCCESS_ACTION';
+export const USER_SIGN_IN_FAILURE_ACTION = 'USER_SIGN_IN_FAILURE_ACTION';
+
 export const USER_SIGN_OUT_ACTION = 'USER_SIGN_OUT_ACTION';
+export const USER_SIGN_OUT_SUCCESS_ACTION = 'USER_SIGN_OUT_SUCCESS_ACTION';
+export const USER_SIGN_OUT_FAILURE_ACTION = 'USER_SIGN_OUT_FAILURE_ACTION';
 
 // api actions
 export const API_FETCHING_ACTION = 'API_FETCH_ACTION';
