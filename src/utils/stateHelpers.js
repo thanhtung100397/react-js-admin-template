@@ -1,7 +1,7 @@
-import { assign, extractFields, removeFields } from './helpers';
+import { ObjectHelpers } from './objectHelpers';
 
 export const StateHelpers = {
-  update: (state, newValues) => assign({}, state, newValues),
-  updateFields: (state, newValues, fieldNames) => assign({}, state, extractFields(newValues, fieldNames)),
-  removeFields: (state, fieldNames) => removeFields(state, fieldNames)
+  update: (state, newValues) => ({...state, ...newValues}),
+  updateField: (state, field, newValue) => ObjectHelpers.updateField({...state}, field, newValue),
+  removeFields: (state, fields) => ObjectHelpers.removeFields(state, fields)
 };

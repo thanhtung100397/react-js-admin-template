@@ -5,8 +5,7 @@ import {
   API_FETCHING_ACTION, API_RESPONSE_SUCCESS_ACTION, API_RESPONSE_FAILURE_ACTION, API_FETCHING_ERROR_ACTION,
   UNEXPECTED_REDUCER_ERROR_ACTION
 } from '../../actionTypes';
-import { updateState, updateStateField } from '../../stateHelpers';
-import { getActionId, getActionType } from '../appAction';
+import { StateHelpers } from '../../../utils/stateHelpers';
 import { getFetchActionId } from './apiAction';
 import { createAppReducer } from '../appReducer';
 
@@ -51,31 +50,23 @@ export const apiFetchingErrorToState = (error) => ({
 
 export const createApiReducer = (targetActionGroup) => {
 
-  const reducer = (state = {}, action) => {
-    switch (getActionType(action)) {
+  const reducer = (state = {}, action, actionType, actionPayload, actionId) => {
+    switch (actionType) {
       case API_FETCHING_ACTION:
-        return updateStateField(state, getActionId(action),
-          updateStateField(state[getActionId(action)], API_FETCHING_STATUS_FIELD, FetchingStatus.IN_PROGRESS)
+        return StateHelpers.updateField(state, actionId,
+          StateHelpers.updateField(state[actionId], API_FETCHING_STATUS_FIELD, FetchingStatus.IN_PROGRESS)
         );
 
       case API_RESPONSE_SUCCESS_ACTION:
-        return updateStateField(state, getFetchActionId(action),
-          updateState(state[getFetchActionId(action)], apiResToState(action.payload))
-        );
-
       case API_RESPONSE_FAILURE_ACTION:
-        return updateStateField(state, getFetchActionId(action),
-          updateState(state[getFetchActionId(action)], apiResToState(action.payload))
+        return StateHelpers.updateField(state, getFetchActionId(action),
+          StateHelpers.update(state[getFetchActionId(action)], apiResToState(action.payload))
         );
 
       case API_FETCHING_ERROR_ACTION:
-        return updateStateField(state, getFetchActionId(action),
-          updateState(state[getFetchActionId(action)], apiFetchingErrorToState(action.payload))
-        );
-
       case UNEXPECTED_REDUCER_ERROR_ACTION:
-        return updateStateField(state, getFetchActionId(action),
-          updateState(state[getFetchActionId(action)], apiFetchingErrorToState(action.payload))
+        return StateHelpers.updateField(state, getFetchActionId(action),
+          StateHelpers.update(state[getFetchActionId(action)], apiFetchingErrorToState(action.payload))
         );
 
       default:

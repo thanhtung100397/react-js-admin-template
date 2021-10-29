@@ -1,6 +1,15 @@
 import ReducerLogger from '../_middleware/reducer/reducerLogger';
 import { isInitialActionType, UNEXPECTED_REDUCER_ERROR_ACTION } from '../actionTypes';
-import { checkActionGroupValid, getActionType } from './appAction';
+import { checkActionGroupValid, getActionType, getActionPayload, getActionId } from './appAction';
+import { getErrorMessage, getErrorType } from '../../services/apiHelpers';
+
+export const baseActionState = (status, data, error) => ({
+  actionStatus: status,
+  data: data,
+  error: error,
+  errorMessage: error && getErrorMessage(error),
+  errorType: error && getErrorType(error)
+});
 
 export const getStorePath = (appReducer) => {
   return appReducer.storePath;
@@ -19,7 +28,7 @@ const reducerWrapper = (appReducer, reducer) => {
     if (!checkActionGroupValid(action, getTargetActions(appReducer)) && !isInitialActionType(getActionType(action))) {
       return state;
     }
-    let nextState = reducer(state, action);
+    let nextState = reducer(state, action, getActionType(action), getActionPayload(action), getActionId(action));
     ReducerLogger.info(getStorePath(appReducer), action, state, nextState);
     return nextState;
   };
