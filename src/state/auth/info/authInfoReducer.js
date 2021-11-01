@@ -4,6 +4,8 @@ import { USER_SIGN_IN_SUCCESS_ACTION, USER_SIGN_OUT_SUCCESS_ACTION } from '../..
 import { getAuthInfo, isAuth } from '../../../services/data/auth/authService';
 import { StateHelpers } from '../../../utils/stateHelpers';
 
+export const TARGET_ACTION_GROUPS = [ACTION_GROUP];
+
 const DEFAULT_STATE = {
   isAuth: isAuth(),
   ...getAuthInfo()
@@ -27,4 +29,4 @@ const reducer = (state = DEFAULT_STATE, action, actionType, actionPayload) => {
   }
 };
 
-export const authInfoReducer = createAppReducer(reducer, ACTION_GROUP);
+export const authInfoReducer = createAppReducer(reducer, TARGET_ACTION_GROUPS);
