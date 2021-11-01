@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect } from 'react';
-import { useApiCall } from '../../state/_base/api/apiHook';
+import { SignInApiHook } from '../../state/data/api/auth/signIn/signInApi';
 import { useAppAuth } from '../../state/auth/authHook';
 import { AuthInfoMapper } from '../../services/data/auth/authService';
 import { FormattedMessage } from 'react-intl';
@@ -16,7 +16,6 @@ import AppAlert from '../../components/alert/AppAlert';
 import { ValidationRule } from '../../constants/validationRules';
 import { images } from '../../assets/images';
 import { ColorIcons } from '../../assets/icons';
-import { SignInApiActions, signInApiReducer } from '../../state/data/api/auth/signIn/signInApi';
 import './Login.scss';
 
 const { Title } = AppTypography;
@@ -26,7 +25,7 @@ const pageStyle = {
 };
 
 const Login = (props) => {
-  const [callSignInApi, signInApiWatcher, signInApiResultWatcher] = useApiCall(SignInApiActions, signInApiReducer);
+  const [callSignInApi, signInApiWatcher, signInApiResultWatcher] = SignInApiHook.useCall();
   const [isAuth, authActions] = useAppAuth();
 
   useEffect(() => {

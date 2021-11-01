@@ -34,3 +34,11 @@ export const useApiResultWatcher = (apiReducer, apiActionId) => {
   const apiResult = useAppSelector(apiReducer, apiActionId);
   return useMemo(() => apiResult || {}, [apiResult]);
 };
+
+export const createApiHook = (apiReducer, apiActions) => {
+  return {
+    useCall: () => useApiCall(apiActions, apiReducer),
+    useFetchingWatcher: (apiActionId) => useApiFetchingWatcher(apiReducer, apiActionId),
+    useResultWatcher: (apiActionId) => useApiResultWatcher(apiReducer, apiActionId)
+  }
+};
