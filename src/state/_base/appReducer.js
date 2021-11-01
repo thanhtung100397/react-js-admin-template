@@ -1,15 +1,7 @@
 import ReducerLogger from '../_middleware/reducer/reducerLogger';
 import { isInitialActionType, UNEXPECTED_REDUCER_ERROR_ACTION } from '../actionTypes';
 import { checkActionGroupValid, getActionType, getActionPayload, getActionId } from './appAction';
-import { getErrorMessage, getErrorType } from '../../services/apiHelpers';
-
-export const baseActionState = (status, data, error) => ({
-  actionStatus: status,
-  data: data,
-  error: error,
-  errorMessage: error && getErrorMessage(error),
-  errorType: error && getErrorType(error)
-});
+import { TypeChecker } from '../../utils/helpers';
 
 export const getStorePath = (appReducer) => {
   return appReducer.storePath;
@@ -46,9 +38,18 @@ const reducerWrapper = (appReducer, reducer) => {
   };
 };
 
+const initTargetActions = (targetActions) => {
+  if (targetActions) {
+    if (!TypeChecker.isArray(targetActions)) {
+      targetActions = [targetActions];
+    }
+    return new Set(targetActions);
+  }
+};
+
 export class AppReducer {
   constructor(reducer, targetActions) {
-    this.targetActions = targetActions? new Set(targetActions) : undefined;
+    this.targetActions = initTargetActions(targetActions);
     this.reducer = reducerWrapper(this, reducer);
   }
 
