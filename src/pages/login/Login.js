@@ -1,5 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { useApiCall } from '../../state/_base/api/apiHook';
+import { useAppAuth } from '../../state/auth/authHook';
+import { AuthInfoMapper } from '../../services/data/auth/authService';
 import { FormattedMessage } from 'react-intl';
 import AppContainer from '../../containers/container/AppContainer';
 import AppSpace from '../../containers/space/AppSpace';
@@ -25,6 +27,19 @@ const pageStyle = {
 
 const Login = (props) => {
   const [callSignInApi, signInApiWatcher, signInApiResultWatcher] = useApiCall(SignInApiActions, signInApiReducer);
+  const [isAuth, authActions] = useAppAuth();
+
+  useEffect(() => {
+    if (signInApiResultWatcher.isSuccess && !isAuth) {
+      authActions.signIn(AuthInfoMapper.fromApiRes(signInApiResultWatcher));
+    }
+  }, [signInApiResultWatcher, authActions, isAuth]);
+
+  useEffect(() => {
+    if (isAuth) {
+      // TODO browser navigte
+    }
+  }, [isAuth]);
 
   const handleFormSubmit = (data) => {
     callSignInApi(data, false);
