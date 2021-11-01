@@ -18,12 +18,12 @@ const postSagaHandler = function*(data, action, postHandler, postHandlerAction) 
   }
 };
 
-const handleOnSagaDone = function*(data, onDone, onDoneAction) {
-  yield postSagaHandler(data, onDone, onDoneAction);
+const handleOnSagaDone = function*(data, action, onDone, onDoneAction) {
+  yield postSagaHandler(data, action, onDone, onDoneAction);
 };
 
-const handleOnSagaError = function*(error, onError, onErrorAction) {
-  yield postSagaHandler(error, onError, onErrorAction);
+const handleOnSagaError = function*(error, action, onError, onErrorAction) {
+  yield postSagaHandler(error, action, onError, onErrorAction);
 };
 
 const appSagaWrapper = ({trigger, onDone, onDoneAction, onError, onErrorAction}) => function* (action) {
