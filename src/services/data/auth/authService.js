@@ -11,21 +11,18 @@ export const isAuth = () => {
 };
 
 export const getAuthAccessToken = () => {
-  LocalStorage.get(STORAGE_AUTH_ACCESS_TOKEN_KEY);
+  return LocalStorage.get(STORAGE_AUTH_ACCESS_TOKEN_KEY);
 };
 
 export const getAuthRefreshToken = () => {
-  LocalStorage.get(STORAGE_AUTH_REFRESH_TOKEN_KEY);
+  return LocalStorage.get(STORAGE_AUTH_REFRESH_TOKEN_KEY);
 };
 
 export const getAuthInfo = () => {
   if (!isAuth()) {
     return {};
   }
-  return {
-    accessToken: getAuthAccessToken(),
-    refreshToken: getAuthRefreshToken()
-  }
+  return AuthInfoMapper.fromLocal();
 };
 
 const validateAuthInfo = ({accessToken, refreshToken}) => {
