@@ -51,11 +51,11 @@ const SignIn = (props) => {
   ), [signInApiWatcher.isError, signInApiResultWatcher]);
 
   return (
-    <AppContainer className="login-page wh-full" style={pageStyle}>
+    <AppContainer className="sign-in-page wh-full" style={pageStyle}>
       <AppLanguageSelect icon={<ColorIcons.GlobalOutlined/>} borderless={false}/>
       <AppSpace size={16}>
         <AppCard>
-          <div className="login-form-container d-flex flex-column h-align-center">
+          <div className="sign-in-form-container d-flex flex-column h-align-center">
             <AppImage className="logo-image"
                       circle={true} bordered={true}
                       src={images.img_app_logo}
