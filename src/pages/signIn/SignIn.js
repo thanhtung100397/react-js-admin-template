@@ -16,7 +16,7 @@ import AppAlert from '../../components/alert/AppAlert';
 import { ValidationRule } from '../../constants/validationRules';
 import { images } from '../../assets/images';
 import { ColorIcons } from '../../assets/icons';
-import './Login.scss';
+import './SignIn.scss';
 
 const { Title } = AppTypography;
 
@@ -24,7 +24,7 @@ const pageStyle = {
   backgroundImage: `url(${images.img_started_background})`
 };
 
-const Login = (props) => {
+const SignIn = (props) => {
   const [callSignInApi, signInApiWatcher, signInApiResultWatcher] = SignInApiHook.useCall();
   const [isAuth, authActions] = useAppAuth();
 
@@ -92,4 +92,4 @@ const Login = (props) => {
   )
 };
 
-export default Login;
+export default SignIn;

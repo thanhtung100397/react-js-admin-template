@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-const Login = React.lazy(() => import('./pages/login/Login'));
+const Login = React.lazy(() => import('./pages/signIn/SignIn'));
 const UiPreview = React.lazy(() => import('./pages/preview/UiPreview'));
 
 const AppRoutes = (props) => {
