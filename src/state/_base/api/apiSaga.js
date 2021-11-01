@@ -7,31 +7,27 @@ import {
   showApiErrorNotification, showApiResFailureNotification, showApiResSuccessNotification
 } from './apiNotification';
 
-const onApiFetching = (apiCall, ApiActions) => function* (action) {
+const onApiFetching = (apiCall) => function* (action) {
   if (!TypeChecker.isFunction(apiCall)) {
     return;
   }
-  const res = yield apiCall(action.payload || {});
-  if (isSuccess(res)) {
-    yield handleApiResponseSuccess(res, ApiActions, action);
-  } else {
-    yield handleApiResponseFailure(res, ApiActions, action);
-  }
+  return yield apiCall(action.payload || {});
 };
 
-function* handleApiResponseSuccess(res, ApiActions, action) {
-  if (isShowNotification(action)) {
-    showApiResSuccessNotification(res);
+const handleApiResponse = (ApiActions) => function*(res, action) {
+  const showNoti = isShowNotification(action);
+  if (isSuccess(res)) {
+    if (showNoti) {
+      showApiResSuccessNotification(res);
+    }
+    yield put(ApiActions.API_RESPONSE_SUCCESS(res, action));
+  } else {
+    if (showNoti) {
+      showApiResFailureNotification(res);
+    }
+    yield put(ApiActions.API_RESPONSE_FAILURE(res, action));
   }
-  yield put(ApiActions.API_RESPONSE_SUCCESS(res, action));
-}
-
-function* handleApiResponseFailure(res, ApiActions, action) {
-  if (isShowNotification(action)) {
-    showApiResFailureNotification(res);
-  }
-  yield put(ApiActions.API_RESPONSE_FAILURE(res, action));
-}
+};
 
 const handleApiFetchingError = (ApiActions) => function* (error, action) {
   if (isShowNotification(action)) {
@@ -47,7 +43,8 @@ export const createApiSagas = (targetActionGroup, apiCall, ApiActions) => {
         type: API_FETCHING_ACTION,
         group: targetActionGroup
       },
-      trigger: onApiFetching(apiCall, ApiActions),
+      trigger: onApiFetching(apiCall),
+      onDone: handleApiResponse(ApiActions),
       onError: handleApiFetchingError(ApiActions)
     }
   ]

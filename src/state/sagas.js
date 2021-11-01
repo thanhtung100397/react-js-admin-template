@@ -23,7 +23,7 @@ function* initAppSaga(saga) {
     }
     yield all(childSagas);
   } else if (TypeChecker.isObject(saga)) {
-    yield createSagaWatcher(saga.action, saga.trigger, saga.onError);
+    yield createSagaWatcher(saga);
   }
 }
 

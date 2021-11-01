@@ -1,17 +1,39 @@
-import { takeEvery } from 'redux-saga/effects';
+import { takeEvery, put } from 'redux-saga/effects';
 import SagaLogger from '../_middleware/saga/sagaLogger';
 import { TypeChecker } from '../../utils/helpers';
 import { getActionType, getActionGroup } from './appAction';
 
-const appSagaWrapper = (handler, errorHandler) => function* (action) {
+const postSagaHandler = function*(data, action, postHandler, postHandlerAction) {
+  if (postHandler) {
+    yield postHandler(data, action);
+  }
+  if (postHandlerAction) {
+    let action;
+    if (TypeChecker.isFunction(postHandlerAction)) {
+      action = yield postHandlerAction(data, action);
+    } else {
+      action = postHandlerAction;
+    }
+    yield put(action);
+  }
+};
+
+const handleOnSagaDone = function*(data, onDone, onDoneAction) {
+  yield postSagaHandler(data, onDone, onDoneAction);
+};
+
+const handleOnSagaError = function*(error, onError, onErrorAction) {
+  yield postSagaHandler(error, onError, onErrorAction);
+};
+
+const appSagaWrapper = ({trigger, onDone, onDoneAction, onError, onErrorAction}) => function* (action) {
   try {
     SagaLogger.info(action.type, action);
-    yield handler(action);
+    let data = yield trigger(action);
+    yield handleOnSagaDone(data, action, onDone, onDoneAction);
   } catch (err) {
     SagaLogger.error(action.type, action, err);
-    if (errorHandler) {
-      yield errorHandler(err, action);
-    }
+    yield handleOnSagaError(err, action, onError, onErrorAction)
   }
 };
 
@@ -28,6 +50,7 @@ const createSagaActionWatcher = (targetAction) => {
   return targetAction;
 };
 
-export function* createSagaWatcher(targetAction, handler, errorHandler) {
-  yield takeEvery(createSagaActionWatcher(targetAction), appSagaWrapper(handler, errorHandler));
+export function* createSagaWatcher(saga) {
+  const { action, ...restSaga } = saga;
+  yield takeEvery(createSagaActionWatcher(action), appSagaWrapper(restSaga));
 }
