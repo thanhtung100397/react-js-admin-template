@@ -2,7 +2,7 @@ const _ = require('lodash');
 
 const TypeChecker = {
   isString: (value) => _.isString(value),
-  isNumber: (value) => _.isNumber(value),
+  isNumber: (value) => _.isNumber(value) && !_.isNaN(value),
   isBoolean: (value) => _.isBoolean(value),
   isDate: (value) => _.is(value),
   isArray: (value) => _.isArray(value),
