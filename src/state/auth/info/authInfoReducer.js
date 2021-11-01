@@ -12,10 +12,15 @@ const DEFAULT_STATE = {
 const reducer = (state = DEFAULT_STATE, action, actionType, actionPayload) => {
   switch (actionType) {
     case USER_SIGN_IN_SUCCESS_ACTION:
-      return StateHelpers.update(state, actionPayload);
+      return StateHelpers.update(state, {
+        isAuth: true,
+        ...actionPayload
+      });
 
     case USER_SIGN_OUT_SUCCESS_ACTION:
-      return {};
+      return {
+        isAuth: false
+      };
 
     default:
       return state;
