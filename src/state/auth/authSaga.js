@@ -1,9 +1,9 @@
 import { USER_SIGN_IN_ACTION, USER_SIGN_OUT_ACTION } from '../actionTypes';
 import { saveAuthInfo, deleteAuthInfo } from '../../services/data/auth/authService';
-import { ACTION_GROUP } from './authAction';
+import { ACTION_GROUP, AuthActions } from './authAction';
 
 function* saveUserAuthInfo(action) {
-  yield saveAuthInfo(action.payload);
+  return yield saveAuthInfo(action.payload);
 }
 
 function* deleteUserAuthInfo(action) {
@@ -16,14 +16,18 @@ const authSagas = [
       type: USER_SIGN_IN_ACTION,
       group: ACTION_GROUP
     },
-    trigger: saveUserAuthInfo
+    trigger: saveUserAuthInfo,
+    onDoneAction: (data) => AuthActions.USER_SIGN_IN_SUCCESS_ACTION(data),
+    onErrorAction: (error) => AuthActions.USER_SIGN_IN_FAILURE_ACTION(error),
   },
   {
     action: {
       type: USER_SIGN_OUT_ACTION,
       group: ACTION_GROUP
     },
-    trigger: deleteUserAuthInfo
+    trigger: deleteUserAuthInfo,
+    onDoneAction: AuthActions.USER_SIGN_OUT_SUCCESS_ACTION(),
+    onErrorAction: (error) => AuthActions.USER_SIGN_OUT_FAILURE_ACTION(error),
   }
 ];
 

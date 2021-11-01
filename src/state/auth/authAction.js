@@ -36,8 +36,9 @@ const actions = {
     type: USER_SIGN_OUT_SUCCESS_ACTION
   }),
 
-  USER_SIGN_OUT_FAILURE_ACTION: () => ({
-    type: USER_SIGN_OUT_FAILURE_ACTION
+  USER_SIGN_OUT_FAILURE_ACTION: (error) => ({
+    type: USER_SIGN_OUT_FAILURE_ACTION,
+    payload: error
   }),
 };
 
