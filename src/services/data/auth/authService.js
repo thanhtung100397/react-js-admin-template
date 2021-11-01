@@ -6,6 +6,17 @@ const STORAGE_AUTH_IS_AUTH = 'auth.is_auth';
 const STORAGE_AUTH_ACCESS_TOKEN_KEY = 'auth.access_token';
 const STORAGE_AUTH_REFRESH_TOKEN_KEY = 'auth.refresh_token';
 
+export const AuthInfoMapper = {
+  fromLocal: () => ({
+    accessToken: getAuthAccessToken(),
+    refreshToken: getAuthRefreshToken()
+  }),
+  fromApiRes: (apiRes) => ({
+    accessToken: apiRes?.data?.accessToken,
+    refreshToken: apiRes?.data?.refreshToken
+  })
+};
+
 export const isAuth = () => {
   return LocalStorage.get(STORAGE_AUTH_IS_AUTH) === 'true';
 };
