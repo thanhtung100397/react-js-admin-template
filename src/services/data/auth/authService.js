@@ -30,9 +30,6 @@ export const getAuthRefreshToken = () => {
 };
 
 export const getAuthInfo = () => {
-  if (!isAuth()) {
-    return {};
-  }
   return AuthInfoMapper.fromLocal();
 };
 
@@ -47,11 +44,12 @@ const validateAuthInfo = ({accessToken, refreshToken}) => {
 
 export const saveAuthInfo = (authInfo) => {
   validateAuthInfo(authInfo);
+  deleteAuthInfo();
   const { accessToken, refreshToken } = authInfo;
   LocalStorage.save(STORAGE_AUTH_IS_AUTH, true);
   LocalStorage.save(STORAGE_AUTH_ACCESS_TOKEN_KEY, accessToken);
   LocalStorage.save(STORAGE_AUTH_REFRESH_TOKEN_KEY, refreshToken);
-  return authInfo;
+  return getAuthInfo();
 };
 
 export const deleteAuthInfo = () => {
