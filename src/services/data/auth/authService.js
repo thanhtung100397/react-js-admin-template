@@ -37,14 +37,17 @@ const validateAuthInfo = ({accessToken, refreshToken}) => {
   }
 };
 
-export const saveAuthInfo = ({accessToken, refreshToken}) => {
-  validateAuthInfo(accessToken, refreshToken);
+export const saveAuthInfo = (authInfo) => {
+  validateAuthInfo(authInfo);
+  const { accessToken, refreshToken } = authInfo;
   LocalStorage.save(STORAGE_AUTH_IS_AUTH, true);
   LocalStorage.save(STORAGE_AUTH_ACCESS_TOKEN_KEY, accessToken);
   LocalStorage.save(STORAGE_AUTH_REFRESH_TOKEN_KEY, refreshToken);
+  return authInfo;
 };
 
 export const deleteAuthInfo = () => {
+  LocalStorage.remove(STORAGE_AUTH_IS_AUTH);
   LocalStorage.remove(STORAGE_AUTH_ACCESS_TOKEN_KEY);
   LocalStorage.remove(STORAGE_AUTH_REFRESH_TOKEN_KEY);
 };
