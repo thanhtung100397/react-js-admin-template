@@ -16,7 +16,7 @@ const DEFAULT_STATE = {
 const reducer = (state = DEFAULT_STATE, action, actionType, actionPayload) => {
   switch (actionType) {
     case CHANGE_LANGUAGE_ACTION:
-      return StateHelpers.updateField(state, APP_UI_LANGUAGE_ID_FIELD, ObjectHelpers.getField(actionPayload));
+      return StateHelpers.updateField(state, APP_UI_LANGUAGE_ID_FIELD, ObjectHelpers.getField(actionPayload, APP_UI_LANGUAGE_ID_FIELD));
 
     default:
       return state;
