@@ -1,7 +1,7 @@
 import React from 'react';
 import { baseProps, fromBaseProps } from '../../components/base';
 import { Layout } from 'antd';
-import './AppFooter.scss'
+import './AppFooter.scss';
 
 const propTypes = {
   ...baseProps
