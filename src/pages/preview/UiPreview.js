@@ -12,6 +12,7 @@ import AppForm from '../../components/form/AppForm';
 import AppButton from '../../components/button/AppButton';
 import AppImage from '../../components/image/AppImage';
 import AppAlert from '../../components/alert/AppAlert';
+import AppMenu from '../../components/menu/AppMenu';
 import { Icons } from '../../assets/icons';
 import { ValidationRule } from '../../constants/validationRules';
 import { delay } from '../../utils/helpers';
@@ -1290,6 +1291,39 @@ const groups = [
                 <AppAlert type="info" showIcon={true} icon={<Icons.GlobalOutlined/>} message="Alert type info with custom icon"/>
                 <AppAlert type="info" showIcon={true} icon={<Icons.GlobalOutlined/>}
                           message="Alert type info expanded with custom icon" description={LONG_DUMMY_TEXT}/>
+              </AppSpace>
+            )
+          }
+        </Col>
+      </Row>
+    )
+  },
+  {
+    title: 'App Menu',
+    content: (
+      <Row gutter={ROW_GUTTER} vStretch={true}>
+        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+          {
+            contentCard('Basic usage', 'Basic use of menu',
+              <AppSpace size={ITEM_SPACE}>
+                <Row>
+                  <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                    <AppMenu>
+                      <AppMenu.Item key="1" title="Hello world">
+                        Hello world
+                      </AppMenu.Item>
+                      <AppMenu.Item key="2" title="Hello world 1">
+                        Hello world 1
+                      </AppMenu.Item>
+                      <AppMenu.Item key="3" title="Hello world 2">
+                        Hello world 2
+                      </AppMenu.Item>
+                      <AppMenu.Item key="4" title="Hello world 3">
+                        Hello world 3
+                      </AppMenu.Item>
+                    </AppMenu>
+                  </Col>
+                </Row>
               </AppSpace>
             )
           }
