@@ -16,8 +16,8 @@ const propTypes = {
   alt: PropTypes.string,
   placeholder: PropTypes.node,
   errorPlaceholder: PropTypes.string,
-  width: PropTypes.number,
-  height: PropTypes.number,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   enablePreview: PropTypes.bool,
   fallback: PropTypes.string,
   onError: PropTypes.func, // (event) => {}
