@@ -6,7 +6,7 @@ import './AppMenuItem.scss';
 
 const propTypes = {
   ...baseProps,
-  id: PropTypes.string,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   title: PropTypes.string,
   icon: PropTypes.node,
   disabled: PropTypes.bool

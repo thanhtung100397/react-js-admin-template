@@ -18,6 +18,7 @@ import { ValidationRule } from '../../constants/validationRules';
 import { delay } from '../../utils/helpers';
 import { toRomanNumber } from '../../utils/numberHelpers';
 import './UiPreview.scss';
+import AppMenuItem from '../../components/menu/item/AppMenuItem';
 
 const { Row, Col } = AppGrid;
 const { Title, Text, Link } = AppTypography;
@@ -1309,18 +1310,27 @@ const groups = [
                 <Row>
                   <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
                     <AppMenu>
-                      <AppMenu.Item key="1" title="Hello world">
+                      <AppMenuItem key="1" id={1} title="Hello world">
                         Hello world
-                      </AppMenu.Item>
-                      <AppMenu.Item key="2" title="Hello world 1">
-                        Hello world 1
-                      </AppMenu.Item>
-                      <AppMenu.Item key="3" title="Hello world 2">
+                      </AppMenuItem>
+                      <AppMenuItem key="2" id={2} title="Hello world 2">
                         Hello world 2
-                      </AppMenu.Item>
-                      <AppMenu.Item key="4" title="Hello world 3">
+                      </AppMenuItem>
+                      <AppMenuItem key="3" id={3} title="Hello world 3">
                         Hello world 3
-                      </AppMenu.Item>
+                      </AppMenuItem>
+                      {/*<AppMenu.Item id="1" title="Hello world">*/}
+                        {/*Hello world*/}
+                      {/*</AppMenu.Item>*/}
+                      {/*<AppMenu.Item id="2" title="Hello world 1">*/}
+                        {/*Hello world 1*/}
+                      {/*</AppMenu.Item>*/}
+                      {/*<AppMenu.Item id="3" title="Hello world 2">*/}
+                        {/*Hello world 2*/}
+                      {/*</AppMenu.Item>*/}
+                      {/*<AppMenu.Item id="4" title="Hello world 3">*/}
+                        {/*Hello world 3*/}
+                      {/*</AppMenu.Item>*/}
                     </AppMenu>
                   </Col>
                 </Row>
