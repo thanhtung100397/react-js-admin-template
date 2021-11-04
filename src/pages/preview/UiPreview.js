@@ -12,13 +12,12 @@ import AppForm from '../../components/form/AppForm';
 import AppButton from '../../components/button/AppButton';
 import AppImage from '../../components/image/AppImage';
 import AppAlert from '../../components/alert/AppAlert';
-import AppMenu from '../../components/menu/AppMenu';
+import AppMenu, { MenuItemType } from '../../components/menu/AppMenu';
 import { Icons } from '../../assets/icons';
 import { ValidationRule } from '../../constants/validationRules';
 import { delay } from '../../utils/helpers';
 import { toRomanNumber } from '../../utils/numberHelpers';
 import './UiPreview.scss';
-import AppMenuItem from '../../components/menu/item/AppMenuItem';
 
 const { Row, Col } = AppGrid;
 const { Title, Text, Link } = AppTypography;
@@ -47,6 +46,100 @@ const DUMMY_PARAGRAPH = "Lorem ipsum dolor sit amet, consectetur adipiscing elit
   "ex ea commodo consequat.\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu " +
   "fugiat nulla pariatur. \nExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
   "mollit anim id est laborum";
+
+const DEMO_MENU = [
+  {
+    title: 'Sub menu 1',
+    type: MenuItemType.SUB_MENU,
+    icon: <Icons.UserOutlined/>,
+    children: [
+      {
+        title: 'Menu item group 1',
+        type: MenuItemType.ITEM_GROUP,
+        children: [
+          {
+            title: 'Menu item 1',
+            icon: <Icons.KeyOutlined/>,
+            type: MenuItemType.ITEM,
+          },
+          {
+            title: 'Menu item 2',
+            icon: <Icons.NumberOutlined/>,
+            type: MenuItemType.ITEM,
+          }
+        ]
+      },
+      {
+        title: 'Menu item group 2',
+        type: MenuItemType.ITEM_GROUP,
+        children: [
+          {
+            title: 'Menu item 3',
+            icon: <Icons.NumberOutlined/>,
+            type: MenuItemType.ITEM,
+          },
+          {
+            title: 'Menu item 4',
+            icon: <Icons.KeyOutlined/>,
+            type: MenuItemType.ITEM,
+          }
+        ]
+      },
+      {
+        title: 'Menu item 5',
+        icon: <Icons.GlobalOutlined/>,
+        type: MenuItemType.ITEM,
+      },
+      {
+        title: 'Menu item 6',
+        icon: <Icons.NumberOutlined/>,
+        type: MenuItemType.ITEM,
+      }
+    ]
+  },
+  {
+    title: 'Sub menu 2',
+    type: MenuItemType.SUB_MENU,
+    icon: <Icons.GlobalOutlined/>,
+    children: [
+      {
+        title: 'Menu item 7',
+        icon: <Icons.KeyOutlined/>,
+        type: MenuItemType.ITEM,
+      },
+      {
+        title: 'Menu item 8',
+        icon: <Icons.NumberOutlined/>,
+        type: MenuItemType.ITEM,
+      },
+      {
+        title: 'Sub menu 3',
+        type: MenuItemType.SUB_MENU,
+        icon: <Icons.UserOutlined/>,
+        children: [
+          {
+            title: 'Menu item 9',
+            icon: <Icons.GlobalOutlined/>,
+            type: MenuItemType.ITEM,
+          },
+          {
+            title: 'Menu item 10',
+            icon: <Icons.KeyOutlined/>,
+            type: MenuItemType.ITEM,
+          }
+        ]
+      }
+    ]
+  },
+  {
+    title: 'Menu item 13',
+    type: MenuItemType.ITEM,
+  },
+  {
+    title: 'Menu item 14',
+    type: MenuItemType.ITEM,
+  }
+];
 
 const contentCard = (name, footer, content) => (
   <AppCard noBodyPadding={true} whFull={true}>
@@ -1305,33 +1398,20 @@ const groups = [
       <Row gutter={ROW_GUTTER} vStretch={true}>
         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
           {
-            contentCard('Basic usage', 'Basic use of menu',
+            contentCard('Basic usage', 'Basic use of menu: vertical, horizontail layout; vertical, horizontal layout expand',
               <AppSpace size={ITEM_SPACE}>
                 <Row>
-                  <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                    <AppMenu>
-                      <AppMenuItem key="1" id={1} title="Hello world">
-                        Hello world
-                      </AppMenuItem>
-                      <AppMenuItem key="2" id={2} title="Hello world 2">
-                        Hello world 2
-                      </AppMenuItem>
-                      <AppMenuItem key="3" id={3} title="Hello world 3">
-                        Hello world 3
-                      </AppMenuItem>
-                      {/*<AppMenu.Item id="1" title="Hello world">*/}
-                        {/*Hello world*/}
-                      {/*</AppMenu.Item>*/}
-                      {/*<AppMenu.Item id="2" title="Hello world 1">*/}
-                        {/*Hello world 1*/}
-                      {/*</AppMenu.Item>*/}
-                      {/*<AppMenu.Item id="3" title="Hello world 2">*/}
-                        {/*Hello world 2*/}
-                      {/*</AppMenu.Item>*/}
-                      {/*<AppMenu.Item id="4" title="Hello world 3">*/}
-                        {/*Hello world 3*/}
-                      {/*</AppMenu.Item>*/}
-                    </AppMenu>
+                  <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <AppMenu items={DEMO_MENU} direction="horizontal" theme="dark"/>
+                  </Col>
+                </Row>
+                <Row gutter={ITEM_SPACE}>
+                  <Col xs={12} sm={12} md={6} lg={6} xl={6} xxl={6}>
+                    <AppMenu items={DEMO_MENU} expandDirection="horizontal" theme="dark"/>
+                  </Col>
+                  <Col xs={0} sm={0} md={12} lg={12} xl={12} xxl={12}/>
+                  <Col xs={12} sm={12} md={6} lg={6} xl={6} xxl={6}>
+                    <AppMenu items={DEMO_MENU} theme="dark"/>
                   </Col>
                 </Row>
               </AppSpace>
