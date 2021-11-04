@@ -2,9 +2,9 @@ import React, { useRef, useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { baseProps, fromBaseProps } from '../base';
 import { ConsoleLogger } from '../../utils/loggers';
+import { setObjField } from '../../utils/helpers';
 import AppFormItem from './AppFormItem';
 import './AppForm.scss';
-import { setObjField } from '../../utils/helpers';
 
 const propTypes = {
   ...baseProps,

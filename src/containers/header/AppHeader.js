@@ -4,7 +4,7 @@ import { Layout } from 'antd';
 import './AppHeader.scss'
 
 const propTypes = {
-  baseProps
+  ...baseProps
 };
 
 const defaultProps = {
