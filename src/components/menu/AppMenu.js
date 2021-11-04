@@ -2,9 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { baseProps, fromBaseProps } from '../../components/base';
 import { Menu } from 'antd';
-import AppMenuItem from './item/AppMenuItem';
-import AppMenuItemGroup from './item/AppMenuItemGroup';
-import AppSubMenu from './AppSubMenu';
+import { stringJoin } from '../../utils/stringHelpers';
 import './AppMenu.scss';
 
 export const MenuDirection = {
@@ -17,6 +15,11 @@ export const ItemDirection = {
   HORIZONTAL: 'horizontal'
 };
 
+export const MenuTheme = {
+  LIGHT: 'light',
+  DARK: 'dark'
+};
+
 export const MenuItemType = {
   SUB_MENU: 'sub_menu',
   ITEM_GROUP: 'item_group',
@@ -25,20 +28,23 @@ export const MenuItemType = {
 
 const MenuItemPropTypes = {
   title: PropTypes.string.isRequired,
-  type: PropTypes.oneOfType(Object.keys(MenuItemType).map(key => MenuItemType[key])),
+  type: PropTypes.oneOf(Object.keys(MenuItemType).map(key => MenuItemType[key])),
   icon: PropTypes.node,
   disabled: PropTypes.bool,
   content: PropTypes.node
+};
+
+const MenuItemGroupPropTypes = {
+  ...MenuItemPropTypes,
+  children: PropTypes.arrayOf(PropTypes.shape(MenuItemPropTypes))
 };
 
 const propTypes = {
   ...baseProps,
   direction: PropTypes.oneOf(Object.keys(MenuDirection).map(key => MenuDirection[key])),
   expandDirection: PropTypes.oneOf(Object.keys(ItemDirection).map(key => ItemDirection[key])),
-  items: PropTypes.arrayOf(PropTypes.shape({
-    ...MenuItemShapePropTypes,
-    children: PropTypes.shape(MenuItemPropTypes)
-  }))
+  theme: PropTypes.oneOf(Object.keys(MenuTheme).map(key => MenuTheme[key])),
+  items: PropTypes.arrayOf(PropTypes.shape(MenuItemGroupPropTypes))
 };
 
 const defaultProps = {
@@ -48,49 +54,52 @@ const defaultProps = {
 };
 
 const subMenu = (item, key, disabled) => (
-  <Menu.SubMenu key={key} title={item.title} icon={item.icon} disabled={disabled}>
+  <Menu.SubMenu className="app-menu-item" key={key}
+                title={item.title} icon={item.icon} disabled={disabled}>
     {item.content}
     {renderMenuItems(item.children, key)}
   </Menu.SubMenu>
 );
 
 const menuItemGroup = (item, key, disabled) => (
-  <Menu.ItemGroup title={item.title}>
+  <Menu.ItemGroup className="app-menu-item-group" key={key} title={item.title}>
     {item.content}
     {renderMenuItems(item.children, key)}
   </Menu.ItemGroup>
 );
 
 const menuItem = (item, key, disabled) => (
-  <Menu.Item key={key} title={item.title} icon={item.icon} disabled={disabled}>
+  <Menu.Item className="app-menu-item" key={key}
+             title={item.title} icon={item.icon} disabled={disabled}>
     {item.content || item.title}
   </Menu.Item>
 );
 
-const generateMenuItemKey = (index, parentKey) => {
-  return `${parentKey}.${index + 1}`;
-};
+function generateMenuItemKey(index, parentKey) {
+  return stringJoin('.', parentKey, index + 1);
+}
 
-const renderMenuItem = (menuItem, index = 0, parentKey = "") => {
-  const { type = MenuItemType.ITEM } = menuItem;
+function renderMenuItem(item, index = 0, parentKey) {
+  const { type = MenuItemType.ITEM } = item;
   switch (type) {
     case MenuItemType.SUB_MENU:
-      return subMenu(menuItem, generateMenuItemKey(index, parentKey), menuItem.disabled);
+      return subMenu(item, generateMenuItemKey(index, parentKey), item.disabled);
     case MenuItemType.ITEM_GROUP:
-      return menuItemGroup(menuItem, generateMenuItemKey(index, parentKey), menuItem.disabled);
+      return menuItemGroup(item, generateMenuItemKey(index, parentKey), item.disabled);
     default:
-      return menuItem(menuItem, generateMenuItemKey(index, parentKey), menuItem.disabled);
+      return menuItem(item, generateMenuItemKey(index, parentKey), item.disabled);
   }
-};
+}
 
-function renderMenuItems(menuItems, parentKey = "") {
-  menuItems.map((menuItem, index) => renderMenuItem(menuItem, index, parentKey));
+function renderMenuItems(menuItems, parentKey = 1) {
+  return menuItems.map((menuItem, index) => renderMenuItem(menuItem, index, parentKey));
 }
 
 const AppMenu = (props) => {
 
   const menuMode = useMemo(() => {
-    if (props.expandDirection === ItemDirection.VERTICAL) {
+    if (props.expandDirection === ItemDirection.VERTICAL &&
+      props.direction === MenuDirection.VERTICAL) {
       return 'inline'; // ant menu mode
     }
     if (props.direction) {
@@ -102,7 +111,7 @@ const AppMenu = (props) => {
 
   return (
     <Menu {...fromBaseProps({ className: 'app-menu' }, props)}
-          mode={menuMode}>
+          mode={menuMode} theme={props.theme}>
       {menuItems}
     </Menu>
   );
@@ -111,9 +120,5 @@ const AppMenu = (props) => {
 AppMenu.propTypes = propTypes;
 
 AppMenu.defaultProps = defaultProps;
-
-AppMenu.Item = Menu.Item;
-AppMenu.ItemGroup = (props) => <AppMenuItemGroup {...props}/>;
-AppMenu.SubMenu = (props) => <AppSubMenu {...props}/>;
 
 export default AppMenu;
