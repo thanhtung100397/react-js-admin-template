@@ -10,7 +10,7 @@ export const MenuDirection = {
   HORIZONTAL: 'horizontal'
 };
 
-export const ItemDirection = {
+export const ExpandDirection = {
   VERTICAL: 'vertical',
   HORIZONTAL: 'horizontal'
 };
@@ -42,14 +42,15 @@ const MenuItemGroupPropTypes = {
 const propTypes = {
   ...baseProps,
   direction: PropTypes.oneOf(Object.keys(MenuDirection).map(key => MenuDirection[key])),
-  expandDirection: PropTypes.oneOf(Object.keys(ItemDirection).map(key => ItemDirection[key])),
+  expandDirection: PropTypes.oneOf(Object.keys(ExpandDirection).map(key => ExpandDirection[key])),
   theme: PropTypes.oneOf(Object.keys(MenuTheme).map(key => MenuTheme[key])),
   items: PropTypes.arrayOf(PropTypes.shape(MenuItemGroupPropTypes))
 };
 
 const defaultProps = {
-  direction: 'vertical',
-  expandDirection: 'vertical',
+  direction: MenuDirection.VERTICAL,
+  expandDirection: ExpandDirection.VERTICAL,
+  theme: MenuTheme.DARK,
   items: []
 };
 
@@ -98,7 +99,7 @@ function renderMenuItems(menuItems, parentKey = 1) {
 const AppMenu = (props) => {
 
   const menuMode = useMemo(() => {
-    if (props.expandDirection === ItemDirection.VERTICAL &&
+    if (props.expandDirection === ExpandDirection.VERTICAL &&
       props.direction === MenuDirection.VERTICAL) {
       return 'inline'; // ant menu mode
     }

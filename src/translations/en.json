@@ -31,5 +31,13 @@
   "ID_USERNAME": "Username",
   "ID_PASSWORD": "Password",
   "ID_SIGN_IN": "Sign in",
-  "ID_SIGN_IN_ZALO": "Sign in with Zalo"
+  "ID_SIGN_IN_ZALO": "Sign in with Zalo",
+
+  "ID_USER_MANAGEMENT": "User management",
+  "ID_LIST_USERS": "List users",
+  "ID_CREATE_USER": "Create user",
+
+  "ID_PRODUCT_MANAGEMENT": "Product management",
+  "ID_LIST_PRODUCTS": "List products",
+  "ID_CREATE_PRODUCT": "Create product"
 }

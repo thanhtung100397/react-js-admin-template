@@ -11,7 +11,12 @@ import {
   UserOutlined,
   KeyOutlined,
   NumberOutlined,
-  GlobalOutlined
+  GlobalOutlined,
+  SolutionOutlined,
+  UserAddOutlined,
+  AppstoreOutlined,
+  BarChartOutlined,
+  PlusCircleOutlined,
 } from '@ant-design/icons';
 
 const colorIconStyle = {
@@ -23,7 +28,12 @@ export const Icons = {
   UserOutlined,
   KeyOutlined,
   NumberOutlined,
-  GlobalOutlined
+  GlobalOutlined,
+  SolutionOutlined,
+  UserAddOutlined,
+  AppstoreOutlined,
+  BarChartOutlined,
+  PlusCircleOutlined
 };
 
 export const ColorIcons = {

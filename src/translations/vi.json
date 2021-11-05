@@ -31,5 +31,13 @@
   "ID_USERNAME": "Tên đăng nhập",
   "ID_PASSWORD": "Mật khẩu",
   "ID_SIGN_IN": "Đăng nhập",
-  "ID_SIGN_IN_ZALO": "Đăng nhập với Zalo"
+  "ID_SIGN_IN_ZALO": "Đăng nhập với Zalo",
+
+  "ID_USER_MANAGEMENT": "Quản lý người dùng",
+  "ID_LIST_USERS": "Danh sách người dùng",
+  "ID_CREATE_USER": "Tạo người dùng",
+
+  "ID_PRODUCT_MANAGEMENT": "Quản lý sản phẩm",
+  "ID_LIST_PRODUCTS": "Danh sách sản phẩm",
+  "ID_CREATE_PRODUCT": "Tạo sản phẩm"
 }
