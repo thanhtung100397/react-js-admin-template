@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useAppAuth } from './state/auth/authHook';
 
-const Login = React.lazy(() => import('./pages/signIn/SignIn'));
+const SignIn = React.lazy(() => import('./pages/signIn/SignIn'));
 const Dashboard = React.lazy(() => import('./pages/dashboard/Dashboard'));
 const UiPreview = React.lazy(() => import('./pages/preview/UiPreview'));
 
@@ -10,12 +10,12 @@ const RouteType = {
   NO_AUTH: 'no_auth',
   AUTH_REQUIRED: 'auth_required',
   NO_AUTH_REQUIRED: 'no_auth_required'
-}
+};
 
 export const routes = {
   SIGN_IN: {
-    path: '/login',
-    component: Login,
+    path: '/sign-in',
+    component: SignIn,
     exact: true,
     type: RouteType.NO_AUTH_REQUIRED
   },
@@ -44,7 +44,7 @@ const NoAuthRoute = (props) => {
       (props) => !isAuth? <Component {...props}/> : <Redirect to={routes.DASHBOARD.path}/>
     }/>
   );
-}
+};
 
 const AuthRoute = (props) => {
   const { component : Component, isAuth, ...otherProps } = props;
