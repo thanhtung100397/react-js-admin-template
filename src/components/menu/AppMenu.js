@@ -27,7 +27,7 @@ export const MenuItemType = {
 };
 
 const MenuItemPropTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.node.isRequired,
   type: PropTypes.oneOf(Object.keys(MenuItemType).map(key => MenuItemType[key])),
   icon: PropTypes.node,
   disabled: PropTypes.bool,

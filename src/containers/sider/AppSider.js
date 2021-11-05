@@ -22,6 +22,7 @@ const AppSider = (props) => {
   return (
     <Layout.Sider {...fromBaseProps({ className: 'app-sider' }, props)}
                   theme={props.theme}>
+      {props.children}
     </Layout.Sider>
   )
 };

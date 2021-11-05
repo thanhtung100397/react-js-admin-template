@@ -5,6 +5,9 @@ import { Icons } from '../../assets/icons';
 
 export const appMenu = [
   {
+    title: <FormattedMessage id="ID_DASHBOARD"/>,
+  },
+  {
     title: <FormattedMessage id="ID_USER_MANAGEMENT"/>,
     icon: <Icons.UserOutlined/>,
     type: MenuItemType.SUB_MENU,
