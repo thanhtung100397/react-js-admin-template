@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { baseProps, fromBaseProps } from '../../components/base';
 import { Menu } from 'antd';
 import { stringJoin } from '../../utils/stringHelpers';
+import { ArrayHelpers } from '../../utils/arrayHelpers';
 import './AppMenu.scss';
 
 export const MenuDirection = {
@@ -31,11 +32,13 @@ const MenuItemPropTypes = {
   type: PropTypes.oneOf(Object.keys(MenuItemType).map(key => MenuItemType[key])),
   icon: PropTypes.node,
   disabled: PropTypes.bool,
-  content: PropTypes.node
+  content: PropTypes.node,
+  path: PropTypes.string,
 };
 
 const MenuItemGroupPropTypes = {
   ...MenuItemPropTypes,
+  expanded: PropTypes.bool,
   children: PropTypes.arrayOf(PropTypes.shape(MenuItemPropTypes))
 };
 
@@ -44,7 +47,10 @@ const propTypes = {
   direction: PropTypes.oneOf(Object.keys(MenuDirection).map(key => MenuDirection[key])),
   expandDirection: PropTypes.oneOf(Object.keys(ExpandDirection).map(key => ExpandDirection[key])),
   theme: PropTypes.oneOf(Object.keys(MenuTheme).map(key => MenuTheme[key])),
-  items: PropTypes.arrayOf(PropTypes.shape(MenuItemGroupPropTypes))
+  items: PropTypes.arrayOf(PropTypes.shape(MenuItemGroupPropTypes)),
+  allowMultiSelect: PropTypes.bool,
+  expandCurrentOnly: PropTypes.bool,
+  expandAll: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -80,23 +86,51 @@ function generateMenuItemKey(index, parentKey) {
   return stringJoin('.', parentKey, index + 1);
 }
 
-function renderMenuItem(item, index = 0, parentKey) {
+function renderMenuItem(item, index = 0, parentKey,
+                        onEachItem = (item, itemKey, itemType) => {}) {
   const { type = MenuItemType.ITEM } = item;
+  const itemKey = generateMenuItemKey(index, parentKey);
+  onEachItem(item, itemKey, type);
   switch (type) {
     case MenuItemType.SUB_MENU:
-      return subMenu(item, generateMenuItemKey(index, parentKey), item.disabled);
+      return subMenu(item, itemKey, item.disabled);
     case MenuItemType.ITEM_GROUP:
-      return menuItemGroup(item, generateMenuItemKey(index, parentKey), item.disabled);
+      return menuItemGroup(item, itemKey, item.disabled);
     default:
-      return menuItem(item, generateMenuItemKey(index, parentKey), item.disabled);
+      return menuItem(item, itemKey, item.disabled);
   }
 }
 
-function renderMenuItems(menuItems, parentKey = 1) {
-  return menuItems.map((menuItem, index) => renderMenuItem(menuItem, index, parentKey));
+function renderMenuItems(menuItems,
+                         onEachItem = (item, itemKey, itemType) => {},
+                         parentKey = 1) {
+  return menuItems.map((menuItem, index) => renderMenuItem(menuItem, index, parentKey, onEachItem));
+}
+
+function forEachMenuItems(menuItems, onEachItem = (item, itemKey, itemType) => {}) {
+  return menuItems.map((menuItem, index) => eachMenuItem(menuItem, index, ));
+}
+
+function eachMenuItem(menuItem, index = 0, parentKey,
+                      onEachItem = (item, itemKey, itemType) => {}) {
+  const { type = MenuItemType.ITEM } = item;
+  const itemKey = generateMenuItemKey(index, parentKey);
+  onEachItem(item, itemKey, type);
+  switch (type) {
+    case MenuItemType.SUB_MENU:
+      return subMenu(item, itemKey, item.disabled);
+    case MenuItemType.ITEM_GROUP:
+      return menuItemGroup(item, itemKey, item.disabled);
+    default:
+      return menuItem(item, itemKey, item.disabled);
+  }
 }
 
 const AppMenu = (props) => {
+
+  const [menuKeyPathMap, setMenuKeyPathMap] = useState();
+  const [expandedMenuKeys, setExpandedMenuKeys] = useState();
+  const [selectedKeys, setSelectedKeys] = useState();
 
   const menuMode = useMemo(() => {
     if (props.expandDirection === ExpandDirection.VERTICAL &&
@@ -108,12 +142,39 @@ const AppMenu = (props) => {
     }
   }, [props.direction, props.expandDirection]);
 
-  const menuItems = useMemo(() => renderMenuItems(props.items), [props.items]);
+  const menuItemsNode = useMemo(() => {
+    const pathMap = {};
+    const expandedKeys = [];
+    const node = renderMenuItems(props.items, (menuItem, itemKey) => {
+      pathMap[menuItem.path] = itemKey;
+      if (menuItem.expanded) {
+        expandedKeys.push(itemKey);
+      }
+    });
+    setMenuKeyPathMap(pathMap);
+    setExpandedMenuKeys(expandedKeys);
+    return node;
+  }, [props.items]);
+
+  const handleExpandMenuChanged = useMemo(() => {
+    if (!props.allowMultiSelect && props.expandCurrentOnly) {
+      return (keys) => setExpandedMenuKeys((prev) => ArrayHelpers.nonIntersectValues(keys, prev));
+    }
+    return (keys) => setExpandedMenuKeys(keys);
+  }, [props.expandCurrentOnly, props.allowMultiSelect]);
+
+  const handleMenuItemSelected = ({item, key, keyPath}) => {
+    console.log('ABC', item);
+    console.log('DEF', key);
+    console.log('GHI', keyPath);
+  };
 
   return (
     <Menu {...fromBaseProps({ className: 'app-menu' }, props)}
-          mode={menuMode} theme={props.theme}>
-      {menuItems}
+          mode={menuMode} theme={props.theme} multiple={props.allowMultiSelect}
+          openKeys={expandedMenuKeys} onOpenChange={handleExpandMenuChanged}
+          selectedKeys={selectedKeys} onSelect={handleMenuItemSelected}>
+      {menuItemsNode}
     </Menu>
   );
 };
