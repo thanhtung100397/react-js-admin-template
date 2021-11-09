@@ -33,6 +33,8 @@
   "ID_SIGN_IN": "Sign in",
   "ID_SIGN_IN_ZALO": "Sign in with Zalo",
 
+  "ID_DASHBOARD": "Dashboard",
+
   "ID_USER_MANAGEMENT": "User management",
   "ID_LIST_USERS": "List users",
   "ID_CREATE_USER": "Create user",

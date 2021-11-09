@@ -12,7 +12,7 @@ const Dashboard = (props) => {
   return (
     <AppContainer className="dashboard-page wh-full">
       <AppSider>
-        <AppMenu items={appMenu}/>
+        <AppMenu items={appMenu} expandCurrentOnly={true}/>
       </AppSider>
       <AppContainer>
         <AppHeader>

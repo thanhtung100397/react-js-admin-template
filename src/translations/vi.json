@@ -33,6 +33,8 @@
   "ID_SIGN_IN": "Đăng nhập",
   "ID_SIGN_IN_ZALO": "Đăng nhập với Zalo",
 
+  "ID_DASHBOARD": "Trang tổng quan",
+
   "ID_USER_MANAGEMENT": "Quản lý người dùng",
   "ID_LIST_USERS": "Danh sách người dùng",
   "ID_CREATE_USER": "Tạo người dùng",
