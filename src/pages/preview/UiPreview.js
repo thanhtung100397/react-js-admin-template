@@ -261,6 +261,15 @@ const groups = [
                     <Title level={5} onClick={() => AppNotification.success('Click Message', 'Title clicked')}>
                       (Click listener) {SHORT_DUMMY_TEXT}
                     </Title>
+                    <Title level={5} textAlign="start">
+                      (Text align start) {TINY_DUMMY_TEXT}
+                    </Title>
+                    <Title level={5} textAlign="center">
+                      (Text align center) {TINY_DUMMY_TEXT}
+                    </Title>
+                    <Title level={5} textAlign="end">
+                      (Text align end) {TINY_DUMMY_TEXT}
+                    </Title>
                   </>
                 )
               }
@@ -428,6 +437,15 @@ const groups = [
                     <Link href="https://reactjs.org" target="_blank"
                           onClick={() => AppNotification.success('Click Message', 'Text clicked')}>
                       (Click listener) Consectetur adipiscing elit
+                    </Link>
+                    <Link href="https://reactjs.org" textAlign="start">
+                      (Text align start) {TINY_DUMMY_TEXT}
+                    </Link>
+                    <Link href="https://reactjs.org" textAlign="center">
+                      (Text align center) {TINY_DUMMY_TEXT}
+                    </Link>
+                    <Link href="https://reactjs.org" textAlign="end">
+                      (Text align end) {TINY_DUMMY_TEXT}
                     </Link>
                   </>
                 )
