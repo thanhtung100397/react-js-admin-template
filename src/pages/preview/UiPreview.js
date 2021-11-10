@@ -1447,6 +1447,28 @@ const groups = [
             )
           }
         </Col>
+        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+          {
+            contentCard('Other options', 'Basic use of menu: vertical, horizontail layout; vertical, horizontal layout expand',
+              <AppSpace size={ITEM_SPACE}>
+                <Row gutter={ITEM_SPACE}>
+                  <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
+                    <Text>Only expand current selected</Text>
+                    <AppMenu items={DEMO_MENU} theme="dark" expandCurrentOnly={true}/>
+                  </Col>
+                  <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
+                    <Text>Allow multiple expand</Text>
+                    <AppMenu items={DEMO_MENU} theme="dark"/>
+                  </Col>
+                  <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
+                    <Text>Auto expand all sub-menu(s)</Text>
+                    <AppMenu items={DEMO_MENU} theme="dark" expandAll={true}/>
+                  </Col>
+                </Row>
+              </AppSpace>
+            )
+          }
+        </Col>
       </Row>
     )
   }
