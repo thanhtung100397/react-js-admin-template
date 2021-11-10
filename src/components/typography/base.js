@@ -2,6 +2,13 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { fromBaseProps } from '../base';
 import { TypeChecker } from '../../utils/helpers';
+import { isEmpty } from '../../utils/stringHelpers';
+
+export const TextAlign = {
+  START: 'start',
+  CENTER: 'center',
+  END: 'end',
+};
 
 export const typographyPropTypes = {
   bold: PropTypes.bool, // bold style
@@ -14,12 +21,14 @@ export const typographyPropTypes = {
   disabled: PropTypes.bool, // disabled content
   onClick: PropTypes.func,
   firstCap: PropTypes.bool, // display first character uppercase
-  allCaps: PropTypes.bool // display all characters uppercase
+  allCaps: PropTypes.bool, // display all characters uppercase,
+  textAlign: PropTypes.oneOf([TextAlign.START, TextAlign.CENTER, TextAlign.END])
 };
 
 export const typographyBaseClassNames = (props) => ({
   'all-caps': props.allCaps,
-  'first-caps': props.firstCap
+  'first-caps': props.firstCap,
+  [`text-align-${props.textAlign}`]: !isEmpty(props.textAlign)
 });
 
 const italicValue = (italic) => { // ant design has bug about Typography italic prop

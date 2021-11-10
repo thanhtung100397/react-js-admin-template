@@ -36,6 +36,8 @@ const APP_IMAGE_BROKEN_URL = 'https://foo.bar/image.png';
 const APP_IMAGE_ERROR_PLACEHOLDER_URL = `https://via.placeholder.com/${APP_IMAGE_FIXED_SIZE}/FF0000/FFFFFF/?text=Broken`;
 const APP_IMAGE_FALLBACK_URL = 'https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg';
 
+const TINY_DUMMY_TEXT = "Lorem ipsum";
+
 const SHORT_DUMMY_TEXT = "Lorem ipsum dolor sit amet";
 
 const LONG_DUMMY_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt " +
@@ -297,16 +299,16 @@ const groups = [
               {
                 contentCard('Text Style', 'All supported component text style',
                   <>
-                    <Text level={5} bold={true}>
+                    <Text bold={true}>
                       (Bold) Consectetur adipiscing elit
                     </Text>
-                    <Text level={5} italic={true}>
+                    <Text italic={true}>
                       (Italic) Consectetur adipiscing elit
                     </Text>
-                    <Text level={5} underline={true}>
+                    <Text underline={true}>
                       (Underline) Consectetur adipiscing elit
                     </Text>
-                    <Text level={5} disabled={true}>
+                    <Text disabled={true}>
                       (Disabled) Consectetur adipiscing elit
                     </Text>
                   </>
@@ -329,14 +331,23 @@ const groups = [
                     <Text copyable={true}>
                       (Copyable) Consectetur adipiscing elit
                     </Text>
-                    <Text level={5} strikethrough={true}>
+                    <Text strikethrough={true}>
                       (Strike Through) Consectetur adipiscing elit
                     </Text>
-                    <Text level={5} highlight={true}>
+                    <Text highlight={true}>
                       (Highlight) Consectetur adipiscing elit
                     </Text>
                     <Text onClick={() => AppNotification.success('Click Message', 'Text clicked')}>
                       (Click listener) Consectetur adipiscing elit
+                    </Text>
+                    <Text textAlign="start">
+                      (Text align start) {TINY_DUMMY_TEXT}
+                    </Text>
+                    <Text textAlign="center">
+                      (Text align center) {TINY_DUMMY_TEXT}
+                    </Text>
+                    <Text textAlign="end">
+                      (Text align end) {TINY_DUMMY_TEXT}
                     </Text>
                   </>
                 )
