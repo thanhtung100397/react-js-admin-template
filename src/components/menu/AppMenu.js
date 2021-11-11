@@ -86,6 +86,23 @@ function generateMenuItemKey(index, parentKey) {
   return stringJoin('.', parentKey, index + 1);
 }
 
+function getItemParentKeys(itemKey) {
+  const levels = itemKey.split('.');
+  if (levels.length > 1) {
+    const parentLevels = levels.slice(0, levels.length - 1);
+    return parentLevels.reduce((prev, curr) => {
+      const parentKey = prev[prev.length - 1];
+      if (parentKey) {
+        prev.push(`${parentKey}.${curr}`);
+      } else {
+        prev.push(curr);
+      }
+      return prev;
+    }, []);
+  }
+  return [];
+}
+
 function renderMenuItem(item, index = 0, parentKey) {
   const { type = MenuItemType.ITEM } = item;
   const itemKey = generateMenuItemKey(index, parentKey);
@@ -99,11 +116,11 @@ function renderMenuItem(item, index = 0, parentKey) {
   }
 }
 
-function renderMenuItems(menuItems, parentKey = 1) {
+function renderMenuItems(menuItems, parentKey) {
   return menuItems?.map((menuItem, index) => renderMenuItem(menuItem, index, parentKey));
 }
 
-function forEachMenuItems(menuItems, onEachItem = (item, itemKey, itemType) => {}, parentKey = 1) {
+function forEachMenuItems(menuItems, onEachItem = (item, itemKey, itemType) => {}, parentKey) {
   return menuItems?.forEach((menuItem, index) => {
     if (menuItem) {
       onEachMenuItem(menuItem, index, parentKey, onEachItem);
@@ -111,7 +128,7 @@ function forEachMenuItems(menuItems, onEachItem = (item, itemKey, itemType) => {
   });
 }
 
-function onEachMenuItem(menuItem, index = 0, parentKey = 1,
+function onEachMenuItem(menuItem, index = 0, parentKey,
                         onEachItem = (item, itemKey, itemType) => {}) {
   const { type = MenuItemType.ITEM, children } = menuItem;
   const itemKey = generateMenuItemKey(index, parentKey);
@@ -164,7 +181,10 @@ const AppMenu = (props) => {
   const handleExpandMenuChanged = useMemo(() => {
     if (!props.allowMultiSelect && props.expandCurrentOnly) {
       return (keys) => {
-        setExpandedMenuKeys((prev) => ArrayHelpers.nonIntersectValues(keys, prev));
+        console.log(keys);
+        console.log('PARENTS', getItemParentKeys(keys[keys.length - 1]));
+        // const newOpenKeys = ArrayHelpers.nonIntersectValues(keys, prev);
+        // setExpandedMenuKeys((prev) => ArrayHelpers.nonIntersectValues(keys, prev));
       }
     }
     return (keys) => setExpandedMenuKeys(keys);
