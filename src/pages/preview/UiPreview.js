@@ -56,44 +56,44 @@ const DEMO_MENU = [
     icon: <Icons.UserOutlined/>,
     children: [
       {
-        title: 'Menu item group 1',
+        title: 'Menu item group 1.1',
         type: MenuItemType.ITEM_GROUP,
         children: [
           {
-            title: 'Menu item 1',
+            title: 'Menu item 1.1.1',
             icon: <Icons.KeyOutlined/>,
             type: MenuItemType.ITEM,
           },
           {
-            title: 'Menu item 2',
+            title: 'Menu item 1.1.2',
             icon: <Icons.NumberOutlined/>,
             type: MenuItemType.ITEM,
           }
         ]
       },
       {
-        title: 'Menu item group 2',
+        title: 'Menu item group 1.2',
         type: MenuItemType.ITEM_GROUP,
         children: [
           {
-            title: 'Menu item 3',
+            title: 'Menu item 1.2.1',
             icon: <Icons.NumberOutlined/>,
             type: MenuItemType.ITEM,
           },
           {
-            title: 'Menu item 4',
+            title: 'Menu item 1.2.2',
             icon: <Icons.KeyOutlined/>,
             type: MenuItemType.ITEM,
           }
         ]
       },
       {
-        title: 'Menu item 5',
+        title: 'Menu item 1.3',
         icon: <Icons.GlobalOutlined/>,
         type: MenuItemType.ITEM,
       },
       {
-        title: 'Menu item 6',
+        title: 'Menu item 1.4',
         icon: <Icons.NumberOutlined/>,
         type: MenuItemType.ITEM,
       }
@@ -105,27 +105,44 @@ const DEMO_MENU = [
     icon: <Icons.GlobalOutlined/>,
     children: [
       {
-        title: 'Menu item 7',
+        title: 'Menu item 2.1',
         icon: <Icons.KeyOutlined/>,
         type: MenuItemType.ITEM,
       },
       {
-        title: 'Menu item 8',
+        title: 'Menu item 2.2',
         icon: <Icons.NumberOutlined/>,
         type: MenuItemType.ITEM,
       },
       {
-        title: 'Sub menu 3',
+        title: 'Sub menu 2.3',
         type: MenuItemType.SUB_MENU,
         icon: <Icons.UserOutlined/>,
         children: [
           {
-            title: 'Menu item 9',
+            title: 'Menu item 2.3.1',
             icon: <Icons.GlobalOutlined/>,
             type: MenuItemType.ITEM,
           },
           {
-            title: 'Menu item 10',
+            title: 'Menu item 2.3.2',
+            icon: <Icons.KeyOutlined/>,
+            type: MenuItemType.ITEM,
+          }
+        ]
+      },
+      {
+        title: 'Sub menu 2.4',
+        type: MenuItemType.SUB_MENU,
+        icon: <Icons.UserOutlined/>,
+        children: [
+          {
+            title: 'Menu item 2.4.1',
+            icon: <Icons.NumberOutlined/>,
+            type: MenuItemType.ITEM,
+          },
+          {
+            title: 'Menu item 2.4.2',
             icon: <Icons.KeyOutlined/>,
             type: MenuItemType.ITEM,
           }
@@ -134,11 +151,11 @@ const DEMO_MENU = [
     ]
   },
   {
-    title: 'Menu item 13',
+    title: 'Menu item 3',
     type: MenuItemType.ITEM,
   },
   {
-    title: 'Menu item 14',
+    title: 'Menu item 4',
     type: MenuItemType.ITEM,
   }
 ];
@@ -1463,6 +1480,14 @@ const groups = [
                   <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
                     <Text>Auto expand all sub-menu(s)</Text>
                     <AppMenu items={DEMO_MENU} theme="dark" expandAll={true}/>
+                  </Col>
+                  <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
+                    <Text>Event trigger</Text>
+                    <AppMenu items={DEMO_MENU} theme="dark" allowMultiSelect={true}
+                             onItemExpandChanged={(menuItem, isExpanded, itemKey) =>
+                               AppNotification.info(`[${itemKey}] '${menuItem.title}' ${isExpanded? 'expanded' : 'collapsed'}`)}
+                             onItemSelectChanged={(menuItem, isSelected, itemKey) =>
+                               AppNotification.info(`[${itemKey}] '${menuItem.title}' ${isSelected? 'selected' : 'de-selected'}`)}/>
                   </Col>
                 </Row>
               </AppSpace>
