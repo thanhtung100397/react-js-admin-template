@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { baseProps, fromBaseProps } from '../../components/base';
 import { Menu } from 'antd';
@@ -33,12 +33,15 @@ const MenuItemPropTypes = {
   icon: PropTypes.node,
   disabled: PropTypes.bool,
   content: PropTypes.node,
-  path: PropTypes.string
+  path: PropTypes.string,
+  selected: PropTypes.bool,
+  onSelectChanged: PropTypes.func, // (menuItem, isSelected: (boolean), itemKey) => {}
 };
 
 const MenuItemGroupPropTypes = {
   ...MenuItemPropTypes,
   expanded: PropTypes.bool,
+  onExpandChanged: PropTypes.func, // (menuItem, isExpanded: (boolean), itemKey) => {}
   children: PropTypes.arrayOf(PropTypes.shape(MenuItemPropTypes))
 };
 
@@ -51,13 +54,17 @@ const propTypes = {
   allowMultiSelect: PropTypes.bool,
   expandCurrentOnly: PropTypes.bool,
   expandAll: PropTypes.bool,
+  onItemExpandChanged: PropTypes.func, // (menuItem, isExpanded: (boolean), itemKey) => {}
+  onItemSelectChanged: PropTypes.func, // (menuItem, isSelected: (boolean), itemKey) => {}
 };
 
 const defaultProps = {
   direction: MenuDirection.VERTICAL,
   expandDirection: ExpandDirection.VERTICAL,
   theme: MenuTheme.DARK,
-  items: []
+  items: [],
+  onItemExpandChanged: (menuItem, isExpanded, itemKey) => {},
+  onItemSelectChanged: (menuItem, isSelected, itemKey) => {}
 };
 
 const subMenu = (item, key, disabled) => (
@@ -136,7 +143,7 @@ function onEachMenuItem(menuItem, index = 0, parentKey,
   switch (type) {
     case MenuItemType.SUB_MENU:
     case MenuItemType.ITEM_GROUP:
-      forEachMenuItems(children, onEachMenuItem);
+      forEachMenuItems(children, onEachItem, itemKey);
       break;
 
     default:
@@ -145,23 +152,29 @@ function onEachMenuItem(menuItem, index = 0, parentKey,
 }
 
 const AppMenu = (props) => {
+  const { onItemSelectChanged, onItemExpandChanged } = props;
 
-  const [menuKeyPathMap, setMenuKeyPathMap] = useState();
+  const [menuItemKeyMap, setMenuItemKeyMap] = useState();
+  const [menuItemKeyPathMap, setMenuItemKeyPathMap] = useState();
   const [expandedMenuKeys, setExpandedMenuKeys] = useState();
+  const [selectedMenuKeys, setSelectedMenuKeys] = useState();
 
   useEffect(() => {
     if (props.items) {
-      const menuKeyPathMap = {};
+      const menuItemKeyMap = {};
+      const menuItemKeyPathMap = {};
       const expandedMenuKeys = [];
       forEachMenuItems(props.items, (menuItem, itemKey, itemType) => {
-        if (itemType === MenuItemType.ITEM && menuItem.path) {
-          menuKeyPathMap[menuItem.path] = itemKey;
+        menuItemKeyMap[itemKey] = menuItem;
+        if (menuItem.path) {
+          menuItemKeyPathMap[menuItem.path] = itemKey;
         }
         if (itemType === MenuItemType.SUB_MENU && (props.expandAll || menuItem.expanded)) {
           expandedMenuKeys.push(itemKey);
         }
       });
-      setMenuKeyPathMap(menuKeyPathMap);
+      setMenuItemKeyMap(menuItemKeyMap);
+      setMenuItemKeyPathMap(menuItemKeyPathMap);
       setExpandedMenuKeys(expandedMenuKeys);
     }
   }, [props.items, props.expandAll]);
@@ -178,26 +191,58 @@ const AppMenu = (props) => {
 
   const menuItemsNode = useMemo(() => renderMenuItems(props.items), [props.items]);
 
-  const handleExpandMenuChanged = useMemo(() => {
-    if (!props.allowMultiSelect && props.expandCurrentOnly) {
-      return (keys) => {
-        console.log(keys);
-        console.log('PARENTS', getItemParentKeys(keys[keys.length - 1]));
-        // const newOpenKeys = ArrayHelpers.nonIntersectValues(keys, prev);
-        // setExpandedMenuKeys((prev) => ArrayHelpers.nonIntersectValues(keys, prev));
+  const handleMenuExpandOnlyCurrent = useCallback((keys) => {
+    setExpandedMenuKeys((prevExpandedMenuKeys) => {
+      let newExpandedKeys = ArrayHelpers.nonIntersectValues(keys, prevExpandedMenuKeys);
+      if (!newExpandedKeys || !newExpandedKeys.length) {
+        return newExpandedKeys;
+      }
+      const currentItemKey = newExpandedKeys[0];
+      const parentItemKeys = getItemParentKeys(currentItemKey);
+      if (parentItemKeys && parentItemKeys.length) {
+        return parentItemKeys.concat(currentItemKey);
+      }
+      return [currentItemKey];
+    });
+  }, [onItemExpandChanged]);
+
+  const handleMenuExpanded = useCallback((keys) => {
+    setExpandedMenuKeys(keys);
+  }, [onItemExpandChanged]);
+
+  const onMenuExpandedChanged = useMemo(() => {
+    const handler = props.expandCurrentOnly && !props.allowMultiSelect? handleMenuExpandOnlyCurrent : handleMenuExpanded;
+    return (keys) => {
+      handler(keys);
+      // TODO handle on key expand/collapse
+    };
+  }, [props.expandCurrentOnly, props.allowMultiSelect, props.onItemExpandChanged]);
+
+  const createMenuItemSelectChangedHandler = useCallback((isSelected) => {
+    return ({ key }) => {
+      const menuItem = menuItemKeyMap[key];
+      if (menuItem && menuItem.onSelectChanged) {
+        menuItem.onSelectChanged(menuItem, isSelected, key);
+      }
+      if (onItemSelectChanged) {
+        onItemSelectChanged(menuItem, isSelected, key);
       }
     }
-    return (keys) => setExpandedMenuKeys(keys);
-  }, [props.expandCurrentOnly, props.allowMultiSelect]);
+  }, [menuItemKeyMap, onItemSelectChanged]);
 
-  const handleMenuItemSelected = ({item, key, keyPath}) => {
+  const onMenuItemSelected = useMemo(() => {
+    return createMenuItemSelectChangedHandler(true);
+  }, [createMenuItemSelectChangedHandler]);
 
-  };
+  const onMenuItemDeselected = useMemo(() => {
+    return createMenuItemSelectChangedHandler(false);
+  }, [createMenuItemSelectChangedHandler]);
 
   return (
     <Menu {...fromBaseProps({ className: 'app-menu' }, props)}
           mode={menuMode} theme={props.theme} multiple={props.allowMultiSelect}
-          openKeys={expandedMenuKeys} onOpenChange={handleExpandMenuChanged}>
+          openKeys={expandedMenuKeys} onOpenChange={onMenuExpandedChanged}
+          selectedKeys={selectedMenuKeys} onSelect={onMenuItemSelected} onDeselect={onMenuItemDeselected}>
       {menuItemsNode}
     </Menu>
   );
