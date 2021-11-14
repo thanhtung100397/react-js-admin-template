@@ -63,6 +63,7 @@ const defaultProps = {
   expandDirection: ExpandDirection.VERTICAL,
   theme: MenuTheme.DARK,
   items: [],
+  allowMultiSelect: false,
   onItemExpandChanged: (menuItem, isExpanded, itemKey) => {},
   onItemSelectChanged: (menuItem, isSelected, itemKey) => {}
 };
@@ -151,6 +152,8 @@ function onEachMenuItem(menuItem, index = 0, parentKey,
   }
 }
 
+
+
 const AppMenu = (props) => {
   const { onItemSelectChanged, onItemExpandChanged } = props;
 
@@ -191,32 +194,23 @@ const AppMenu = (props) => {
 
   const menuItemsNode = useMemo(() => renderMenuItems(props.items), [props.items]);
 
-  const handleMenuExpandOnlyCurrent = useCallback((keys) => {
-    setExpandedMenuKeys((prevExpandedMenuKeys) => {
-      let newExpandedKeys = ArrayHelpers.nonIntersectValues(keys, prevExpandedMenuKeys);
-      if (!newExpandedKeys || !newExpandedKeys.length) {
-        return newExpandedKeys;
-      }
+  const onMenuExpandedChanged = (keys) => {
+    let updatedExpandedMenuKeys = keys;
+    const newExpandedKeys = ArrayHelpers.nonIntersectValues(updatedExpandedMenuKeys, expandedMenuKeys);
+    if (!newExpandedKeys.length) {
+      return;
+    }
+    if (props.expandCurrentOnly && !props.allowMultiSelect) {
       const currentItemKey = newExpandedKeys[0];
       const parentItemKeys = getItemParentKeys(currentItemKey);
-      if (parentItemKeys && parentItemKeys.length) {
-        return parentItemKeys.concat(currentItemKey);
+      if (parentItemKeys.length) {
+        updatedExpandedMenuKeys = parentItemKeys.concat(currentItemKey);
+      } else {
+        updatedExpandedMenuKeys = [currentItemKey];
       }
-      return [currentItemKey];
-    });
-  }, [onItemExpandChanged]);
-
-  const handleMenuExpanded = useCallback((keys) => {
-    setExpandedMenuKeys(keys);
-  }, [onItemExpandChanged]);
-
-  const onMenuExpandedChanged = useMemo(() => {
-    const handler = props.expandCurrentOnly && !props.allowMultiSelect? handleMenuExpandOnlyCurrent : handleMenuExpanded;
-    return (keys) => {
-      handler(keys);
-      // TODO handle on key expand/collapse
-    };
-  }, [props.expandCurrentOnly, props.allowMultiSelect, props.onItemExpandChanged]);
+    }
+    setExpandedMenuKeys(updatedExpandedMenuKeys);
+  };
 
   const createMenuItemSelectChangedHandler = useCallback((isSelected) => {
     return ({ key }) => {
@@ -227,6 +221,11 @@ const AppMenu = (props) => {
       if (onItemSelectChanged) {
         onItemSelectChanged(menuItem, isSelected, key);
       }
+      // if (isSelected) {
+      //   setSelectedMenuKeys([...selectedMenuKeys, key]);
+      // } else {
+      //   setSelectedMenuKeys([...selectedMenuKeys]);
+      // }
     }
   }, [menuItemKeyMap, onItemSelectChanged]);
 
