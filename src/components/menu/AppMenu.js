@@ -152,11 +152,7 @@ function onEachMenuItem(menuItem, index = 0, parentKey,
   }
 }
 
-
-
 const AppMenu = (props) => {
-  const { onItemSelectChanged, onItemExpandChanged } = props;
-
   const [menuItemKeyMap, setMenuItemKeyMap] = useState();
   const [menuItemKeyPathMap, setMenuItemKeyPathMap] = useState();
   const [expandedMenuKeys, setExpandedMenuKeys] = useState();
@@ -194,9 +190,9 @@ const AppMenu = (props) => {
 
   const menuItemsNode = useMemo(() => renderMenuItems(props.items), [props.items]);
 
-  const onMenuExpandedChanged = (keys) => {
-    let updatedExpandedMenuKeys = keys;
-    const newExpandedKeys = ArrayHelpers.nonIntersectValues(updatedExpandedMenuKeys, expandedMenuKeys);
+  const expandMenuKeys = (menuKeys) => {
+    let updatedExpandedKeys = menuKeys;
+    let newExpandedKeys = menuKeys.slice(expandedMenuKeys.length);
     if (!newExpandedKeys.length) {
       return;
     }
@@ -204,22 +200,57 @@ const AppMenu = (props) => {
       const currentItemKey = newExpandedKeys[0];
       const parentItemKeys = getItemParentKeys(currentItemKey);
       if (parentItemKeys.length) {
-        updatedExpandedMenuKeys = parentItemKeys.concat(currentItemKey);
+        updatedExpandedKeys = parentItemKeys.concat(currentItemKey);
       } else {
-        updatedExpandedMenuKeys = [currentItemKey];
+        updatedExpandedKeys = [currentItemKey];
       }
+      newExpandedKeys = [currentItemKey];
     }
-    setExpandedMenuKeys(updatedExpandedMenuKeys);
+    setExpandedMenuKeys(updatedExpandedKeys);
+    newExpandedKeys.forEach((key) => {
+      const menuItem = menuItemKeyMap[key];
+      if (menuItem && menuItem.onExpandChanged) {
+        menuItem.onExpandChanged(menuItem, true, key);
+      }
+      if (props.onItemExpandChanged) {
+        props.onItemExpandChanged(menuItem, true, key);
+      }
+    })
   };
 
-  const createMenuItemSelectChangedHandler = useCallback((isSelected) => {
+  const collapseMenuKeys = (menuKeys) => {
+    const newCollapsedKeys = ArrayHelpers.nonIntersectValues(menuKeys, expandedMenuKeys);
+    if (!newCollapsedKeys.length) {
+      return;
+    }
+    setExpandedMenuKeys(menuKeys);
+    newCollapsedKeys.forEach((key) => {
+      const menuItem = menuItemKeyMap[key];
+      if (menuItem && menuItem.onExpandChanged) {
+        menuItem.onExpandChanged(menuItem, false, key);
+      }
+      if (props.onItemExpandChanged) {
+        props.onItemExpandChanged(menuItem, false, key);
+      }
+    });
+  };
+
+  const onMenuExpandedChanged = (keys) => {
+    if (keys.length > expandedMenuKeys.length) {
+      expandMenuKeys(keys);
+    } else {
+      collapseMenuKeys(keys);
+    }
+  };
+
+  const createMenuItemSelectChangedHandler = (isSelected) => {
     return ({ key }) => {
       const menuItem = menuItemKeyMap[key];
       if (menuItem && menuItem.onSelectChanged) {
         menuItem.onSelectChanged(menuItem, isSelected, key);
       }
-      if (onItemSelectChanged) {
-        onItemSelectChanged(menuItem, isSelected, key);
+      if (props.onItemSelectChanged) {
+        props.onItemSelectChanged(menuItem, isSelected, key);
       }
       // if (isSelected) {
       //   setSelectedMenuKeys([...selectedMenuKeys, key]);
@@ -227,7 +258,7 @@ const AppMenu = (props) => {
       //   setSelectedMenuKeys([...selectedMenuKeys]);
       // }
     }
-  }, [menuItemKeyMap, onItemSelectChanged]);
+  };
 
   const onMenuItemSelected = useMemo(() => {
     return createMenuItemSelectChangedHandler(true);
