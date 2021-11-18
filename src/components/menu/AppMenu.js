@@ -111,6 +111,10 @@ function getItemParentKeys(itemKey) {
   return [];
 }
 
+function checkItemParentKey(itemKey, parentKey) {
+  return itemKey.startsWith(parentKey);
+}
+
 function renderMenuItem(item, index = 0, parentKey) {
   const { type = MenuItemType.ITEM } = item;
   const itemKey = generateMenuItemKey(index, parentKey);
@@ -236,11 +240,29 @@ const AppMenu = (props) => {
   };
 
   const onMenuExpandedChanged = (keys) => {
-    if (keys.length > expandedMenuKeys.length) {
-      expandMenuKeys(keys);
-    } else {
-      collapseMenuKeys(keys);
+    let expandedKeys = keys;
+    const newExpandedKeys = new Set(expandedKeys);
+    const collapsedKeys = [];
+    expandedMenuKeys.forEach((menuKey) => {
+      if (newExpandedKeys.has(menuKey)) {
+        newExpandedKeys.delete(menuKey);
+      } else {
+        collapsedKeys.push(menuKey);
+      }
+    });
+
+    if (props.expandCurrentOnly && !props.allowMultiSelect && newExpandedKeys.length) {
+      newExpandedKeys.reduceRight((preItemKey, itemKey) => {
+
+        return preItemKey;
+      });
+
+      const currentMenuKey = newExpandedKeys[newExpandedKeys.length - 1];
+      const parentKeys = getItemParentKeys(currentMenuKey);
+      expandedKeys = parentKeys.push(currentMenuKey);
     }
+
+    setExpandedMenuKeys(expandedKeys);
   };
 
   const createMenuItemSelectChangedHandler = (isSelected) => {
