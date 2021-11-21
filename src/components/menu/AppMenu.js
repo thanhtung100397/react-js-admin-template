@@ -1,6 +1,6 @@
-import React, { useMemo, useState, useEffect, useCallback } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { baseProps, fromBaseProps } from '../../components/base';
+import { baseProps, fromBaseProps } from '../base';
 import { Menu } from 'antd';
 import { stringJoin } from '../../utils/stringHelpers';
 import { ArrayHelpers } from '../../utils/arrayHelpers';
@@ -34,14 +34,12 @@ const MenuItemPropTypes = {
   disabled: PropTypes.bool,
   content: PropTypes.node,
   path: PropTypes.string,
-  selected: PropTypes.bool,
-  onSelectChanged: PropTypes.func, // (menuItem, isSelected: (boolean), itemKey) => {}
+  selected: PropTypes.bool
 };
 
 const MenuItemGroupPropTypes = {
   ...MenuItemPropTypes,
   expanded: PropTypes.bool,
-  onExpandChanged: PropTypes.func, // (menuItem, isExpanded: (boolean), itemKey) => {}
   children: PropTypes.arrayOf(PropTypes.shape(MenuItemPropTypes))
 };
 
@@ -92,27 +90,6 @@ const menuItem = (item, key, disabled) => (
 
 function generateMenuItemKey(index, parentKey) {
   return stringJoin('.', parentKey, index + 1);
-}
-
-function getItemParentKeys(itemKey) {
-  const levels = itemKey.split('.');
-  if (levels.length > 1) {
-    const parentLevels = levels.slice(0, levels.length - 1);
-    return parentLevels.reduce((prev, curr) => {
-      const parentKey = prev[prev.length - 1];
-      if (parentKey) {
-        prev.push(`${parentKey}.${curr}`);
-      } else {
-        prev.push(curr);
-      }
-      return prev;
-    }, []);
-  }
-  return [];
-}
-
-function checkItemParentKey(itemKey, parentKey) {
-  return itemKey.startsWith(parentKey);
 }
 
 function renderMenuItem(item, index = 0, parentKey) {
@@ -194,101 +171,66 @@ const AppMenu = (props) => {
 
   const menuItemsNode = useMemo(() => renderMenuItems(props.items), [props.items]);
 
-  const expandMenuKeys = (menuKeys) => {
-    let updatedExpandedKeys = menuKeys;
-    let newExpandedKeys = menuKeys.slice(expandedMenuKeys.length);
-    if (!newExpandedKeys.length) {
-      return;
-    }
-    if (props.expandCurrentOnly && !props.allowMultiSelect) {
-      const currentItemKey = newExpandedKeys[0];
-      const parentItemKeys = getItemParentKeys(currentItemKey);
-      if (parentItemKeys.length) {
-        updatedExpandedKeys = parentItemKeys.concat(currentItemKey);
-      } else {
-        updatedExpandedKeys = [currentItemKey];
-      }
-      newExpandedKeys = [currentItemKey];
-    }
-    setExpandedMenuKeys(updatedExpandedKeys);
-    newExpandedKeys.forEach((key) => {
-      const menuItem = menuItemKeyMap[key];
-      if (menuItem && menuItem.onExpandChanged) {
-        menuItem.onExpandChanged(menuItem, true, key);
-      }
-      if (props.onItemExpandChanged) {
-        props.onItemExpandChanged(menuItem, true, key);
-      }
-    })
-  };
-
-  const collapseMenuKeys = (menuKeys) => {
-    const newCollapsedKeys = ArrayHelpers.nonIntersectValues(menuKeys, expandedMenuKeys);
-    if (!newCollapsedKeys.length) {
-      return;
-    }
-    setExpandedMenuKeys(menuKeys);
-    newCollapsedKeys.forEach((key) => {
-      const menuItem = menuItemKeyMap[key];
-      if (menuItem && menuItem.onExpandChanged) {
-        menuItem.onExpandChanged(menuItem, false, key);
-      }
-      if (props.onItemExpandChanged) {
-        props.onItemExpandChanged(menuItem, false, key);
-      }
-    });
-  };
-
   const onMenuExpandedChanged = (keys) => {
     let expandedKeys = keys;
-    const newExpandedKeys = new Set(expandedKeys);
+    const newExpandedKeysSet = new Set(expandedKeys);
     const collapsedKeys = [];
     expandedMenuKeys.forEach((menuKey) => {
-      if (newExpandedKeys.has(menuKey)) {
-        newExpandedKeys.delete(menuKey);
+      if (newExpandedKeysSet.has(menuKey)) {
+        newExpandedKeysSet.delete(menuKey);
       } else {
         collapsedKeys.push(menuKey);
       }
     });
-
-    if (props.expandCurrentOnly && !props.allowMultiSelect && newExpandedKeys.length) {
-      newExpandedKeys.reduceRight((preItemKey, itemKey) => {
-
-        return preItemKey;
-      });
-
-      const currentMenuKey = newExpandedKeys[newExpandedKeys.length - 1];
-      const parentKeys = getItemParentKeys(currentMenuKey);
-      expandedKeys = parentKeys.push(currentMenuKey);
+    if (props.expandCurrentOnly && !props.allowMultiSelect && newExpandedKeysSet.size) {
+      const [onlyExpandedMenuKey] = newExpandedKeysSet;
+      expandedKeys = expandedKeys.reduce((prev, curr) => {
+        if (onlyExpandedMenuKey.startsWith(curr)) {
+          prev.push(curr);
+        } else {
+          collapsedKeys.push(curr);
+        }
+        return prev;
+      }, []);
     }
-
+    if (props.onItemExpandChanged) {
+      newExpandedKeysSet.forEach((expandedKey) => {
+        props.onItemExpandChanged(menuItemKeyMap[expandedKey], true, expandedKey);
+      });
+      collapsedKeys.forEach((collapsedKey) => {
+        props.onItemExpandChanged(menuItemKeyMap[collapsedKey], false, collapsedKey);
+      });
+    }
     setExpandedMenuKeys(expandedKeys);
   };
 
   const createMenuItemSelectChangedHandler = (isSelected) => {
     return ({ key }) => {
       const menuItem = menuItemKeyMap[key];
-      if (menuItem && menuItem.onSelectChanged) {
-        menuItem.onSelectChanged(menuItem, isSelected, key);
+      let newSelectedMenuKeys;
+      if (props.allowMultiSelect) {
+        newSelectedMenuKeys = isSelected?
+          ArrayHelpers.addValues(selectedMenuKeys, key) :
+          ArrayHelpers.removeValue(selectedMenuKeys, key);
+        if (props.onItemSelectChanged) {
+          props.onItemSelectChanged(menuItem, isSelected, key);
+        }
+      } else {
+        newSelectedMenuKeys = [key]; // not aLLow to de-select menu item in single selection mode
+        if (isSelected && props.onItemSelectChanged) {
+          props.onItemSelectChanged(menuItem, true, key);
+          selectedMenuKeys?.forEach((itemKey) => {
+            props.onItemSelectChanged(menuItemKeyMap[itemKey], false, itemKey);
+          })
+        }
       }
-      if (props.onItemSelectChanged) {
-        props.onItemSelectChanged(menuItem, isSelected, key);
-      }
-      // if (isSelected) {
-      //   setSelectedMenuKeys([...selectedMenuKeys, key]);
-      // } else {
-      //   setSelectedMenuKeys([...selectedMenuKeys]);
-      // }
+      setSelectedMenuKeys(newSelectedMenuKeys);
     }
   };
 
-  const onMenuItemSelected = useMemo(() => {
-    return createMenuItemSelectChangedHandler(true);
-  }, [createMenuItemSelectChangedHandler]);
+  const onMenuItemSelected = createMenuItemSelectChangedHandler(true);
 
-  const onMenuItemDeselected = useMemo(() => {
-    return createMenuItemSelectChangedHandler(false);
-  }, [createMenuItemSelectChangedHandler]);
+  const onMenuItemDeselected = createMenuItemSelectChangedHandler(false);
 
   return (
     <Menu {...fromBaseProps({ className: 'app-menu' }, props)}
