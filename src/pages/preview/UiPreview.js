@@ -1464,6 +1464,50 @@ const groups = [
             )
           }
         </Col>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+          {
+            contentCard('Menu item expand trigger', 'Menu item expand event trigger',
+              <AppSpace size={ITEM_SPACE}>
+                <Row gutter={ITEM_SPACE}>
+                  <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Text>Allow expand all</Text>
+                    <AppMenu items={DEMO_MENU} theme="dark" allowMultiSelect={false} expandCurrentOnly={false}
+                             onItemExpandChanged={(menuItem, isExpanded, itemKey) =>
+                               AppNotification.info(`[${itemKey}] '${menuItem.title}' ${isExpanded? 'expanded' : 'collapsed'}`)}/>
+                  </Col>
+                  <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Text>Allow expand current only</Text>
+                    <AppMenu items={DEMO_MENU} theme="dark" allowMultiSelect={false} expandCurrentOnly={true}
+                             onItemExpandChanged={(menuItem, isExpanded, itemKey) =>
+                               AppNotification.info(`[${itemKey}] '${menuItem.title}' ${isExpanded? 'expanded' : 'collapsed'}`)}/>
+                  </Col>
+                </Row>
+              </AppSpace>
+            )
+          }
+        </Col>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+          {
+            contentCard('Menu item select trigger', 'Menu item select event trigger',
+              <AppSpace size={ITEM_SPACE}>
+                <Row gutter={ITEM_SPACE}>
+                  <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Text>Multi-selection</Text>
+                    <AppMenu items={DEMO_MENU} theme="dark" allowMultiSelect={true}
+                             onItemSelectChanged={(menuItem, isSelected, itemKey) =>
+                               AppNotification.info(`[${itemKey}] '${menuItem.title}' ${isSelected? 'selected' : 'de-selected'}`)}/>
+                  </Col>
+                  <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Text>Single selection (no de-select)</Text>
+                    <AppMenu items={DEMO_MENU} theme="dark" allowMultiSelect={false}
+                             onItemSelectChanged={(menuItem, isSelected, itemKey) =>
+                               AppNotification.info(`[${itemKey}] '${menuItem.title}' ${isSelected? 'selected' : 'de-selected'}`)}/>
+                  </Col>
+                </Row>
+              </AppSpace>
+            )
+          }
+        </Col>
         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
           {
             contentCard('Other options', 'Basic use of menu: vertical, horizontail layout; vertical, horizontal layout expand',
@@ -1480,14 +1524,6 @@ const groups = [
                   <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
                     <Text>Auto expand all sub-menu(s)</Text>
                     <AppMenu items={DEMO_MENU} theme="dark" expandAll={true}/>
-                  </Col>
-                  <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
-                    <Text>Event trigger</Text>
-                    <AppMenu items={DEMO_MENU} theme="dark" allowMultiSelect={true}
-                             onItemExpandChanged={(menuItem, isExpanded, itemKey) =>
-                               AppNotification.info(`[${itemKey}] '${menuItem.title}' ${isExpanded? 'expanded' : 'collapsed'}`)}
-                             onItemSelectChanged={(menuItem, isSelected, itemKey) =>
-                               AppNotification.info(`[${itemKey}] '${menuItem.title}' ${isSelected? 'selected' : 'de-selected'}`)}/>
                   </Col>
                 </Row>
               </AppSpace>
