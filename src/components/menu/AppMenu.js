@@ -52,6 +52,7 @@ const propTypes = {
   allowMultiSelect: PropTypes.bool,
   expandCurrentOnly: PropTypes.bool,
   expandAll: PropTypes.bool,
+  expandAllLevel: PropTypes.number,
   onItemExpandChanged: PropTypes.func, // (menuItem, isExpanded: (boolean), itemKey) => {}
   onItemSelectChanged: PropTypes.func, // (menuItem, isSelected: (boolean), itemKey) => {}
 };
@@ -92,6 +93,18 @@ function generateMenuItemKey(index, parentKey) {
   return stringJoin('.', parentKey, index + 1);
 }
 
+function isMenuItemExpandable(menuItem, itemType, itemLevel, props) {
+  if (itemType === MenuItemType.SUB_MENU) {
+    if (menuItem.expanded) {
+      return true;
+    }
+    if (props.expandAll && (!props.expandAllLevel || props.expandAllLevel >= itemLevel)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function renderMenuItem(item, index = 0, parentKey) {
   const { type = MenuItemType.ITEM } = item;
   const itemKey = generateMenuItemKey(index, parentKey);
@@ -109,23 +122,24 @@ function renderMenuItems(menuItems, parentKey) {
   return menuItems?.map((menuItem, index) => renderMenuItem(menuItem, index, parentKey));
 }
 
-function forEachMenuItems(menuItems, onEachItem = (item, itemKey, itemType) => {}, parentKey) {
+function forEachMenuItems(menuItems, onEachItem = (item, itemKey, itemType, itemLevel) => {},
+                          parentKey, itemLevel = 1) {
   return menuItems?.forEach((menuItem, index) => {
     if (menuItem) {
-      onEachMenuItem(menuItem, index, parentKey, onEachItem);
+      onEachMenuItem(menuItem, index, parentKey, itemLevel, onEachItem);
     }
   });
 }
 
-function onEachMenuItem(menuItem, index = 0, parentKey,
-                        onEachItem = (item, itemKey, itemType) => {}) {
+function onEachMenuItem(menuItem, index = 0, parentKey, itemLevel = 1,
+                        onEachItem = (item, itemKey, itemType, itemLevel) => {}) {
   const { type = MenuItemType.ITEM, children } = menuItem;
   const itemKey = generateMenuItemKey(index, parentKey);
-  onEachItem(menuItem, itemKey, type);
+  onEachItem(menuItem, itemKey, type, itemLevel);
   switch (type) {
     case MenuItemType.SUB_MENU:
     case MenuItemType.ITEM_GROUP:
-      forEachMenuItems(children, onEachItem, itemKey);
+      forEachMenuItems(children, onEachItem, itemKey, itemLevel + 1);
       break;
 
     default:
@@ -144,12 +158,14 @@ const AppMenu = (props) => {
       const menuItemKeyMap = {};
       const menuItemKeyPathMap = {};
       const expandedMenuKeys = [];
-      forEachMenuItems(props.items, (menuItem, itemKey, itemType) => {
+      forEachMenuItems(props.items, (menuItem, itemKey, itemType, itemLevel) => {
         menuItemKeyMap[itemKey] = menuItem;
         if (menuItem.path) {
           menuItemKeyPathMap[menuItem.path] = itemKey;
         }
-        if (itemType === MenuItemType.SUB_MENU && (props.expandAll || menuItem.expanded)) {
+        console.log('ITEM', menuItem);
+        console.log('LEVEL', itemLevel);
+        if (isMenuItemExpandable(menuItem, itemType, itemLevel, props)) {
           expandedMenuKeys.push(itemKey);
         }
       });
