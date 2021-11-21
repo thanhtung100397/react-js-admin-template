@@ -1379,16 +1379,16 @@ const groups = [
         </Col>
         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
           {
-            contentCard('Alert expanded', 'Aler with icon and description',
+            contentCard('Alert expanded', 'Alert with icon and description',
               <AppSpace size={ITEM_SPACE}>
                 <Row gutter={ROW_GUTTER}>
-                  <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                  <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                     <AppSpace className="w-full" size={ITEM_SPACE}>
                       <AppAlert type="success" showIcon={true} message="Alert type success with icon"/>
                       <AppAlert type="info" showIcon={true} message="Alert type info with icon"/>
                     </AppSpace>
                   </Col>
-                  <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                  <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                     <AppSpace className="w-full" size={ITEM_SPACE}>
                       <AppAlert type="warning" showIcon={true} message="Alert type warning with icon"/>
                       <AppAlert type="error" showIcon={true} message="Alert type error with icon"/>
@@ -1396,7 +1396,7 @@ const groups = [
                   </Col>
                 </Row>
                 <Row gutter={ROW_GUTTER}>
-                  <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                  <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                     <AppSpace className="w-full" size={ITEM_SPACE}>
                       <AppAlert type="success" showIcon={true} message="Alert type success expanded with icon"
                                 description={LONG_DUMMY_TEXT}/>
@@ -1404,7 +1404,7 @@ const groups = [
                                 description={LONG_DUMMY_TEXT}/>
                     </AppSpace>
                   </Col>
-                  <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                  <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                     <AppSpace className="w-full" size={ITEM_SPACE}>
                       <AppAlert type="warning" showIcon={true} message="Alert type warning expanded with icon"
                                 description={LONG_DUMMY_TEXT}/>
