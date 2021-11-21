@@ -1514,16 +1514,20 @@ const groups = [
               <AppSpace size={ITEM_SPACE}>
                 <Row gutter={ITEM_SPACE}>
                   <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
+                    <Text>Expand all sub-menu(s)</Text>
+                    <AppMenu items={DEMO_MENU} theme="dark" expandAll={true}/>
+                  </Col>
+                  <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
+                    <Text>Expand all lv1 sub-menu(s)</Text>
+                    <AppMenu items={DEMO_MENU} theme="dark" expandAll={true} expandAllLevel={1}/>
+                  </Col>
+                  <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
                     <Text>Only expand current selected</Text>
                     <AppMenu items={DEMO_MENU} theme="dark" expandCurrentOnly={true}/>
                   </Col>
                   <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
                     <Text>Allow multiple expand</Text>
                     <AppMenu items={DEMO_MENU} theme="dark"/>
-                  </Col>
-                  <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
-                    <Text>Auto expand all sub-menu(s)</Text>
-                    <AppMenu items={DEMO_MENU} theme="dark" expandAll={true}/>
                   </Col>
                 </Row>
               </AppSpace>
