@@ -1,7 +1,9 @@
 import React, { useMemo, useState, useEffect } from 'react';
+import { useLocation } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { baseProps, fromBaseProps } from '../base';
 import { Menu } from 'antd';
+import AppLink from '../typography/link/AppLink';
 import { stringJoin } from '../../utils/stringHelpers';
 import { ArrayHelpers } from '../../utils/arrayHelpers';
 import './AppMenu.scss';
@@ -82,12 +84,25 @@ const menuItemGroup = (item, key, disabled) => (
   </Menu.ItemGroup>
 );
 
-const menuItem = (item, key, disabled) => (
-  <Menu.Item className="app-menu-item" key={key}
-             title={item.title} icon={item.icon} disabled={disabled}>
-    {item.content || item.title}
-  </Menu.Item>
-);
+const menuItem = (item, key, disabled) => {
+  const itemContent = item.content || item.title;
+  return (
+    <Menu.Item className="app-menu-item" key={key}
+               title={item.title} icon={item.icon} disabled={disabled}>
+      {
+        item.path? menuItemLink(item.path, itemContent) : itemContent
+      }
+    </Menu.Item>
+  );
+};
+
+const menuItemLink = (path, content) => {
+  return (
+    <AppLink href={path}>
+      {content}
+    </AppLink>
+  )
+};
 
 function generateMenuItemKey(index, parentKey) {
   return stringJoin('.', parentKey, index + 1);
@@ -153,6 +168,8 @@ const AppMenu = (props) => {
   const [expandedMenuKeys, setExpandedMenuKeys] = useState();
   const [selectedMenuKeys, setSelectedMenuKeys] = useState();
 
+  const location = useLocation();
+
   useEffect(() => {
     if (props.items) {
       const menuItemKeyMap = {};
@@ -163,8 +180,6 @@ const AppMenu = (props) => {
         if (menuItem.path) {
           menuItemKeyPathMap[menuItem.path] = itemKey;
         }
-        console.log('ITEM', menuItem);
-        console.log('LEVEL', itemLevel);
         if (isMenuItemExpandable(menuItem, itemType, itemLevel, props)) {
           expandedMenuKeys.push(itemKey);
         }
@@ -174,6 +189,17 @@ const AppMenu = (props) => {
       setExpandedMenuKeys(expandedMenuKeys);
     }
   }, [props.items, props.expandAll]);
+
+  useEffect(() => {
+    if (menuItemKeyPathMap) {
+      const selectedKey = menuItemKeyPathMap[location.pathname];
+      if (selectedKey) {
+        onMenuItemSelected({
+          key: selectedKey
+        });
+      }
+    }
+  }, [location, menuItemKeyPathMap]);
 
   const menuMode = useMemo(() => {
     if (props.expandDirection === ExpandDirection.VERTICAL &&
@@ -232,7 +258,7 @@ const AppMenu = (props) => {
           props.onItemSelectChanged(menuItem, isSelected, key);
         }
       } else {
-        newSelectedMenuKeys = [key]; // not aLLow to de-select menu item in single selection mode
+        newSelectedMenuKeys = [key]; // not allow to de-select menu item in single selection mode
         if (isSelected && props.onItemSelectChanged) {
           props.onItemSelectChanged(menuItem, true, key);
           selectedMenuKeys?.forEach((itemKey) => {
