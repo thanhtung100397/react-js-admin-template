@@ -5,14 +5,19 @@ import AppHeader from '../../containers/header/AppHeader';
 import AppContent from '../../containers/content/AppContent';
 import AppFooter from '../../containers/footer/AppFooter';
 import AppMenu from '../../components/menu/AppMenu';
+import AppImage from '../../components/image/AppImage';
 import { dashboardMenu } from './dashboardMenu';
+import { images } from '../../assets/images'
 import './Dashboard.scss';
 
 const Dashboard = (props) => {
   return (
     <AppContainer className="dashboard-page wh-full">
       <AppSider>
-        <AppMenu items={dashboardMenu} expandCurrentOnly={true}/>
+        <div className="app-logo-container">
+          <AppImage src={images.img_app_logo}/>
+        </div>
+        <AppMenu items={dashboardMenu} expandAll={true} expandAllLevel={1}/>
       </AppSider>
       <AppContainer>
         <AppHeader>
