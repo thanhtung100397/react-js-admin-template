@@ -61,6 +61,12 @@
     }
   }
 
+  &.square-image {
+    .ant-image-img {
+      aspect-ratio: 1;
+    }
+  }
+
   .ant-image {
     .ant-image-mask {
       .ant-image-mask-info {

@@ -13,6 +13,7 @@ const ImageFit = {
 
 const propTypes = {
   ...baseProps,
+  src: PropTypes.string,
   alt: PropTypes.string,
   placeholder: PropTypes.node,
   errorPlaceholder: PropTypes.string,
@@ -20,10 +21,13 @@ const propTypes = {
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   enablePreview: PropTypes.bool,
   fallback: PropTypes.string,
+  onLoad: PropTypes.func, // (event) => {}
   onError: PropTypes.func, // (event) => {}
   circle: PropTypes.bool,
   round: PropTypes.bool,
   bordered: PropTypes.bool,
+  square: PropTypes.bool, // square image
+  whRatio: PropTypes.number, // width:height aspect ratio
   imageFit: PropTypes.oneOf(Object.keys(ImageFit).map((key) => ImageFit[key])),
 };
 
@@ -50,6 +54,12 @@ const AppImage = (props) => {
       setEnablePreview(props.enablePreview);
     }
   }, [props.src, props.enablePreview]);
+
+  const onLoad = useCallback((event) => {
+    if (props.onLoad) {
+      props.onLoad(event);
+    }
+  }, [props.onLoad]);
 
   const onError = useCallback((event) => {
     if (!showFallback && props.fallback) {
@@ -78,17 +88,18 @@ const AppImage = (props) => {
         'bordered-image': props.bordered,
         'image-fit-cover': props.imageFit === ImageFit.COVER,
         'image-fit-contain': props.imageFit === ImageFit.CONTAIN,
-        'no-image': !src
+        'no-image': !src,
+        'square-image': props.square,
       }
-    ), [props.circle, props.round, props.bordered, props.imageFit, src]);
+    ), [props.circle, props.round, props.bordered, props.imageFit, props.square, src]);
 
   return (
     // due to className of ant design image not work as expected
     // need this div.app-image for customizing this component style
-    <div {...fromBaseProps({ className: className }, props)} >
+    <div {...fromBaseProps({ className: className }, props)}>
       <Image src={src} alt={props.alt} placeholder={placeholder}
              width={props.width} height={props.height}
-             onError={onError} preview={enablePreview}/>
+             onLoad={onLoad} onError={onError} preview={enablePreview}/>
     </div>
   )
 };
