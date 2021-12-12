@@ -5,14 +5,14 @@ import AppHeader from '../../containers/header/AppHeader';
 import AppContent from '../../containers/content/AppContent';
 import AppFooter from '../../containers/footer/AppFooter';
 import AppMenu from '../../components/menu/AppMenu';
-import { appMenu } from './appMenu';
+import { dashboardMenu } from './dashboardMenu';
 import './Dashboard.scss';
 
 const Dashboard = (props) => {
   return (
     <AppContainer className="dashboard-page wh-full">
       <AppSider>
-        <AppMenu items={appMenu} expandCurrentOnly={true}/>
+        <AppMenu items={dashboardMenu} expandCurrentOnly={true}/>
       </AppSider>
       <AppContainer>
         <AppHeader>

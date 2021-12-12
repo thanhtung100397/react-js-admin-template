@@ -4,7 +4,7 @@ import { MenuItemType } from '../../components/menu/AppMenu';
 import { Icons } from '../../assets/icons';
 import { routes } from '../../AppRoutes';
 
-export const appMenu = [
+export const dashboardMenu = [
   {
     title: <FormattedMessage id="ID_DASHBOARD"/>,
     icon: <Icons.BubbleChart/>,
@@ -18,11 +18,14 @@ export const appMenu = [
     children: [
       {
         title: <FormattedMessage id="ID_LIST_PRODUCTS"/>,
-        icon: <Icons.List/>
+        icon: <Icons.List/>,
+        path: routes.LIST_PRODUCTS.path,
+
       },
       {
         title: <FormattedMessage id="ID_CREATE_PRODUCT"/>,
-        icon: <Icons.Box/>
+        icon: <Icons.Box/>,
+        path: routes.ADD_PRODUCT.path
       }
     ]
   },
@@ -33,11 +36,13 @@ export const appMenu = [
     children: [
       {
         title: <FormattedMessage id="ID_LIST_USERS"/>,
-        icon: <Icons.List/>
+        icon: <Icons.List/>,
+        path: routes.LIST_USERS.path
       },
       {
         title: <FormattedMessage id="ID_CREATE_USER"/>,
-        icon: <Icons.UserAdd/>
+        icon: <Icons.UserAdd/>,
+        path: routes.ADD_USER.path
       }
     ]
   },
