@@ -1303,6 +1303,36 @@ const groups = [
         </Col>
         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
           {
+            contentCard('Force wh-size square options', 'Force image size be always square size',
+              <AppSpace size={ITEM_SPACE}>
+                <Row vStretch={true}>
+                  <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <AppImage className="wh-full" src={APP_IMAGE_URL}
+                              enablePreview={true} square={true}/>
+                  </Col>
+                </Row>
+                {/*<Row vStretch={true}>*/}
+                {/*  <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>*/}
+                {/*    <AppImage src={APP_IMAGE_URL} enablePreview={true}*/}
+                {/*              square={true} squareSizeResolver={*/}
+                {/*                (originWidth, originHeight) => originWidth > originHeight? originWidth : originHeight*/}
+                {/*              }/>*/}
+                {/*  </Col>*/}
+                {/*</Row>*/}
+                {/*<Row vStretch={true}>*/}
+                {/*  <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>*/}
+                {/*    <AppImage src={APP_IMAGE_URL} enablePreview={true}*/}
+                {/*              square={true} squareSizeResolver={*/}
+                {/*                (originWidth, originHeight) => originWidth / 2*/}
+                {/*              }/>*/}
+                {/*  </Col>*/}
+                {/*</Row>*/}
+              </AppSpace>
+            )
+          }
+        </Col>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+          {
             contentCard('Other options', 'Other options: image preview, fallback image, bordered',
               <AppSpace size={ITEM_SPACE}>
                 <Row gutter={ROW_GUTTER} vStretch={true}>
