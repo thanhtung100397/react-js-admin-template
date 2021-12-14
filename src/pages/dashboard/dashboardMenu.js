@@ -8,6 +8,7 @@ export const dashboardMenu = [
   {
     title: <FormattedMessage id="ID_DASHBOARD"/>,
     icon: <Icons.BubbleChart/>,
+    exact: true,
     path: routes.DASHBOARD.path
   },
   {
@@ -19,13 +20,13 @@ export const dashboardMenu = [
       {
         title: <FormattedMessage id="ID_LIST_PRODUCTS"/>,
         icon: <Icons.List/>,
-        path: routes.LIST_PRODUCTS.path,
+        path: routes.DASHBOARD.children.LIST_PRODUCTS.path,
 
       },
       {
         title: <FormattedMessage id="ID_CREATE_PRODUCT"/>,
         icon: <Icons.Box/>,
-        path: routes.ADD_PRODUCT.path
+        path: routes.DASHBOARD.children.ADD_PRODUCT.path
       }
     ]
   },
@@ -37,12 +38,12 @@ export const dashboardMenu = [
       {
         title: <FormattedMessage id="ID_LIST_USERS"/>,
         icon: <Icons.List/>,
-        path: routes.LIST_USERS.path
+        path: routes.DASHBOARD.children.LIST_USERS.path
       },
       {
         title: <FormattedMessage id="ID_CREATE_USER"/>,
         icon: <Icons.UserAdd/>,
-        path: routes.ADD_USER.path
+        path: routes.DASHBOARD.children.ADD_USER.path
       }
     ]
   },

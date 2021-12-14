@@ -11,7 +11,11 @@ export const SiderTheme = {
 
 const propTypes = {
   ...baseProps,
-  theme: PropTypes.oneOf(Object.keys(SiderTheme).map((key) => SiderTheme[key]))
+  theme: PropTypes.oneOf(Object.keys(SiderTheme).map((key) => SiderTheme[key])),
+  width: PropTypes.number,
+  collapsible: PropTypes.bool,
+  collapsed: PropTypes.bool,
+  onCollapse: PropTypes.func,
 };
 
 const defaultProps = {
@@ -19,9 +23,13 @@ const defaultProps = {
 };
 
 const AppSider = (props) => {
+  const [collapsed, setCollapsed] = useState();
+
   return (
     <Layout.Sider {...fromBaseProps({ className: 'app-sider' }, props)}
-                  theme={props.theme}>
+                  theme={props.theme} width={props.width}
+                  collapsible={props.collapsible} collapsed={collapsed}
+                  onCollapse={props.onCollapse}>
       {props.children}
     </Layout.Sider>
   )

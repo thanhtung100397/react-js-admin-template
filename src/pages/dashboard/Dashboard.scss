@@ -1,10 +1,19 @@
 .dashboard-page {
   .app-logo-container {
-    height: 64px;
-    padding: 10px;
+    height: 60px;
+    padding: 10px 10px 6px 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
     .app-image {
+      height: 100%;
+      margin-right: 10px;
+    }
 
+    .app-title {
+      color: white;
+      margin-bottom: 0;
     }
   }
 }

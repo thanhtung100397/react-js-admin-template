@@ -70,12 +70,7 @@ const appRedirectRoutes = {
   DEFAULT: {
     path: '/',
     exact: true,
-    redirectTo: normalRoutes.DASHBOARD.path
-  },
-  USER: {
-    path: '/user',
-    exact: true,
-    redirectTo: normalRoutes.LIST_USERS.path
+    redirectTo: appRoutes.DASHBOARD.path
   }
 };
 
