@@ -12,7 +12,9 @@ import {
   UserOutlined,
   KeyOutlined,
   NumberOutlined,
-  GlobalOutlined
+  GlobalOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
 } from '@ant-design/icons';
 
 // material design icons import
@@ -50,6 +52,8 @@ export const Icons = {
   KeyOutlined,
   NumberOutlined,
   GlobalOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
 };
 
 // color editable icons
