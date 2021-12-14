@@ -190,17 +190,6 @@ const AppMenu = (props) => {
     }
   }, [props.items, props.expandAll]);
 
-  useEffect(() => {
-    if (menuItemKeyPathMap) {
-      const selectedKey = menuItemKeyPathMap[location.pathname];
-      if (selectedKey) {
-        onMenuItemSelected({
-          key: selectedKey
-        });
-      }
-    }
-  }, [location, menuItemKeyPathMap]);
-
   const menuMode = useMemo(() => {
     if (props.expandDirection === ExpandDirection.VERTICAL &&
       props.direction === MenuDirection.VERTICAL) {
@@ -273,6 +262,17 @@ const AppMenu = (props) => {
   const onMenuItemSelected = createMenuItemSelectChangedHandler(true);
 
   const onMenuItemDeselected = createMenuItemSelectChangedHandler(false);
+
+  useEffect(() => {
+    if (menuItemKeyPathMap) {
+      const selectedKey = menuItemKeyPathMap[location.pathname];
+      if (selectedKey) {
+        onMenuItemSelected({
+          key: selectedKey
+        });
+      }
+    }
+  }, [location, menuItemKeyPathMap]);
 
   return (
     <Menu {...fromBaseProps({ className: 'app-menu' }, props)}
