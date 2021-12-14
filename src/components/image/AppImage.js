@@ -56,12 +56,6 @@ const AppImage = (props) => {
     }
   }, [props.src, props.enablePreview]);
 
-  const onLoad = useCallback((event) => {
-    if (props.onLoad) {
-      props.onLoad(event);
-    }
-  }, [props.onLoad]);
-
   const onError = useCallback((event) => {
     if (!showFallback && props.fallback) {
       setSrc(props.fallback);
@@ -97,11 +91,13 @@ const AppImage = (props) => {
   return (
     // due to className of ant design image not work as expected
     // need this div.app-image for customizing this component style
+
+    // using props whRatio with '$' sign to disable React warning: React does not recognize prop
     <div {...fromBaseProps({ className: className }, props)}>
       <CustomImage src={src} alt={props.alt} placeholder={placeholder}
                    width={props.width} height={props.height}
-                   onLoad={onLoad} onError={onError} preview={enablePreview}
-                   whRatio={props.whRatio}/>
+                   onLoad={props.onLoad} onError={onError} preview={enablePreview}
+                   $whRatio={props.whRatio}/>
     </div>
   )
 };
