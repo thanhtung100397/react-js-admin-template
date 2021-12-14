@@ -2,8 +2,6 @@
 @import '../../dimens.module';
 
 .app-image {
-  display: flex;
-  flex-direction: column;
 
   &.image-fit-cover {
     .ant-image-img {

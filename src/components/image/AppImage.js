@@ -111,7 +111,9 @@ AppImage.propTypes = propTypes;
 AppImage.defaultProps = defaultProps;
 
 const CustomImage = styled(Image)`
-  aspect-ratio: ${props => props.whRatio};
+  .ant-image-img {
+    aspect-ratio: ${props => props.whRatio}
+  }
 `;
 
 export default AppImage;
