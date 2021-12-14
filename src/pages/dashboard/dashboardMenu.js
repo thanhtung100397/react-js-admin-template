@@ -15,7 +15,6 @@ export const dashboardMenu = [
     title: <FormattedMessage id="ID_PRODUCT_MANAGEMENT"/>,
     icon: <Icons.Boxes/>,
     type: MenuItemType.SUB_MENU,
-    expanded: true,
     children: [
       {
         title: <FormattedMessage id="ID_LIST_PRODUCTS"/>,
