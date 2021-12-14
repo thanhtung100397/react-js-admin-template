@@ -8,12 +8,13 @@
 
     .app-image {
       height: 100%;
-      margin-right: 10px;
     }
 
     .app-title {
       color: white;
       margin-bottom: 0;
+      margin-left: 10px;
+      flex: 1;
     }
   }
 }
