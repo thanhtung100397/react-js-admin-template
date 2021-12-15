@@ -40,6 +40,10 @@
   &.h-align-center {
     justify-content: center;
   }
+
+  &.h-auto-space {
+    justify-content: space-between;
+  }
 }
 
 .flex-column {
