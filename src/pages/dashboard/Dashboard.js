@@ -6,14 +6,16 @@ import AppContent from '../../containers/content/AppContent';
 import AppMenu from '../../components/menu/AppMenu';
 import AppImage from '../../components/image/AppImage';
 import AppTypography from '../../components/typography/AppTypography';
+import AppButton from '../../components/button/AppButton';
 import { dashboardMenu } from './dashboardMenu';
 import { images } from '../../assets/images';
+import { Icons } from '../../assets/icons';
 import { delay } from '../../utils/helpers';
 import './Dashboard.scss';
 
 const { Title } = AppTypography;
 
-const SIDER_COLLAPSED_ANIMATION_DELAY_MILLIS = 200;
+const SIDER_COLLAPSED_ANIMATION_DELAY_MILLIS = 100;
 
 const Dashboard = (props) => {
   const [siderCollapsed, setSiderCollapsed] = useState();
@@ -25,7 +27,7 @@ const Dashboard = (props) => {
         await delay(SIDER_COLLAPSED_ANIMATION_DELAY_MILLIS);
       }
       setHideAppName(collapsed);
-    }
+    };
     updateHideAppName(siderCollapsed);
   }, [siderCollapsed]);
 
@@ -43,7 +45,7 @@ const Dashboard = (props) => {
       </AppSider>
       <AppContainer>
         <AppHeader>
-
+          <AppButton icon={siderCollapsed? Icons.MenuUnfoldOutlined : Icons.MenuFoldOutlined}/>
         </AppHeader>
         <AppContent>
         </AppContent>

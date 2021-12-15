@@ -33,6 +33,8 @@ $error-text-color: #ff4d4f;
 $error-color: #ff4d4f;
 $error-shadow-color: #{$error-color + '33'};
 
+$dashboard-app-logo-background: #334454;
+
 :export {
   appPrimaryColor: $app-primary-color;
   appPrimaryColorLight: $app-primary-color-light;

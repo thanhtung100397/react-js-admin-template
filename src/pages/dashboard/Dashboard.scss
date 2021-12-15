@@ -1,20 +1,29 @@
+@import '../../colors.module';
+
 .dashboard-page {
-  .app-logo-container {
-    height: 60px;
-    padding: 10px 10px 6px 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  .app-sider {
+    .app-logo-container {
+      height: 64px;
+      padding: 10px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      background: $dashboard-app-logo-background;
 
-    .app-image {
-      height: 100%;
-    }
+      .app-image {
+        height: 100%;
+      }
 
-    .app-title {
-      color: white;
-      margin-bottom: 0;
-      margin-left: 10px;
-      flex: 1;
+      .app-title {
+        color: white;
+        margin-bottom: 0;
+        margin-left: 10px;
+        flex: 1;
+      }
     }
+  }
+
+  .app-header {
+
   }
 }
