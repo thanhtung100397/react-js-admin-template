@@ -1219,6 +1219,26 @@ const groups = [
     )
   },
   {
+    title: 'App Button',
+    content: (
+      <Row gutter={ROW_GUTTER} vStretch={true}>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+          {
+            contentCard('Basic usage', 'All basic type of button',
+              <div className="d-flex flex-row h-auto-space">
+                <AppButton type="primary">Primary</AppButton>
+                <AppButton type="dashed">Dashed</AppButton>
+                <AppButton type="link">Link</AppButton>
+                <AppButton type="text">Text</AppButton>
+                <AppButton type="default">Default</AppButton>
+              </div>
+            )
+          }
+        </Col>
+      </Row>
+    )
+  },
+  {
     title: 'App Image',
     content: (
       <Row gutter={ROW_GUTTER} vStretch={true}>
@@ -1561,7 +1581,7 @@ const groups = [
         </Col>
       </Row>
     )
-  }
+  },
 ];
 
 const UiPreview = (props) => {
