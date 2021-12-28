@@ -1225,7 +1225,7 @@ const groups = [
         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
           {
             contentCard('Basic usage', 'All basic type of button',
-              <div className="d-flex flex-row h-auto-space">
+              <div className="d-flex flex-wrap flex-row h-align-center" style={{gap: 10}}>
                 <AppButton type="primary">Primary</AppButton>
                 <AppButton type="dashed">Dashed</AppButton>
                 <AppButton type="link">Link</AppButton>

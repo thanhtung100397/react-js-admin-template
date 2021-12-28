@@ -1,3 +1,5 @@
-.app-header {
+@import '../../colors.module';
 
+.app-header {
+  background: $dashboard-app-header-background;
 }

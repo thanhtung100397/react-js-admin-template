@@ -45,7 +45,7 @@ const Dashboard = (props) => {
       </AppSider>
       <AppContainer>
         <AppHeader>
-          <AppButton icon={siderCollapsed? Icons.MenuUnfoldOutlined : Icons.MenuFoldOutlined}/>
+          <AppButton type="text" icon={siderCollapsed? <Icons.MenuUnfoldOutlined/> : <Icons.MenuFoldOutlined/>}/>
         </AppHeader>
         <AppContent>
         </AppContent>

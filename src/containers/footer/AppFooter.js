@@ -19,9 +19,10 @@ const defaultProps = {
 };
 
 const AppFooter = (props) => {
+
   return (
     <Layout.Header {...fromBaseProps({ className: 'app-footer' }, props)}
-                   theme={props.theme}>
+                   theme={theme}>
       {props.children}
     </Layout.Header>
   )

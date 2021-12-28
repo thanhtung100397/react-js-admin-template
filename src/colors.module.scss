@@ -33,7 +33,10 @@ $error-text-color: #ff4d4f;
 $error-color: #ff4d4f;
 $error-shadow-color: #{$error-color + '33'};
 
-$dashboard-app-logo-background: #334454;
+$dashboard-app-logo-background: $app-primary-color-dark;
+$app-header-background: $app-primary-color;
+$app-sider-background: $app-primary-color-light;
+$app-footer-background: $app-primary-color;
 
 :export {
   appPrimaryColor: $app-primary-color;
@@ -48,4 +51,9 @@ $dashboard-app-logo-background: #334454;
   successColor: $success-color;
   warningColor: $warning-color;
   errorColor: $error-color;
+
+  dashboardAppLogoBackground: $dashboard-app-logo-background;
+  appHeaderBackground: $app-header-background;
+  appSiderBackground: $app-sider-background;
+  appFooterBackground: $app-footer-background;
 }

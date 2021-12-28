@@ -1,6 +1,8 @@
 import React from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import { useAppTheme } from './state/ui/theme/themeHook';
 import AppRoutes from './AppRoutes';
 import TranslationProvider from './translations/provider/TranslationsProvider';
 import { Provider } from 'react-redux';
@@ -24,25 +26,34 @@ const appMeta = (
     <meta property="og:image" content={images.img_og_image} />
 
   </Helmet>
-)
+);
 
 const App = (props) => {
+  const theme = useAppTheme();
+  return (
+    <ThemeProvider theme={theme}>
+      <div className="app">
+        <BrowserRouter>
+          <React.Suspense fallback={<AppLoading/>}>
+            <AppRoutes/>
+          </React.Suspense>
+        </BrowserRouter>
+      </div>
+    </ThemeProvider>
+  )
+};
+
+const AppWrapper = (props) => {
   return (
     <Provider store={store}>
       <TranslationProvider>
         <HelmetProvider>
           {appMeta}
-          <div className="app">
-            <BrowserRouter>
-              <React.Suspense fallback={<AppLoading/>}>
-                <AppRoutes/>
-              </React.Suspense>
-            </BrowserRouter>
-          </div>
+          <App/>
         </HelmetProvider>
       </TranslationProvider>
     </Provider>
   );
-}
+};
 
-export default App;
+export default AppWrapper;
