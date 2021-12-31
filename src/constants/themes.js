@@ -5,7 +5,9 @@ export const DEFAULT_THEME = 'default';
 const AppThemes = {
   default: {
     dashboard: {
-      logoBackground: colors.dashboardAppLogoBackground
+      appLogoContainer: {
+        background: colors.dashboardAppLogoBackground
+      }
     },
     header: {
       background: colors.appHeaderBackground

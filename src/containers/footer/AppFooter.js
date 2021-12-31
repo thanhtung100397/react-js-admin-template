@@ -1,13 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { baseProps, fromBaseProps } from '../../components/base';
+import styled from 'styled-components';
 import { Layout } from 'antd';
 import './AppFooter.scss';
-
-export const FooterTheme = {
-  LIGHT: 'light',
-  DARK: 'dark'
-};
 
 const propTypes = {
   ...baseProps,
@@ -15,18 +11,20 @@ const propTypes = {
 };
 
 const defaultProps = {
-  theme: FooterTheme.DARK
 };
 
 const AppFooter = (props) => {
 
   return (
-    <Layout.Header {...fromBaseProps({ className: 'app-footer' }, props)}
-                   theme={theme}>
+    <ThemedFooter {...fromBaseProps({ className: 'app-footer' }, props)}>
       {props.children}
-    </Layout.Header>
+    </ThemedFooter>
   )
 };
+
+const ThemedFooter = styled(Layout.Header)`
+  ${props => props.theme.footer}
+`;
 
 AppFooter.propTypes = propTypes;
 

@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { baseProps, fromBaseProps } from '../../components/base';
+import styled from 'styled-components';
 import { Layout } from 'antd';
 import './AppSider.scss';
 import { TypeChecker } from '../../utils/helpers';
-
-export const SiderTheme = {
-  LIGHT: 'light',
-  DARK: 'dark'
-};
 
 const propTypes = {
   ...baseProps,
@@ -22,7 +18,6 @@ const propTypes = {
 };
 
 const defaultProps = {
-  theme: SiderTheme.DARK
 };
 
 const AppSider = (props) => {
@@ -40,14 +35,18 @@ const AppSider = (props) => {
   };
 
   return (
-    <Layout.Sider {...fromBaseProps({ className: 'app-sider' }, props)}
-                  theme={props.theme} width={props.width} collapsedWidth={props.collapsedWidth}
+    <ThemedSider {...fromBaseProps({ className: 'app-sider' }, props)}
+                  width={props.width} collapsedWidth={props.collapsedWidth}
                   collapsible={props.collapsible} collapsed={isCollapsed} onCollapse={onCollapse}
                   trigger={props.hideCollapseButton? null : undefined}>
       {props.children}
-    </Layout.Sider>
+    </ThemedSider>
   )
 };
+
+const ThemedSider = styled(Layout.Sider)`
+  ${props => props.theme.sider}
+`;
 
 AppSider.propTypes = propTypes;
 

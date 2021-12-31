@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { baseProps, fromBaseProps } from '../../components/base';
+import styled from 'styled-components';
 import { Layout } from 'antd';
 import './AppHeader.scss'
 
@@ -20,12 +21,15 @@ const defaultProps = {
 
 const AppHeader = (props) => {
   return (
-    <Layout.Header {...fromBaseProps({ className: 'app-header' }, props)}
-                   theme={props.theme}>
+    <ThemedHeader {...fromBaseProps({ className: 'app-header' }, props)}>
       {props.children}
-    </Layout.Header>
+    </ThemedHeader>
   )
 };
+
+const ThemedHeader = styled(Layout.Header)`
+  ${props => props.theme.header}
+`;
 
 AppHeader.propTypes = propTypes;
 

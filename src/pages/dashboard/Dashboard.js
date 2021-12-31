@@ -12,6 +12,7 @@ import { images } from '../../assets/images';
 import { Icons } from '../../assets/icons';
 import { delay } from '../../utils/helpers';
 import './Dashboard.scss';
+import AppFooter from '../../containers/footer/AppFooter';
 
 const { Title } = AppTypography;
 
@@ -49,6 +50,7 @@ const Dashboard = (props) => {
         </AppHeader>
         <AppContent>
         </AppContent>
+        <AppFooter/>
       </AppContainer>
     </AppContainer>
   )
