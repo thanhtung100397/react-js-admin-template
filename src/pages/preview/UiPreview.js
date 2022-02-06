@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppNotification from '../../components/notification/AppNotification';
 import AppContainer from '../../containers/container/AppContainer';
 import AppGrid from '../../containers/grid/AppGrid';
@@ -12,6 +12,7 @@ import AppForm from '../../components/form/AppForm';
 import AppButton from '../../components/button/AppButton';
 import AppImage from '../../components/image/AppImage';
 import AppAlert from '../../components/alert/AppAlert';
+import AppColorPicker from '../../components/color-picker/AppColorPicker';
 import AppMenu, { MenuItemType } from '../../components/menu/AppMenu';
 import { Icons } from '../../assets/icons';
 import { ValidationRule } from '../../constants/validationRules';
@@ -189,14 +190,16 @@ const getTitleNumbering = (depth, index) => {
   return index + 1;
 };
 
-const newGroup = (index, group, depth = 0) => (
+const newGroup = (index, group, pageStateHolder, depth = 0) => (
   <div key={index} className="group-container">
     <Title className="group-title" level={getTitleLevel(depth)}>{getTitleNumbering(depth, index)}. {group.title}</Title>
-    {group.content}
+    {
+      group.content? group.content({ pageStateHolder }) : ''
+    }
     <div className="group-items-container">
       {
         group.items?.map((item, itemIndex) =>
-          newGroup(itemIndex, item, depth + 1))
+          newGroup(itemIndex, item, pageStateHolder, depth + 1))
       }
     </div>
   </div>
@@ -208,7 +211,7 @@ const groups = [
     items: [
       {
         title: 'App Title',
-        content: (
+        content: () => (
           <Row gutter={ROW_GUTTER} vStretch={true}>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
               {
@@ -296,7 +299,7 @@ const groups = [
       },
       {
         title: 'App Text',
-        content: (
+        content: () => (
           <Row gutter={ROW_GUTTER} vStretch={true}>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
               {
@@ -384,7 +387,7 @@ const groups = [
       },
       {
         title: 'App Link',
-        content: (
+        content: () => (
           <Row gutter={ROW_GUTTER} vStretch={true}>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
               {
@@ -478,7 +481,7 @@ const groups = [
     items: [
       {
         title: 'App Text Input',
-        content: (
+        content: () => (
           <Row gutter={ROW_GUTTER} vStretch={true}>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
               {
@@ -517,7 +520,7 @@ const groups = [
       },
       {
         title: 'App Password Input',
-        content: (
+        content: () => (
           <Row gutter={ROW_GUTTER} vStretch={true}>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
               {
@@ -555,7 +558,7 @@ const groups = [
       },
       {
         title: 'App Text Area Input',
-        content: (
+        content: () => (
           <Row gutter={ROW_GUTTER} vStretch={true}>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
               {
@@ -608,7 +611,7 @@ const groups = [
       },
       {
         title: 'App Number Input',
-        content: (
+        content: () => (
           <Row gutter={ROW_GUTTER} vStretch={true}>
             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
               {
@@ -650,7 +653,7 @@ const groups = [
   },
   {
     title: 'App Select',
-    content: (
+    content: () => (
       <Row gutter={ROW_GUTTER} vStretch={true}>
         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
           {
@@ -860,7 +863,7 @@ const groups = [
   },
   {
     title: 'App Form',
-    content: (
+    content: () => (
       <Row gutter={ROW_GUTTER} vStretch={true}>
         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}
              flexContainer={true} rowGut={ROW_GUTTER}>
@@ -1220,7 +1223,7 @@ const groups = [
   },
   {
     title: 'App Button',
-    content: (
+    content: () => (
       <Row gutter={ROW_GUTTER} vStretch={true}>
         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
           {
@@ -1240,7 +1243,7 @@ const groups = [
   },
   {
     title: 'App Image',
-    content: (
+    content: () => (
       <Row gutter={ROW_GUTTER} vStretch={true}>
         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
           {
@@ -1382,7 +1385,7 @@ const groups = [
   },
   {
     title: 'App Alert',
-    content: (
+    content: () => (
       <Row gutter={ROW_GUTTER} vStretch={true}>
         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
           {
@@ -1484,8 +1487,60 @@ const groups = [
     )
   },
   {
+    title: 'App Color Picker',
+    content: ({ pageStateHolder }) => {
+      const appColorPickerState = pageStateHolder.get()?.appColorPicker || {};
+      const currentColor = appColorPickerState.color;
+
+      const setCurrentColor = (newColor) => {
+        pageStateHolder.update({
+          appColorPicker: {
+            ...appColorPickerState,
+            color: newColor
+          }
+
+        })
+      };
+
+      return (
+        <Row gutter={ROW_GUTTER} vStretch={true}>
+          <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+            {
+              contentCard('Mode', 'All color picker mode',
+                <AppSpace size={ITEM_SPACE}>
+                  <Row>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                      <div className="d-flex w-full flex-column vh-align-center"
+                           style={{height: 50, background: currentColor}}>
+                        <Text bold={true}>
+                          {currentColor || 'No Color'}
+                        </Text>
+                      </div>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}
+                         flexContainer={true} className="flex-column vh-align-center">
+                      <AppColorPicker mode="sketch" color={currentColor}
+                                      onColorChanged={({hex}) => setCurrentColor(hex)}/>
+                    </Col>
+                    <Col xs={24} sm={24} md={16} lg={16} xl={16} xxl={16}
+                         flexContainer={true} className="flex-column vh-align-center">
+                      <AppColorPicker mode="photoshop" color={currentColor}
+                                      onColorChanged={({hex}) => setCurrentColor(hex)}/>
+                    </Col>
+                  </Row>
+                </AppSpace>
+              )
+            }
+          </Col>
+        </Row>
+      )
+    }
+  },
+  {
     title: 'App Menu',
-    content: (
+    content: () => (
       <Row gutter={ROW_GUTTER} vStretch={true}>
         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
           {
@@ -1493,16 +1548,16 @@ const groups = [
               <AppSpace size={ITEM_SPACE}>
                 <Row>
                   <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <AppMenu items={DEMO_MENU} direction="horizontal" theme="dark"/>
+                    <AppMenu items={DEMO_MENU} direction="horizontal"/>
                   </Col>
                 </Row>
                 <Row gutter={ITEM_SPACE}>
                   <Col xs={12} sm={12} md={6} lg={6} xl={6} xxl={6}>
-                    <AppMenu items={DEMO_MENU} expandDirection="horizontal" theme="dark"/>
+                    <AppMenu items={DEMO_MENU} expandDirection="horizontal"/>
                   </Col>
                   <Col xs={0} sm={0} md={12} lg={12} xl={12} xxl={12}/>
                   <Col xs={12} sm={12} md={6} lg={6} xl={6} xxl={6}>
-                    <AppMenu items={DEMO_MENU} theme="dark"/>
+                    <AppMenu items={DEMO_MENU}/>
                   </Col>
                 </Row>
               </AppSpace>
@@ -1516,13 +1571,13 @@ const groups = [
                 <Row gutter={ITEM_SPACE}>
                   <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                     <Text>Allow expand all</Text>
-                    <AppMenu items={DEMO_MENU} theme="dark" allowMultiSelect={false} expandCurrentOnly={false}
+                    <AppMenu items={DEMO_MENU} allowMultiSelect={false} expandCurrentOnly={false}
                              onItemExpandChanged={(menuItem, isExpanded, itemKey) =>
                                AppNotification.info(`[${itemKey}] '${menuItem.title}' ${isExpanded? 'expanded' : 'collapsed'}`)}/>
                   </Col>
                   <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                     <Text>Allow expand current only</Text>
-                    <AppMenu items={DEMO_MENU} theme="dark" allowMultiSelect={false} expandCurrentOnly={true}
+                    <AppMenu items={DEMO_MENU} allowMultiSelect={false} expandCurrentOnly={true}
                              onItemExpandChanged={(menuItem, isExpanded, itemKey) =>
                                AppNotification.info(`[${itemKey}] '${menuItem.title}' ${isExpanded? 'expanded' : 'collapsed'}`)}/>
                   </Col>
@@ -1538,13 +1593,13 @@ const groups = [
                 <Row gutter={ITEM_SPACE}>
                   <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                     <Text>Multi-selection</Text>
-                    <AppMenu items={DEMO_MENU} theme="dark" allowMultiSelect={true}
+                    <AppMenu items={DEMO_MENU} allowMultiSelect={true}
                              onItemSelectChanged={(menuItem, isSelected, itemKey) =>
                                AppNotification.info(`[${itemKey}] '${menuItem.title}' ${isSelected? 'selected' : 'de-selected'}`)}/>
                   </Col>
                   <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                     <Text>Single selection (no de-select)</Text>
-                    <AppMenu items={DEMO_MENU} theme="dark" allowMultiSelect={false}
+                    <AppMenu items={DEMO_MENU} allowMultiSelect={false}
                              onItemSelectChanged={(menuItem, isSelected, itemKey) =>
                                AppNotification.info(`[${itemKey}] '${menuItem.title}' ${isSelected? 'selected' : 'de-selected'}`)}/>
                   </Col>
@@ -1560,15 +1615,15 @@ const groups = [
                 <Row gutter={ITEM_SPACE}>
                   <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
                     <Text>Expand all sub-menu(s)</Text>
-                    <AppMenu items={DEMO_MENU} theme="dark" expandAll={true}/>
+                    <AppMenu items={DEMO_MENU} expandAll={true}/>
                   </Col>
                   <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
                     <Text>Expand all lv1 sub-menu(s)</Text>
-                    <AppMenu items={DEMO_MENU} theme="dark" expandAll={true} expandAllLevel={1}/>
+                    <AppMenu items={DEMO_MENU} expandAll={true} expandAllLevel={1}/>
                   </Col>
                   <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
                     <Text>Only expand current selected</Text>
-                    <AppMenu items={DEMO_MENU} theme="dark" expandCurrentOnly={true}/>
+                    <AppMenu items={DEMO_MENU} expandCurrentOnly={true}/>
                   </Col>
                   <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
                     <Text>Allow multiple expand</Text>
@@ -1585,11 +1640,31 @@ const groups = [
 ];
 
 const UiPreview = (props) => {
+
+  const [pageState, setPageState] = useState({
+    appColorPicker: {
+      color: 'red'
+    }
+  })
+
+  const pageStateHolder = {
+    get: () => {
+      return pageState
+    },
+
+    update: (newValue) => {
+      setPageState({
+        ...pageState,
+        ...newValue
+      })
+    }
+  }
+
   return (
     <div className="ui-preview-page page-padding">
       <AppContainer>
         {
-          groups.map((group, groupIndex) => newGroup(groupIndex, group))
+          groups.map((group, groupIndex) => newGroup(groupIndex, group, pageStateHolder))
         }
       </AppContainer>
     </div>
