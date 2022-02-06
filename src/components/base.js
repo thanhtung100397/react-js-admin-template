@@ -6,7 +6,8 @@ export const baseProps = {
   style: PropTypes.object,
   wFull: PropTypes.bool,
   hFull: PropTypes.bool,
-  whFull: PropTypes.bool
+  whFull: PropTypes.bool,
+  theme: PropTypes.object
 };
 
 export const baseClassNames = (props) => ({

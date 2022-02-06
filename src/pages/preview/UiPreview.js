@@ -1627,7 +1627,36 @@ const groups = [
                   </Col>
                   <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
                     <Text>Allow multiple expand</Text>
-                    <AppMenu items={DEMO_MENU} theme="dark"/>
+                    <AppMenu items={DEMO_MENU}/>
+                  </Col>
+                </Row>
+              </AppSpace>
+            )
+          }
+        </Col>
+        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+          {
+            contentCard('Dark Mode', 'Dark mode theme',
+              <AppSpace size={ITEM_SPACE}>
+                <Row gutter={ITEM_SPACE}>
+                  <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <AppButton>
+                      Background Color
+                    </AppButton>
+                  </Col>
+                </Row>
+                <Row gutter={ITEM_SPACE}>
+                  <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} style={{background: '#3c4b64'}}>
+                    <AppMenu items={DEMO_MENU} direction="horizontal" themeMode="dark"/>
+                  </Col>
+                </Row>
+                <Row gutter={ITEM_SPACE}>
+                  <Col xs={12} sm={12} md={6} lg={6} xl={6} xxl={6} style={{background: '#000000'}}>
+                    <AppMenu items={DEMO_MENU} expandDirection="horizontal" themeMode="dark"/>
+                  </Col>
+                  <Col xs={0} sm={0} md={12} lg={12} xl={12} xxl={12}/>
+                  <Col xs={12} sm={12} md={6} lg={6} xl={6} xxl={6} style={{background: '#3c4b64'}}>
+                    <AppMenu items={DEMO_MENU} themeMode="dark"/>
                   </Col>
                 </Row>
               </AppSpace>

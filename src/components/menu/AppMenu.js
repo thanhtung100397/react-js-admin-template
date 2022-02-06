@@ -1,11 +1,14 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useLocation } from "react-router-dom";
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { baseProps, fromBaseProps } from '../base';
+import styled, { createGlobalStyle } from 'styled-components';
 import { Menu } from 'antd';
 import AppLink from '../typography/link/AppLink';
 import { stringJoin } from '../../utils/stringHelpers';
 import { ArrayHelpers } from '../../utils/arrayHelpers';
+import { getThemeStylesFromProps } from '../../utils/themeHelpers';
 import './AppMenu.scss';
 
 export const MenuDirection = {
@@ -18,7 +21,7 @@ export const ExpandDirection = {
   HORIZONTAL: 'horizontal'
 };
 
-export const MenuTheme = {
+export const ThemeMode = {
   LIGHT: 'light',
   DARK: 'dark'
 };
@@ -49,7 +52,7 @@ const propTypes = {
   ...baseProps,
   direction: PropTypes.oneOf(Object.keys(MenuDirection).map(key => MenuDirection[key])),
   expandDirection: PropTypes.oneOf(Object.keys(ExpandDirection).map(key => ExpandDirection[key])),
-  theme: PropTypes.oneOf(Object.keys(MenuTheme).map(key => MenuTheme[key])),
+  themeMode: PropTypes.oneOf(Object.keys(ThemeMode).map(key => ThemeMode[key])),
   items: PropTypes.arrayOf(PropTypes.shape(MenuItemGroupPropTypes)),
   allowMultiSelect: PropTypes.bool,
   expandCurrentOnly: PropTypes.bool,
@@ -62,7 +65,7 @@ const propTypes = {
 const defaultProps = {
   direction: MenuDirection.VERTICAL,
   expandDirection: ExpandDirection.VERTICAL,
-  theme: MenuTheme.DARK,
+  themeMode: ThemeMode.LIGHT,
   items: [],
   allowMultiSelect: false,
   onItemExpandChanged: (menuItem, isExpanded, itemKey) => {},
@@ -70,7 +73,7 @@ const defaultProps = {
 };
 
 const subMenu = (item, key, disabled) => (
-  <Menu.SubMenu className="app-menu-item" key={key}
+  <Menu.SubMenu className="app-sub-menu" key={key}
                 title={item.title} icon={item.icon} disabled={disabled}>
     {item.content}
     {renderMenuItems(item.children, key)}
@@ -274,15 +277,200 @@ const AppMenu = (props) => {
     }
   }, [location, menuItemKeyPathMap]);
 
+  const appMenuClassNames = classNames('app-menu', {
+    'app-menu-light-mode': props.themeMode === ThemeMode.LIGHT,
+    'app-menu-dark-mode': props.themeMode === ThemeMode.DARK,
+  });
+
   return (
-    <Menu {...fromBaseProps({ className: 'app-menu' }, props)}
-          mode={menuMode} theme={props.theme} multiple={props.allowMultiSelect}
-          openKeys={expandedMenuKeys} onOpenChange={onMenuExpandedChanged}
-          selectedKeys={selectedMenuKeys} onSelect={onMenuItemSelected} onDeselect={onMenuItemDeselected}>
-      {menuItemsNode}
-    </Menu>
+    // DO NOT use 'theme' prop of ant menu, it will conflict with 'theme' prop of styled component ThemeProvider
+    <>
+      <PopupTheme/>
+      <Root {...fromBaseProps({ className: appMenuClassNames }, props)}
+            mode={menuMode} multiple={props.allowMultiSelect}
+            openKeys={expandedMenuKeys} onOpenChange={onMenuExpandedChanged}
+            selectedKeys={selectedMenuKeys} onSelect={onMenuItemSelected} onDeselect={onMenuItemDeselected}>
+        {menuItemsNode}
+      </Root>
+    </>
   );
 };
+
+const getThemeStylesByMode = (props, themeMode, path, defaultValue) => {
+  return getThemeStylesFromProps(props, `components.menu.${themeMode}.${path}`, defaultValue)
+};
+
+const PopupTheme = createGlobalStyle`
+  .ant-menu-submenu-popup {
+    .ant-menu-sub {
+      ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'popup')}
+    
+      .app-menu-item {
+        color: ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'popup.item.text')?.color};
+        
+        .ant-menu-title-content {
+          ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'popup.item.text')}
+        
+          .app-typography {
+            color: inherit;
+          }
+        }
+      
+        &:hover {
+          ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'popup.item.on_hover')}
+        }
+        
+        &.ant-menu-item-active {
+          color: ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'popup.item.on_hover.text')?.color};
+          
+          .ant-menu-title-content {
+            ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'popup.item.on_hover.text')}
+            
+            .app-typography {
+              color: inherit;
+            }
+          }
+        }
+      }
+      
+      .app-menu-item-group {    
+        .ant-menu-item-group-title {
+          color: ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'popup.item_group.text')?.color};
+          ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'popup.item_group')}
+        }
+      }
+      
+      .ant-menu-submenu {
+        ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'popup.sub_menu')}
+      
+        .ant-menu-submenu-title {
+          color: ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'popup.sub_menu.text')?.color};
+          
+          .ant-menu-submenu-arrow {
+            color: ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'popup.sub_menu.text')?.color};
+          }
+          
+          &:hover {
+            color: ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'popup.sub_menu.on_hover.text')?.color};
+            ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'popup.sub_menu.on_hover')}
+            
+            .ant-menu-submenu-arrow {
+              color: ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'popup.sub_menu.on_hover.text')?.color};
+            }
+          }
+        }
+      
+        .ant-menu-sub {
+          color: ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'popup.sub_menu.text')?.color};
+          ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'popup.sub_menu')}
+        }
+      }
+    }
+  }
+`
+
+const Root = styled(Menu)`
+  ${props => getThemeStylesFromProps(props, 'components.menu')}
+
+  &.app-menu-dark-mode {
+    .app-menu-item {
+      color: ${props => getThemeStylesByMode(props, 'item.text')?.color};
+      ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'item')}
+
+      .ant-menu-title-content {
+        ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'item.text')}
+      
+        .app-typography {
+          color: inherit;
+        }
+      }
+      
+      &:hover {
+        color: ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'item.on_hover.text')?.color};
+        ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'item.on_hover')}
+      }
+      
+      &.ant-menu-item-active {
+        color: ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'item.on_hover.text')?.color};
+      }
+    }
+    
+    &.ant-menu-horizontal {
+      border-bottom: none;
+    }
+    
+    &:not(.ant-menu-horizontal) {
+      .app-menu-item::after {
+        border-color: ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'item.on_select.badge')?.color};
+      }
+    }
+    
+    .app-menu-item-group {    
+      .ant-menu-item-group-title {
+        color: ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'item_group.text')?.color};
+        ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'item_group')}
+      }
+    }
+  
+    .app-sub-menu {
+      ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'sub_menu')}
+    
+      .ant-menu-submenu-title {
+        color: ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'sub_menu.text')?.color};
+        
+        .ant-menu-submenu-arrow {
+          color: ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'sub_menu.text')?.color};
+        }
+        
+        &:hover {
+          color: ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'sub_menu.on_hover.text')?.color};
+          ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'sub_menu.on_hover')}
+          
+          .ant-menu-submenu-arrow {
+            color: ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'sub_menu.on_hover.text')?.color};
+          }
+        }
+      }
+    
+      .ant-menu-sub {
+        color: ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'sub_menu.text')?.color};
+        ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'sub_menu')}
+      }
+    }
+  
+    &:not(.ant-menu-horizontal) {
+      .ant-menu-item-selected {
+        ${props => getThemeStylesByMode(props, 'item.on_select')}
+      }
+    }
+  
+    .ant-menu-item-selected {
+      color: ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'item.on_select.text')?.color};
+      ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'item.on_select')}
+      
+      .ant-menu-title-content {
+        ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'item.on_select.text')}
+      
+        .app-typography {
+          color: inherit;
+        }
+      }
+    }
+    
+    .ant-menu-item-active {
+      color: ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'item.on_hover.text')?.color};
+      ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'item.on_hover')}
+      
+      .ant-menu-title-content {
+        ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'item.on_hover.text')}
+      
+        .app-typography {
+          color: inherit;
+        }
+      }
+    }
+  }
+`;
 
 AppMenu.propTypes = propTypes;
 

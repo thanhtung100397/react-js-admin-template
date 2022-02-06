@@ -1,7 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { baseProps, fromBaseProps } from '../../components/base';
+import styled from 'styled-components';
 import { Layout } from 'antd';
+import { getThemeStylesFromProps } from '../../utils/themeHelpers';
 import './AppContent.scss';
 
 const propTypes = {
@@ -13,11 +14,15 @@ const defaultProps = {
 
 const AppContent = (props) => {
   return (
-    <Layout.Content {...fromBaseProps({ className: 'app-content' }, props)}>
+    <Root {...fromBaseProps({ className: 'app-content' }, props)}>
       {props.children}
-    </Layout.Content>
+    </Root>
   );
 };
+
+const Root = styled(Layout.Content)`
+  ${props => getThemeStylesFromProps(props, 'components.content')}
+`;
 
 AppContent.propTypes = propTypes;
 

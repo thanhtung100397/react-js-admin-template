@@ -1,34 +1,27 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { baseProps, fromBaseProps } from '../../components/base';
 import styled from 'styled-components';
 import { Layout } from 'antd';
+import { getThemeStylesFromProps } from '../../utils/themeHelpers';
 import './AppHeader.scss'
-
-export const HeaderTheme = {
-  LIGHT: 'light',
-  DARK: 'dark'
-};
 
 const propTypes = {
   ...baseProps,
-  theme: PropTypes.oneOf(Object.keys(HeaderTheme).map((key) => HeaderTheme[key]))
 };
 
 const defaultProps = {
-  theme: HeaderTheme.DARK
 };
 
 const AppHeader = (props) => {
   return (
-    <ThemedHeader {...fromBaseProps({ className: 'app-header' }, props)}>
+    <Root {...fromBaseProps({ className: 'app-header' }, props)}>
       {props.children}
-    </ThemedHeader>
+    </Root>
   )
 };
 
-const ThemedHeader = styled(Layout.Header)`
-  ${props => props.theme.header}
+const Root = styled(Layout.Header)`
+  ${props => getThemeStylesFromProps(props, 'components.header')}
 `;
 
 AppHeader.propTypes = propTypes;

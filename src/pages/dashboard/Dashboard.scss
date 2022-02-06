@@ -1,5 +1,3 @@
-@import '../../colors.module';
-
 .dashboard-page {
   .app-sider {
     .app-logo-container {
@@ -8,14 +6,12 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      background: $dashboard-app-logo-background;
 
       .app-image {
         height: 100%;
       }
 
       .app-title {
-        color: white;
         margin-bottom: 0;
         margin-left: 10px;
         flex: 1;

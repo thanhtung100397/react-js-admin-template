@@ -1,29 +1,27 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { baseProps, fromBaseProps } from '../../components/base';
 import styled from 'styled-components';
 import { Layout } from 'antd';
+import { getThemeStylesFromProps } from '../../utils/themeHelpers';
 import './AppFooter.scss';
 
 const propTypes = {
   ...baseProps,
-  theme: PropTypes.oneOf(Object.keys(FooterTheme).map((key) => FooterTheme[key]))
 };
 
 const defaultProps = {
 };
 
 const AppFooter = (props) => {
-
   return (
-    <ThemedFooter {...fromBaseProps({ className: 'app-footer' }, props)}>
+    <Root {...fromBaseProps({ className: 'app-footer' }, props)}>
       {props.children}
-    </ThemedFooter>
+    </Root>
   )
 };
 
-const ThemedFooter = styled(Layout.Header)`
-  ${props => props.theme.footer}
+const Root = styled(Layout.Header)`
+  ${props => getThemeStylesFromProps(props, 'components.header')}
 `;
 
 AppFooter.propTypes = propTypes;

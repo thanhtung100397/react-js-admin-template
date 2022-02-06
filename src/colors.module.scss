@@ -1,7 +1,9 @@
-$app-primary-color: #40a9ff;
-$app-primary-color-light: #69c0ff;
-$app-primary-color-dark: #1890ff;
+$app-primary-color: #3c4b64;
+$app-primary-color-light: #8a93a2;
+$app-primary-color-dark: #303c54;
 $app-primary-shadow-color: #{$app-primary-color + '33'};
+
+$app-secondary-color: #1890ff;
 
 $app-text-primary-color: #000000;
 $app-text-secondary-color: #979797;
@@ -33,10 +35,59 @@ $error-text-color: #ff4d4f;
 $error-color: #ff4d4f;
 $error-shadow-color: #{$error-color + '33'};
 
-$dashboard-app-logo-background: $app-primary-color-dark;
-$app-header-background: $app-primary-color;
-$app-sider-background: $app-primary-color-light;
-$app-footer-background: $app-primary-color;
+// container color
+
+$app-header-background: #ffffff;
+$app-footer-background: #ffffff;
+$app-content-background: #ebedef;
+$app-sider-background: $app-primary-color;
+
+// dashboard page color
+
+$app-dashboard-logo-container-background: $app-primary-color-dark;
+$app-dashboard-app-name-text-color: #e4e6e9;
+
+// menu color - dark mode
+
+$app-menu-dark-mode-sub-menu-item-background: unset;
+$app-menu-dark-mode-sub-menu-item-background-hover: rgba(174,174,174,0.1);
+
+$app-menu-dark-mode-sub-menu-item-text-color: #abb1bc;
+$app-menu-dark-mode-sub-menu-item-text-color-hover: #ffffff;
+
+$app-menu-dark-mode-menu-item-group-background: unset;
+$app-menu-dark-mode-menu-item-group-text-color: #6f757f;
+
+$app-menu-dark-mode-menu-item-background: unset;
+$app-menu-dark-mode-menu-item-background-hover: $app-menu-dark-mode-sub-menu-item-background-hover;
+$app-menu-dark-mode-menu-item-background-selected: $app-menu-dark-mode-sub-menu-item-background-hover;
+
+$app-menu-dark-mode-menu-item-text-color: $app-menu-dark-mode-sub-menu-item-text-color;
+$app-menu-dark-mode-menu-item-text-color-hover: $app-menu-dark-mode-sub-menu-item-text-color-hover;
+$app-menu-dark-mode-menu-item-text-color-selected: $app-menu-dark-mode-sub-menu-item-text-color-hover;
+
+$app-menu-dark-mode-menu-item-selected-badge-color: $app-secondary-color;
+
+$app-menu-dark-mode-popup-background: #ffffff;
+
+$app-menu-dark-mode-popup-sub-menu-item-background: unset;
+$app-menu-dark-mode-popup-sub-menu-item-background-hover: $app-menu-dark-mode-sub-menu-item-background-hover;
+
+$app-menu-dark-mode-popup-sub-menu-item-text-color: #000000;
+$app-menu-dark-mode-popup-sub-menu-item-text-color-hover: #000000;
+
+$app-menu-dark-mode-popup-menu-item-group-background: unset;
+$app-menu-dark-mode-popup-menu-item-group-text-color: $app-menu-dark-mode-menu-item-group-text-color;
+
+$app-menu-dark-mode-popup-menu-item-background: unset;
+$app-menu-dark-mode-popup-menu-item-background-hover: $app-menu-dark-mode-menu-item-background-hover;
+$app-menu-dark-mode-popup-menu-item-background-selected: unset;
+
+$app-menu-dark-mode-popup-menu-item-text-color: $app-menu-dark-mode-popup-sub-menu-item-text-color;
+$app-menu-dark-mode-popup-menu-item-text-color-hover: $app-menu-dark-mode-popup-sub-menu-item-text-color-hover;
+$app-menu-dark-mode-popup-menu-item-text-color-selected: $app-secondary-color;
+
+// menu color - light mode
 
 :export {
   appPrimaryColor: $app-primary-color;
@@ -52,8 +103,49 @@ $app-footer-background: $app-primary-color;
   warningColor: $warning-color;
   errorColor: $error-color;
 
-  dashboardAppLogoBackground: $dashboard-app-logo-background;
   appHeaderBackground: $app-header-background;
-  appSiderBackground: $app-sider-background;
   appFooterBackground: $app-footer-background;
+  appContentBackground: $app-content-background;
+  appSiderBackground: $app-sider-background;
+
+  appDashboardLogoContainerBackground: $app-dashboard-logo-container-background;
+  appDashboardAppNameTextColor: $app-dashboard-app-name-text-color;
+
+  appMenuDarkModeSubMenuItemBackground: $app-menu-dark-mode-sub-menu-item-background;
+  appMenuDarkModeSubMenuItemBackgroundHover: $app-menu-dark-mode-sub-menu-item-background-hover;
+
+  appMenuDarkModeSubMenuItemTextColor: $app-menu-dark-mode-sub-menu-item-text-color;
+  appMenuDarkModeSubMenuItemTextColorHover: $app-menu-dark-mode-sub-menu-item-text-color-hover;
+
+  appMenuDarkModeMenuItemGroupBackground: $app-menu-dark-mode-menu-item-group-background;
+  appMenuDarkModeMenuItemGroupTextColor: $app-menu-dark-mode-menu-item-group-text-color;
+
+  appMenuDarkModeMenuItemBackground: $app-menu-dark-mode-menu-item-background;
+  appMenuDarkModeMenuItemBackgroundHover: $app-menu-dark-mode-menu-item-background-hover;
+  appMenuDarkModeMenuItemBackgroundSelected: $app-menu-dark-mode-menu-item-background-selected;
+
+  appMenuDarkModeMenuItemTextColor: $app-menu-dark-mode-menu-item-text-color;
+  appMenuDarkModeMenuItemTextColorHover: $app-menu-dark-mode-menu-item-text-color-hover;
+  appMenuDarkModeMenuItemTextColorSelected: $app-menu-dark-mode-menu-item-text-color-selected;
+
+  appMenuDarkModeMenuItemSelectedBadgeColor :$app-menu-dark-mode-menu-item-selected-badge-color;
+
+  appMenuDarkModePopupBackground: $app-menu-dark-mode-popup-background;
+
+  appMenuDarkModePopupSubMenuItemBackground: $app-menu-dark-mode-popup-sub-menu-item-background;
+  appMenuDarkModePopupSubMenuItemBackgroundHover: $app-menu-dark-mode-popup-sub-menu-item-background-hover;
+
+  appMenuDarkModePopupSubMenuItemTextColor: $app-menu-dark-mode-popup-sub-menu-item-text-color;
+  appMenuDarkModePopupSubMenuItemTextColorHover: $app-menu-dark-mode-popup-sub-menu-item-text-color-hover;
+
+  appMenuDarkModePopupMenuItemGroupBackground: $app-menu-dark-mode-popup-menu-item-group-background;
+  appMenuDarkModePopupMenuItemGroupTextColor: $app-menu-dark-mode-popup-menu-item-group-text-color;
+
+  appMenuDarkModePopupMenuItemBackground: $app-menu-dark-mode-popup-menu-item-background;
+  appMenuDarkModePopupMenuItemBackgroundHover: $app-menu-dark-mode-popup-menu-item-background-hover;
+  appMenuDarkModePopupMenuItemBackgroundSelected: $app-menu-dark-mode-popup-menu-item-background-selected;
+
+  appMenuDarkModePopupMenuItemTextColor: $app-menu-dark-mode-popup-menu-item-text-color;
+  appMenuDarkModePopupMenuItemTextColorHover: $app-menu-dark-mode-popup-menu-item-text-color-hover;
+  appMenuDarkModePopupMenuItemTextColorSelected: $app-menu-dark-mode-popup-menu-item-text-color-selected;
 }

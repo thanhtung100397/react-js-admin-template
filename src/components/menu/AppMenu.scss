@@ -2,6 +2,16 @@
 
 .app-menu {
 
+  &.ant-menu-inline, &.ant-menu-vertical, &.ant-menu-vertical-left {
+    border-right: unset;
+  }
+
+  &.ant-menu-inline {
+    .ant-menu-item, .ant-menu-submenu-title {
+      width: 100%;
+    }
+  }
+
   .app-sub-menu {
 
   }
