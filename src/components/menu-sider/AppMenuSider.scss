@@ -1,0 +1,19 @@
+.app-menu-sider {
+  .head-container {
+    height: 64px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .app-image {
+      height: 100%;
+    }
+
+    .app-title {
+      margin-bottom: 0;
+      margin-left: 10px;
+      flex: 1;
+    }
+  }
+}

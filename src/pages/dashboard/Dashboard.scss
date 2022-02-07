@@ -1,25 +1,5 @@
 .dashboard-page {
-  .app-sider {
-    .app-logo-container {
-      height: 64px;
-      padding: 10px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-
-      .app-image {
-        height: 100%;
-      }
-
-      .app-title {
-        margin-bottom: 0;
-        margin-left: 10px;
-        flex: 1;
-      }
-    }
-  }
-
   .app-header {
-
+    padding: 0 10px;
   }
 }

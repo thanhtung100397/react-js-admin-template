@@ -4,19 +4,7 @@ export const DEFAULT_THEME = 'default';
 
 const STARTED_THEME = {
   pages: {
-    dashboard: {
-      app_logo_container: {
-        _css: {
-          background: colors.appDashboardLogoContainerBackground,
-        },
 
-        text: {
-          _css: {
-            color: colors.appDashboardAppNameTextColor,
-          },
-        },
-      },
-    },
   },
   components: {
     header: {
@@ -43,6 +31,21 @@ const STARTED_THEME = {
       _css: {
         background: colors.appContentBackground,
       },
+    },
+
+    menu_sider: {
+
+      head_container: {
+        _css: {
+          background: colors.appDashboardLogoContainerBackground
+        },
+
+        text: {
+          _css: {
+            color: colors.appDashboardAppNameTextColor,
+          },
+        },
+      }
     },
 
     menu: {

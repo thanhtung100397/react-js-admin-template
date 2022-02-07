@@ -7,7 +7,7 @@ import { TypeChecker } from '../../utils/helpers';
 import { getThemeStylesFromProps } from '../../utils/themeHelpers';
 import './AppSider.scss';
 
-const propTypes = {
+export const propTypes = {
   ...baseProps,
   width: PropTypes.number,
   collapsedWidth: PropTypes.number,
