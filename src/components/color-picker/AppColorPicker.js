@@ -1,34 +1,15 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { baseProps, fromBaseProps } from '../base';
 import {
   SketchPicker, PhotoshopPicker, BlockPicker, AlphaPicker, HuePicker, TwitterPicker, GithubPicker, ChromePicker,
-  CirclePicker, SliderPicker, CompactPicker, MaterialPicker, SwatchesPicker
+  CirclePicker, SliderPicker, CompactPicker, SwatchesPicker
 } from 'react-color';
-import { rgbaToHex } from '../../utils/colorHelpers';
+import { alphaToHex } from '../../utils/colorHelpers';
 import './AppColorPicker.scss';
-
-export const ColorPickerMode = {
-  SKETCH: (props) => <SketchPicker {...props}/>,
-  PHOTOSHOP: (props) => <PhotoshopPicker {...props}/>,
-  BLOCK: (props) => <BlockPicker {...props}/>,
-  ALPHA: (props) => <AlphaPicker {...props}/>,
-  HUE: (props) => <HuePicker {...props}/>,
-  TWITTER: (props) => <TwitterPicker {...props}/>,
-  GITHUB: (props) => <GithubPicker {...props}/>,
-  CHROME: (props) => <ChromePicker {...props}/>,
-  CIRCLE: (props) => <CirclePicker {...props}/>,
-  SLIDER: (props) => <SliderPicker {...props}/>,
-  COMPACT: (props) => <CompactPicker {...props}/>,
-  MATERIAL: (props) => <MaterialPicker {...props}/>,
-  SWATCHES: (props) => <SwatchesPicker {...props}/>,
-};
-
-export const DEFAULT_PICKER = ColorPickerMode.SKETCH;
 
 const propTypes = {
   ...baseProps,
-  mode: PropTypes.oneOf(Object.keys(ColorPickerMode).map(key => key.toLowerCase())),
   color: PropTypes.string,
   defaultColor: PropTypes.string,
   onColorChange: PropTypes.func, // ( { hex, rgb: {r, g, b, a} , hsl: {h, s, l, a} } ) => {}
@@ -36,12 +17,11 @@ const propTypes = {
 };
 
 const defaultProps = {
-  mode: 'sketch',
   defaultColor: '#000000'
 };
 
-const AppColorPicker = (props) => {
-  const { mode, color, defaultColor, onColorChange, onColorChanged, ...pickerProps } = props;
+const AppColorPicker = (props, ColorPicker) => {
+  const { color, defaultColor, onColorChange, onColorChanged, ...pickerProps } = props;
 
   const [pickColor, setPickColor] = useState();
 
@@ -50,7 +30,9 @@ const AppColorPicker = (props) => {
   }, [props.color])
 
   const handleColorChange = useCallback((color) => {
-    color.hex = rgbaToHex(color.rgb);
+    if (color.rgb.a !== 1) {
+      color.hex = color.hex + alphaToHex(color.rgb.a)
+    }
     setPickColor(color.hex);
     if (onColorChange) {
       onColorChange(color)
@@ -58,20 +40,10 @@ const AppColorPicker = (props) => {
   }, [onColorChange]);
 
   const handleColorChanged = useCallback((color) => {
-    color.hex = rgbaToHex(color.rgb);
-    setPickColor(color.hex);
     if (onColorChanged) {
       onColorChanged(color)
     }
   }, [onColorChanged]);
-
-  const ColorPicker = useMemo(() => {
-    let colorPicker = ColorPickerMode[mode.toUpperCase()]
-    if (!colorPicker) {
-      colorPicker = DEFAULT_PICKER;
-    }
-    return colorPicker;
-  }, [mode]);
 
   return <ColorPicker {...fromBaseProps({ className: 'app-color-picker' }, props)}
                       {...pickerProps} color={pickColor}
@@ -82,5 +54,17 @@ const AppColorPicker = (props) => {
 AppColorPicker.propTypes = propTypes;
 
 AppColorPicker.defaultProps = defaultProps;
+
+AppColorPicker.Sketch = (props) => AppColorPicker(props, SketchPicker);
+AppColorPicker.Photoshop = (props) => AppColorPicker(props, PhotoshopPicker);
+AppColorPicker.Block = (props) => AppColorPicker(props, BlockPicker);
+AppColorPicker.Github = (props) => AppColorPicker(props, GithubPicker);
+AppColorPicker.Twitter = (props) => AppColorPicker(props, TwitterPicker);
+AppColorPicker.Alpha = (props) => AppColorPicker(props, AlphaPicker);
+AppColorPicker.Hue = (props) => AppColorPicker(props, HuePicker);
+AppColorPicker.Circle = (props) => AppColorPicker(props, CirclePicker);
+AppColorPicker.Slider = (props) => AppColorPicker(props, SliderPicker);
+AppColorPicker.Compact = (props) => AppColorPicker(props, CompactPicker);
+AppColorPicker.Swatches = (props) => AppColorPicker(props, SwatchesPicker);
 
 export default AppColorPicker;

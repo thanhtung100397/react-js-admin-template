@@ -1512,22 +1512,90 @@ const groups = [
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                       <div className="d-flex w-full flex-column vh-align-center"
                            style={{height: 50, background: currentColor}}>
-                        <Text bold={true}>
+                        <Text bold={true} style={{background: '#ffffff', padding: '0 5px'}}>
                           {currentColor || 'No Color'}
                         </Text>
                       </div>
                     </Col>
                   </Row>
-                  <Row>
-                    <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}
+                  <Row vGutter={ITEM_SPACE} hGutter={ITEM_SPACE * 2}>
+                    <Col xs={24} sm={24} md={8} lg={6} xl={6} xxl={6}
                          flexContainer={true} className="flex-column vh-align-center">
-                      <AppColorPicker mode="sketch" color={currentColor}
-                                      onColorChanged={({hex}) => setCurrentColor(hex)}/>
+                      <AppColorPicker.Sketch color={currentColor} onColorChanged={({hex}) => setCurrentColor(hex)}/>
+                      <Text>Sketch</Text>
                     </Col>
-                    <Col xs={24} sm={24} md={16} lg={16} xl={16} xxl={16}
+                    <Col xs={24} sm={24} md={16} lg={14} xl={12} xxl={12}
                          flexContainer={true} className="flex-column vh-align-center">
-                      <AppColorPicker mode="photoshop" color={currentColor}
-                                      onColorChanged={({hex}) => setCurrentColor(hex)}/>
+                      <AppColorPicker.Photoshop color={currentColor} onColorChanged={({hex}) => setCurrentColor(hex)}/>
+                      <Text>Photoshop</Text>
+                    </Col>
+                    <Col xs={24} sm={24} md={4} lg={4} xl={4} xxl={4}
+                         flexContainer={true} className="flex-column vh-align-center">
+                      <AppColorPicker.Block color={currentColor}
+                                            onColorChanged={({hex}) => setCurrentColor(hex)}/>
+                      <Text>Block</Text>
+                    </Col>
+                    <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}
+                         flexContainer={true} className="flex-column vh-align-center">
+                      <Row vGutter={ITEM_SPACE} hGutter={ITEM_SPACE * 2}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}
+                             flexContainer={true} className="flex-column vh-align-center">
+                          <AppColorPicker.Github color={currentColor}
+                                                 onColorChanged={({hex}) => setCurrentColor(hex)}/>
+                          <Text>Github</Text>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}
+                             flexContainer={true} className="flex-column vh-align-center">
+                          <AppColorPicker.Twitter color={currentColor}
+                                                  onColorChanged={({hex}) => setCurrentColor(hex)}/>
+                          <Text>Twitter</Text>
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}
+                         flexContainer={true} className="flex-column vh-align-center">
+                      <Row vGutter={ITEM_SPACE} hGutter={ITEM_SPACE * 2}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}
+                             flexContainer={true} className="flex-column vh-align-center">
+                          <AppColorPicker.Alpha color={currentColor}
+                                                onColorChanged={({hex}) => setCurrentColor(hex)}/>
+                          <Text>Alpha</Text>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}
+                             flexContainer={true} className="flex-column vh-align-center">
+                          <AppColorPicker.Hue color={currentColor}
+                                              onColorChanged={({hex}) => setCurrentColor(hex)}/>
+                          <Text>Hue</Text>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}
+                             flexContainer={true} className="flex-column vh-align-center">
+                          <AppColorPicker.Circle color={currentColor}
+                                                 onColorChanged={({hex}) => setCurrentColor(hex)}/>
+                          <Text>Circle</Text>
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                      <Row vGutter={ITEM_SPACE} hGutter={ITEM_SPACE * 2}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}
+                             flexContainer={true} className="flex-column vh-align-center">
+                          <AppColorPicker.Slider className="w-full" color={currentColor}
+                                                 onColorChanged={({hex}) => setCurrentColor(hex)}/>
+                          <Text>Slider</Text>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}
+                             flexContainer={true} className="flex-column vh-align-center">
+                          <AppColorPicker.Compact color={currentColor}
+                                                  onColorChanged={({hex}) => setCurrentColor(hex)}/>
+                          <Text>Compact</Text>
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}
+                         flexContainer={true} className="flex-column vh-align-center">
+                      <AppColorPicker.Swatches color={currentColor}
+                                               onColorChanged={({hex}) => setCurrentColor(hex)}/>
+                      <Text>Swatches</Text>
                     </Col>
                   </Row>
                 </AppSpace>
@@ -1672,7 +1740,7 @@ const UiPreview = (props) => {
 
   const [pageState, setPageState] = useState({
     appColorPicker: {
-      color: 'red'
+      color: '#000000'
     }
   })
 
