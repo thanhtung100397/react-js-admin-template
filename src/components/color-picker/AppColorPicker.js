@@ -11,22 +11,20 @@ import './AppColorPicker.scss';
 const propTypes = {
   ...baseProps,
   color: PropTypes.string,
-  defaultColor: PropTypes.string,
   onColorChange: PropTypes.func, // ( { hex, rgb: {r, g, b, a} , hsl: {h, s, l, a} } ) => {}
   onColorChanged: PropTypes.func, // ( { hex, rgb: {r, g, b, a} , hsl: {h, s, l, a} } ) => {}
 };
 
 const defaultProps = {
-  defaultColor: '#000000'
 };
 
 const AppColorPicker = (props, ColorPicker) => {
-  const { color, defaultColor, onColorChange, onColorChanged, ...pickerProps } = props;
+  const { color, onColorChange, onColorChanged, ...pickerProps } = props;
 
   const [pickColor, setPickColor] = useState();
 
   useEffect(() => {
-    setPickColor(props.color || defaultColor);
+    setPickColor(props.color);
   }, [props.color])
 
   const handleColorChange = useCallback((color) => {
