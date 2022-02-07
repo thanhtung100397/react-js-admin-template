@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
+import { getThemeStylesFromProps } from '../../utils/themeHelpers';
 import AppNotification from '../../components/notification/AppNotification';
 import AppContainer from '../../containers/container/AppContainer';
+import AppSider from '../../containers/sider/AppSider';
+import AppHeader from "../../containers/header/AppHeader";
+import AppContent from "../../containers/content/AppContent";
 import AppGrid from '../../containers/grid/AppGrid';
 import AppSpace from '../../containers/space/AppSpace';
 import AppCard from '../../components/card/AppCard';
@@ -15,6 +20,7 @@ import AppAlert from '../../components/alert/AppAlert';
 import AppColorPicker from '../../components/color-picker/AppColorPicker';
 import AppMenu, { MenuItemType } from '../../components/menu/AppMenu';
 import { Icons } from '../../assets/icons';
+import { images } from '../../assets/images';
 import { ValidationRule } from '../../constants/validationRules';
 import { delay } from '../../utils/helpers';
 import { toRomanNumber } from '../../utils/numberHelpers';
@@ -1765,13 +1771,43 @@ const UiPreview = (props) => {
 
   return (
     <div className="ui-preview-page page-padding">
+      <AppSider width={256} collapsible={true} collapsedWidth={64}
+                collapsed={siderCollapsed} onCollapse={setSiderCollapsed}>
+        <PageLogoContainer className="page-logo-container">
+          <AppImage src={images.img_app_logo} square={true} height="100%"/>
+          {
+            !hideAppName && <Title level={4}>UI Preview</Title>
+          }
+        </PageLogoContainer>
+        <PageMenu themeMode="dark" items={pageMenu} expandCurrentOnly={true}/>
+      </AppSider>
       <AppContainer>
-        {
-          groups.map((group, groupIndex) => newGroup(groupIndex, group, pageStateHolder))
-        }
+        <AppHeader>
+          <AppButton type="text" icon={siderCollapsed? <Icons.MenuUnfoldOutlined/> : <Icons.MenuFoldOutlined/>}/>
+        </AppHeader>
+        <AppContent>
+          {
+            groups.map((group, groupIndex) => newGroup(groupIndex, group, pageStateHolder))
+          }
+        </AppContent>
       </AppContainer>
     </div>
   );
 };
+
+const PageLogoContainer = styled.div`
+  ${props => getThemeStylesFromProps(props, 'pages.dashboard.app_logo_container')}
+  
+  .app-title {
+    ${props => getThemeStylesFromProps(props, 'pages.dashboard.app_logo_container.text')}
+  }
+`;
+
+const PageMenu = styled(AppMenu)`
+  
+  .ant-layout-sider-trigger {
+    background: ${props => getThemeStylesFromProps(props, 'pages.dashboard.app_logo_container')?.background};
+  }
+`
 
 export default UiPreview;
