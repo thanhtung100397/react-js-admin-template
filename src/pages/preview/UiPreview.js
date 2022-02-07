@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { getThemeStylesFromProps } from '../../utils/themeHelpers';
 import AppNotification from '../../components/notification/AppNotification';
 import AppContainer from '../../containers/container/AppContainer';
-import AppSider from '../../containers/sider/AppSider';
+import AppMenuSider from '../../components/menu-sider/AppMenuSider';
 import AppHeader from "../../containers/header/AppHeader";
 import AppContent from "../../containers/content/AppContent";
 import AppGrid from '../../containers/grid/AppGrid';
@@ -19,12 +19,14 @@ import AppImage from '../../components/image/AppImage';
 import AppAlert from '../../components/alert/AppAlert';
 import AppColorPicker from '../../components/color-picker/AppColorPicker';
 import AppMenu, { MenuItemType } from '../../components/menu/AppMenu';
-import { Icons } from '../../assets/icons';
-import { images } from '../../assets/images';
+import { Icons } from './assets/icons';
+import { images } from './assets/images';
 import { ValidationRule } from '../../constants/validationRules';
 import { delay } from '../../utils/helpers';
 import { toRomanNumber } from '../../utils/numberHelpers';
 import './UiPreview.scss';
+import { dashboardMenu } from '../dashboard/dashboardMenu';
+import { uiMenu } from './uiMenu';
 
 const { Row, Col } = AppGrid;
 const { Title, Text, Link } = AppTypography;
@@ -1749,7 +1751,7 @@ const groups = [
 ];
 
 const UiPreview = (props) => {
-
+  const [siderCollapsed, setSiderCollapsed] = useState();
   const [pageState, setPageState] = useState({
     appColorPicker: {
       color: '#000000'
@@ -1770,44 +1772,24 @@ const UiPreview = (props) => {
   }
 
   return (
-    <div className="ui-preview-page page-padding">
-      <AppSider width={256} collapsible={true} collapsedWidth={64}
-                collapsed={siderCollapsed} onCollapse={setSiderCollapsed}>
-        <PageLogoContainer className="page-logo-container">
-          <AppImage src={images.img_app_logo} square={true} height="100%"/>
-          {
-            !hideAppName && <Title level={4}>UI Preview</Title>
-          }
-        </PageLogoContainer>
-        <PageMenu themeMode="dark" items={pageMenu} expandCurrentOnly={true}/>
-      </AppSider>
+    <AppContainer className="ui-preview-page wh-full">
+      <AppMenuSider logoSrc={images.img_react_logo} title="UI Preview"
+                    collapsed={siderCollapsed} onCollapse={setSiderCollapsed}>
+        <AppMenu themeMode="dark" items={uiMenu} allowMultiSelect={true}/>
+      </AppMenuSider>
       <AppContainer>
         <AppHeader>
-          <AppButton type="text" icon={siderCollapsed? <Icons.MenuUnfoldOutlined/> : <Icons.MenuFoldOutlined/>}/>
+          <AppButton type="text" icon={siderCollapsed? <Icons.MenuUnfoldOutlined/> : <Icons.MenuFoldOutlined/>}
+                     onClick={() => setSiderCollapsed(!siderCollapsed)}/>
         </AppHeader>
-        <AppContent>
+        <AppContent className="page-padding">
           {
             groups.map((group, groupIndex) => newGroup(groupIndex, group, pageStateHolder))
           }
         </AppContent>
       </AppContainer>
-    </div>
+    </AppContainer>
   );
 };
-
-const PageLogoContainer = styled.div`
-  ${props => getThemeStylesFromProps(props, 'pages.dashboard.app_logo_container')}
-  
-  .app-title {
-    ${props => getThemeStylesFromProps(props, 'pages.dashboard.app_logo_container.text')}
-  }
-`;
-
-const PageMenu = styled(AppMenu)`
-  
-  .ant-layout-sider-trigger {
-    background: ${props => getThemeStylesFromProps(props, 'pages.dashboard.app_logo_container')?.background};
-  }
-`
 
 export default UiPreview;

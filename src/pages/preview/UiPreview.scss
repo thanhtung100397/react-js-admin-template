@@ -22,13 +22,14 @@
   }
 
   .app-container {
-    position: relative;
 
     .app-header {
-      position: sticky;
+      padding: 0 10px;
     }
 
     .app-content {
+      overflow: auto;
+
       .app-title {
         &.group-title {
           margin-bottom: 10px;
