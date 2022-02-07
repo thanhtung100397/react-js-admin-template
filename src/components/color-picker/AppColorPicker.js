@@ -60,6 +60,7 @@ AppColorPicker.Photoshop = (props) => AppColorPicker(props, PhotoshopPicker);
 AppColorPicker.Block = (props) => AppColorPicker(props, BlockPicker);
 AppColorPicker.Github = (props) => AppColorPicker(props, GithubPicker);
 AppColorPicker.Twitter = (props) => AppColorPicker(props, TwitterPicker);
+AppColorPicker.Chrome = (props) => AppColorPicker(props, ChromePicker);
 AppColorPicker.Alpha = (props) => AppColorPicker(props, AlphaPicker);
 AppColorPicker.Hue = (props) => AppColorPicker(props, HuePicker);
 AppColorPicker.Circle = (props) => AppColorPicker(props, CirclePicker);

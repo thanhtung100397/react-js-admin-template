@@ -1575,7 +1575,7 @@ const groups = [
                         </Col>
                       </Row>
                     </Col>
-                    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                    <Col xs={24} sm={24} md={14} lg={14} xl={14} xxl={14}>
                       <Row vGutter={ITEM_SPACE} hGutter={ITEM_SPACE * 2}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}
                              flexContainer={true} className="flex-column vh-align-center">
@@ -1583,15 +1583,21 @@ const groups = [
                                                  onColorChanged={({hex}) => setCurrentColor(hex)}/>
                           <Text>Slider</Text>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}
+                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}
                              flexContainer={true} className="flex-column vh-align-center">
                           <AppColorPicker.Compact color={currentColor}
                                                   onColorChanged={({hex}) => setCurrentColor(hex)}/>
                           <Text>Compact</Text>
                         </Col>
+                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}
+                             flexContainer={true} className="flex-column vh-align-center">
+                          <AppColorPicker.Chrome color={currentColor}
+                                                 onColorChanged={({hex}) => setCurrentColor(hex)}/>
+                          <Text>Chrome</Text>
+                        </Col>
                       </Row>
                     </Col>
-                    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}
+                    <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}
                          flexContainer={true} className="flex-column vh-align-center">
                       <AppColorPicker.Swatches color={currentColor}
                                                onColorChanged={({hex}) => setCurrentColor(hex)}/>
