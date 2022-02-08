@@ -50,7 +50,7 @@ $app-dashboard-app-name-text-color: #e4e6e9;
 // menu color - dark mode
 
 $app-menu-dark-mode-sub-menu-item-background: unset;
-$app-menu-dark-mode-sub-menu-item-background-hover: rgba(174,174,174,0.1);
+$app-menu-dark-mode-sub-menu-item-background-hover: rgba(174,174,174,0.3);
 
 $app-menu-dark-mode-sub-menu-item-text-color: #abb1bc;
 $app-menu-dark-mode-sub-menu-item-text-color-hover: #ffffff;
@@ -81,10 +81,10 @@ $app-menu-dark-mode-popup-menu-item-group-text-color: $app-menu-dark-mode-menu-i
 
 $app-menu-dark-mode-popup-menu-item-background: unset;
 $app-menu-dark-mode-popup-menu-item-background-hover: $app-menu-dark-mode-menu-item-background-hover;
-$app-menu-dark-mode-popup-menu-item-background-selected: unset;
+$app-menu-dark-mode-popup-menu-item-background-selected: #{$app-secondary-color + '1c'};;
 
 $app-menu-dark-mode-popup-menu-item-text-color: $app-menu-dark-mode-popup-sub-menu-item-text-color;
-$app-menu-dark-mode-popup-menu-item-text-color-hover: $app-menu-dark-mode-popup-sub-menu-item-text-color-hover;
+$app-menu-dark-mode-popup-menu-item-text-color-hover: $app-secondary-color;
 $app-menu-dark-mode-popup-menu-item-text-color-selected: $app-secondary-color;
 
 // menu color - light mode
