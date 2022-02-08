@@ -68,8 +68,6 @@ const defaultProps = {
   themeMode: ThemeMode.LIGHT,
   items: [],
   allowMultiSelect: false,
-  onItemExpandChanged: (menuItem, isExpanded, itemKey) => {},
-  onItemSelectChanged: (menuItem, isSelected, itemKey) => {}
 };
 
 const subMenu = (item, key, disabled) => (
@@ -374,7 +372,7 @@ const Root = styled(Menu)`
 
   &.app-menu-dark-mode {
     .app-menu-item {
-      color: ${props => getThemeStylesByMode(props, 'item.text')?.color};
+      color: ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'item.text')?.color};
       ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'item')}
 
       .ant-menu-title-content {
@@ -440,7 +438,7 @@ const Root = styled(Menu)`
   
     &:not(.ant-menu-horizontal) {
       .ant-menu-item-selected {
-        ${props => getThemeStylesByMode(props, 'item.on_select')}
+        ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'item.on_select')}
       }
     }
   
