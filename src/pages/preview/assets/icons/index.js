@@ -20,6 +20,18 @@ import {
   MdOutlineTitle,
   MdOutlineTextFormat,
   MdOutlineLink,
+  MdOutlineInput,
+  MdOutlineFontDownload,
+  MdOutlinePassword,
+  MdOutlineCrop75,
+  MdOutlinePin,
+  MdOutlineArrowDropDownCircle,
+  MdOutlineEditNote,
+  MdOutlineCrop54,
+  MdOutlineImage,
+  MdOutlineErrorOutline,
+  MdOutlineColorLens,
+  MdOutlineMenu,
 } from 'react-icons/md';
 
 // font awesome icons import
@@ -49,6 +61,18 @@ export const Icons = {
   TitleOutlined: MdOutlineTitle,
   TextOutlined: MdOutlineTextFormat,
   LinkOutlined: MdOutlineLink,
+  InputOutlined: MdOutlineInput,
+  TextInputOutlined: MdOutlineFontDownload,
+  PasswordInputOutlined: MdOutlinePassword,
+  TextAreaInputOutlined: MdOutlineCrop75,
+  NumberInputOutlined: MdOutlinePin,
+  SelectOutlined: MdOutlineArrowDropDownCircle,
+  FormOutlined: MdOutlineEditNote,
+  ButtonOutlined: MdOutlineCrop54,
+  ImageOutlined: MdOutlineImage,
+  AlertOutlined: MdOutlineErrorOutline,
+  ColorOutlined: MdOutlineColorLens,
+  MenuOutlined: MdOutlineMenu,
 };
 
 // color editable icons

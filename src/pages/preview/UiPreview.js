@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import { getThemeStylesFromProps } from '../../utils/themeHelpers';
 import AppNotification from '../../components/notification/AppNotification';
 import AppContainer from '../../containers/container/AppContainer';
 import AppMenuSider from '../../components/menu-sider/AppMenuSider';
@@ -24,9 +22,8 @@ import { images } from './assets/images';
 import { ValidationRule } from '../../constants/validationRules';
 import { delay } from '../../utils/helpers';
 import { toRomanNumber } from '../../utils/numberHelpers';
-import './UiPreview.scss';
-import { dashboardMenu } from '../dashboard/dashboardMenu';
 import { uiMenu } from './uiMenu';
+import './UiPreview.scss';
 
 const { Row, Col } = AppGrid;
 const { Title, Text, Link } = AppTypography;
