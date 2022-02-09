@@ -338,6 +338,18 @@ const PopupTheme = createGlobalStyle`
         }
       }
       
+      .ant-menu-item-selected {
+        color: ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'popup.item.on_select.text')?.color};
+      
+        .ant-menu-title-content {
+          ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'popup.item.on_select.text')}
+        
+          .app-typography {
+            color: inherit;
+          }
+        }
+      }
+      
       .ant-menu-submenu {
         ${props => getThemeStylesByMode(props, ThemeMode.DARK, 'popup.sub_menu')}
       

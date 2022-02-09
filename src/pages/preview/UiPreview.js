@@ -1619,131 +1619,148 @@ const groups = [
   },
   {
     title: 'App Menu',
-    content: () => (
-      <Row gutter={ROW_GUTTER} vStretch={true}>
-        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-          {
-            contentCard('Basic usage', 'Basic use of menu: vertical, horizontail layout; vertical, horizontal layout expand',
-              <AppSpace size={ITEM_SPACE}>
-                <Row>
-                  <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <AppMenu items={DEMO_MENU} direction="horizontal"/>
-                  </Col>
-                </Row>
-                <Row gutter={ITEM_SPACE}>
-                  <Col xs={12} sm={12} md={6} lg={6} xl={6} xxl={6}>
-                    <AppMenu items={DEMO_MENU} expandDirection="horizontal"/>
-                  </Col>
-                  <Col xs={0} sm={0} md={12} lg={12} xl={12} xxl={12}/>
-                  <Col xs={12} sm={12} md={6} lg={6} xl={6} xxl={6}>
-                    <AppMenu items={DEMO_MENU}/>
-                  </Col>
-                </Row>
-              </AppSpace>
-            )
+    content: ({ pageStateHolder }) => {
+      const appMenu = pageStateHolder.get()?.appMenu;
+      const backgroundColor = appMenu?.darkModeColor;
+      const setBackgroundColor = (newColor) => {
+        pageStateHolder.update({
+          appMenu: {
+            ...appMenu,
+            darkModeColor: newColor
           }
-        </Col>
-        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-          {
-            contentCard('Menu item expand trigger', 'Menu item expand event trigger',
-              <AppSpace size={ITEM_SPACE}>
-                <Row gutter={ITEM_SPACE}>
-                  <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                    <Text>Allow expand all</Text>
-                    <AppMenu items={DEMO_MENU} allowMultiSelect={false} expandCurrentOnly={false}
-                             onItemExpandChanged={(menuItem, isExpanded, itemKey) =>
-                               AppNotification.info(`[${itemKey}] '${menuItem.title}' ${isExpanded? 'expanded' : 'collapsed'}`)}/>
-                  </Col>
-                  <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                    <Text>Allow expand current only</Text>
-                    <AppMenu items={DEMO_MENU} allowMultiSelect={false} expandCurrentOnly={true}
-                             onItemExpandChanged={(menuItem, isExpanded, itemKey) =>
-                               AppNotification.info(`[${itemKey}] '${menuItem.title}' ${isExpanded? 'expanded' : 'collapsed'}`)}/>
-                  </Col>
-                </Row>
-              </AppSpace>
-            )
-          }
-        </Col>
-        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-          {
-            contentCard('Menu item select trigger', 'Menu item select event trigger',
-              <AppSpace size={ITEM_SPACE}>
-                <Row gutter={ITEM_SPACE}>
-                  <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                    <Text>Multi-selection</Text>
-                    <AppMenu items={DEMO_MENU} allowMultiSelect={true}
-                             onItemSelectChanged={(menuItem, isSelected, itemKey) =>
-                               AppNotification.info(`[${itemKey}] '${menuItem.title}' ${isSelected? 'selected' : 'de-selected'}`)}/>
-                  </Col>
-                  <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                    <Text>Single selection (no de-select)</Text>
-                    <AppMenu items={DEMO_MENU} allowMultiSelect={false}
-                             onItemSelectChanged={(menuItem, isSelected, itemKey) =>
-                               AppNotification.info(`[${itemKey}] '${menuItem.title}' ${isSelected? 'selected' : 'de-selected'}`)}/>
-                  </Col>
-                </Row>
-              </AppSpace>
-            )
-          }
-        </Col>
-        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-          {
-            contentCard('Other options', 'Basic use of menu: vertical, horizontail layout; vertical, horizontal layout expand',
-              <AppSpace size={ITEM_SPACE}>
-                <Row gutter={ITEM_SPACE}>
-                  <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
-                    <Text>Expand all sub-menu(s)</Text>
-                    <AppMenu items={DEMO_MENU} expandAll={true}/>
-                  </Col>
-                  <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
-                    <Text>Expand all lv1 sub-menu(s)</Text>
-                    <AppMenu items={DEMO_MENU} expandAll={true} expandAllLevel={1}/>
-                  </Col>
-                  <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
-                    <Text>Only expand current selected</Text>
-                    <AppMenu items={DEMO_MENU} expandCurrentOnly={true}/>
-                  </Col>
-                  <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
-                    <Text>Allow multiple expand</Text>
-                    <AppMenu items={DEMO_MENU}/>
-                  </Col>
-                </Row>
-              </AppSpace>
-            )
-          }
-        </Col>
-        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-          {
-            contentCard('Dark Mode', 'Dark mode theme',
-              <AppSpace size={ITEM_SPACE}>
-                <Row gutter={ITEM_SPACE}>
-                  <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <AppButton>
-                      Background Color
-                    </AppButton>
-                  </Col>
-                </Row>
-                <Row gutter={ITEM_SPACE}>
-                  <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} style={{background: '#3c4b64'}}>
-                    <AppMenu items={DEMO_MENU} direction="horizontal" themeMode="dark"/>
-                  </Col>
-                </Row>
-                <Row gutter={ITEM_SPACE}>
-                  <Col xs={12} sm={12} md={6} lg={6} xl={6} xxl={6} style={{background: '#000000'}}>
-                    <AppMenu items={DEMO_MENU} expandDirection="horizontal" themeMode="dark"/>
-                  </Col>
-                  <Col xs={0} sm={0} md={12} lg={12} xl={12} xxl={12}/>
-                  <Col xs={12} sm={12} md={6} lg={6} xl={6} xxl={6} style={{background: '#3c4b64'}}>
-                    <AppMenu items={DEMO_MENU} themeMode="dark"/>
-                  </Col>
-                </Row>
-              </AppSpace>
-            )
-          }
-        </Col>
-      </Row>
-    )
+        });
+      };
+      return (
+        <Row gutter={ROW_GUTTER} vStretch={true}>
+          <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+            {
+              contentCard('Basic usage', 'Basic use of menu: vertical, horizontail layout; vertical, horizontal layout expand',
+                <AppSpace size={ITEM_SPACE}>
+                  <Row>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                      <AppMenu items={DEMO_MENU} direction="horizontal"/>
+                    </Col>
+                  </Row>
+                  <Row gutter={ITEM_SPACE}>
+                    <Col xs={12} sm={12} md={6} lg={6} xl={6} xxl={6}>
+                      <AppMenu items={DEMO_MENU} expandDirection="horizontal"/>
+                    </Col>
+                    <Col xs={0} sm={0} md={12} lg={12} xl={12} xxl={12}/>
+                    <Col xs={12} sm={12} md={6} lg={6} xl={6} xxl={6}>
+                      <AppMenu items={DEMO_MENU}/>
+                    </Col>
+                  </Row>
+                </AppSpace>
+              )
+            }
+          </Col>
+          <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+            {
+              contentCard('Menu item expand trigger', 'Menu item expand event trigger',
+                <AppSpace size={ITEM_SPACE}>
+                  <Row gutter={ITEM_SPACE}>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                      <Text>Allow expand all</Text>
+                      <AppMenu items={DEMO_MENU} allowMultiSelect={false} expandCurrentOnly={false}
+                               onItemExpandChanged={(menuItem, isExpanded, itemKey) =>
+                                 AppNotification.info(`[${itemKey}] '${menuItem.title}' ${isExpanded ? 'expanded' : 'collapsed'}`)}/>
+                    </Col>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                      <Text>Allow expand current only</Text>
+                      <AppMenu items={DEMO_MENU} allowMultiSelect={false} expandCurrentOnly={true}
+                               onItemExpandChanged={(menuItem, isExpanded, itemKey) =>
+                                 AppNotification.info(`[${itemKey}] '${menuItem.title}' ${isExpanded ? 'expanded' : 'collapsed'}`)}/>
+                    </Col>
+                  </Row>
+                </AppSpace>
+              )
+            }
+          </Col>
+          <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+            {
+              contentCard('Menu item select trigger', 'Menu item select event trigger',
+                <AppSpace size={ITEM_SPACE}>
+                  <Row gutter={ITEM_SPACE}>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                      <Text>Multi-selection</Text>
+                      <AppMenu items={DEMO_MENU} allowMultiSelect={true}
+                               onItemSelectChanged={(menuItem, isSelected, itemKey) =>
+                                 AppNotification.info(`[${itemKey}] '${menuItem.title}' ${isSelected ? 'selected' : 'de-selected'}`)}/>
+                    </Col>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                      <Text>Single selection (no de-select)</Text>
+                      <AppMenu items={DEMO_MENU} allowMultiSelect={false}
+                               onItemSelectChanged={(menuItem, isSelected, itemKey) =>
+                                 AppNotification.info(`[${itemKey}] '${menuItem.title}' ${isSelected ? 'selected' : 'de-selected'}`)}/>
+                    </Col>
+                  </Row>
+                </AppSpace>
+              )
+            }
+          </Col>
+          <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+            {
+              contentCard('Other options', 'Basic use of menu: vertical, horizontail layout; vertical, horizontal layout expand',
+                <AppSpace size={ITEM_SPACE}>
+                  <Row gutter={ITEM_SPACE}>
+                    <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
+                      <Text>Expand all sub-menu(s)</Text>
+                      <AppMenu items={DEMO_MENU} expandAll={true}/>
+                    </Col>
+                    <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
+                      <Text>Expand all lv1 sub-menu(s)</Text>
+                      <AppMenu items={DEMO_MENU} expandAll={true} expandAllLevel={1}/>
+                    </Col>
+                    <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
+                      <Text>Only expand current selected</Text>
+                      <AppMenu items={DEMO_MENU} expandCurrentOnly={true}/>
+                    </Col>
+                    <Col xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
+                      <Text>Allow multiple expand</Text>
+                      <AppMenu items={DEMO_MENU}/>
+                    </Col>
+                  </Row>
+                </AppSpace>
+              )
+            }
+          </Col>
+          <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+            {
+              contentCard('Dark Mode', 'Dark mode theme',
+                <AppSpace size={ITEM_SPACE}>
+                  <Row gutter={ITEM_SPACE}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                      <AppColorPicker.Slider className="w-full" color={backgroundColor}
+                                             onColorChanged={({hex}) => setBackgroundColor(hex)}/>
+                    </Col>
+                  </Row>
+                  <Row gutter={ITEM_SPACE}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                      <div style={{background: backgroundColor}}>
+                        <AppMenu items={DEMO_MENU} direction="horizontal" themeMode="dark"/>
+                      </div>
+                    </Col>
+                  </Row>
+                  <Row gutter={ITEM_SPACE}>
+                    <Col xs={12} sm={12} md={6} lg={6} xl={6} xxl={6}>
+                      <div style={{background: backgroundColor}}>
+                        <AppMenu items={DEMO_MENU} expandDirection="horizontal" themeMode="dark"/>
+                      </div>
+                    </Col>
+                    <Col xs={0} sm={0} md={12} lg={12} xl={12} xxl={12}/>
+                    <Col xs={12} sm={12} md={6} lg={6} xl={6} xxl={6}>
+                      <div style={{background: backgroundColor}}>
+                        <AppMenu items={DEMO_MENU} themeMode="dark"/>
+                      </div>
+                    </Col>
+                  </Row>
+                </AppSpace>
+              )
+            }
+          </Col>
+        </Row>
+      );
+    }
   },
 ];
 
@@ -1752,6 +1769,9 @@ const UiPreview = (props) => {
   const [pageState, setPageState] = useState({
     appColorPicker: {
       color: '#000000'
+    },
+    appMenu: {
+      darkModeColor: '#000000'
     }
   })
 
