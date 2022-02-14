@@ -11,14 +11,17 @@ export const uiMenu = [
       {
         title: 'App Title',
         icon: <Icons.TitleOutlined/>,
+        _component: React.lazy(() => import('./previewSections/typography/title/TitlePreview'))
       },
       {
         title: 'App Text',
         icon: <Icons.TextOutlined/>,
+        _component: React.lazy(() => import('./previewSections/typography/text/TextPreview'))
       },
       {
         title: 'App Link',
         icon: <Icons.LinkOutlined/>,
+        _component: React.lazy(() => import('./previewSections/typography/link/LinkPreview'))
       },
     ]
   },
