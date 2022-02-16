@@ -31,7 +31,7 @@
       overflow: auto;
 
       .app-title {
-        &.group-title {
+        &.section-title {
           margin-bottom: 10px;
           color: $app-primary-color-dark;
         }
@@ -42,7 +42,7 @@
           margin-top: 32px;
         }
 
-        .group-items-container {
+        & > .group-container {
           padding: 10px;
         }
       }

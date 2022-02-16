@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import AppNotification from '../../components/notification/AppNotification';
 import AppContainer from '../../containers/container/AppContainer';
 import AppMenuSider from '../../components/menu-sider/AppMenuSider';
@@ -182,31 +182,32 @@ const getTitleNumbering = (depth, index) => {
   return index + 1;
 };
 
-const newGroup = (index, menuItem, depth = 0) => {
-  let groupItems;
-  if (menuItem.children && menuItem.children.length) {
-    groupItems = <div className="group-items-container">
-      {
-        menuItem.children?.map((item, itemIndex) =>
-          newGroup(itemIndex, item, depth + 1))
-      }
-    </div>
-  }
-
-  const Content = menuItem._component;
-
+const newSection = (index, menuItem, depth = 0) => {
+  const SectionContent = menuItem._component;
   return (
-    <ol key={index} className="group-container">
+    <ol key={index} className="section-container">
       <li>
-        <Title className="group-title" level={getTitleLevel(depth)}>
+        <Title className="section-title" level={getTitleLevel(depth)}>
           {menuItem.title}
         </Title>
-        <Content/>
-        {groupItems}
+        <SectionContent/>
+        {
+          (menuItem.children && menuItem.children.length) &&
+          (
+            menuItem.children.map((item, itemIndex) => newSection(itemIndex, item, depth + 1))
+          )
+        }
       </li>
     </ol>
   );
 };
+
+const newSections = (pageSections, selectedSections) => {
+  return pageSections.map((menuItem, index) => {
+
+    return newSection(index, menuItem);
+  })
+}
 
 // const groups = [
 //   {
@@ -1763,56 +1764,29 @@ const newGroup = (index, menuItem, depth = 0) => {
 // ];
 
 const UiPreview = (props) => {
-  const [sections, setSections] = useState([]);
+  const [selectedSections, setSelectedSections] = useState({});
   const [siderCollapsed, setSiderCollapsed] = useState();
-  const [pageState, setPageState] = useState({
-    appColorPicker: {
-      color: '#000000'
-    },
-    appMenu: {
-      darkModeColor: '#000000'
-    }
-  })
-
-  const pageStateHolder = {
-    get: () => {
-      return pageState
-    },
-
-    update: (newValue) => {
-      setPageState({
-        ...pageState,
-        ...newValue
-      })
-    }
-  }
 
   const handleItemSelectChange = useCallback((menuItem, isSelected, itemKey) => {
-    console.log('STATE', isSelected)
-    console.log('ITEM KEY', itemKey)
-
-    // if (isSelected) {
-    //   setSections((currSections) => ([
-    //     ...currSections,
-    //     menuItem
-    //   ]));
-    // } else {
-    //   setSections((currSections) =>
-    //     currSections.filter((item) => item !== menuItem));
-    // }
+    setSelectedSections((selectedSections) => ({
+      ...selectedSections,
+      itemKey: isSelected
+    }))
   }, []);
 
-  const handleItemExpandChange = useCallback((menuItem, isSelected, itemKey) => {
-    console.log('STATE 2', isSelected)
-    console.log('ITEM KEY 2', itemKey)
-  }, []);
+  const appSections = useMemo(() => {
+    return uiMenu.map((menuItem, index) => {
+
+      return newSection(index, menuItem);
+    })
+  }, [selectedSections])
 
   return (
     <AppContainer className="ui-preview-page wh-full">
       <AppMenuSider logoSrc={images.img_react_logo} title="UI Preview"
                     collapsed={siderCollapsed} onCollapse={setSiderCollapsed}>
         <AppMenu themeMode="dark" items={uiMenu} allowMultiSelect={true}
-                 onItemSelectChanged={handleItemSelectChange} onItemExpandChanged={handleItemExpandChange}/>
+                 onItemSelectChanged={handleItemSelectChange}/>
       </AppMenuSider>
       <AppContainer>
         <AppHeader>
@@ -1821,9 +1795,7 @@ const UiPreview = (props) => {
         </AppHeader>
         <AppContent className="page-padding">
           <React.Suspense fallback={<AppLoading/>}>
-            {
-              sections.map((section, groupIndex) => newGroup(groupIndex, section))
-            }
+            {appSections}
           </React.Suspense>
         </AppContent>
       </AppContainer>
