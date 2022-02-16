@@ -98,4 +98,4 @@ const LinkPreview = (props) => {
   );
 };
 
-export default LinkPreview;
+export default React.memo(LinkPreview);

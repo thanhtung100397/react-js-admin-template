@@ -96,4 +96,4 @@ const TitlePreview = (props) => {
   )
 };
 
-export default TitlePreview;
+export default React.memo(TitlePreview);

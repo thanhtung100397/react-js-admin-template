@@ -187,32 +187,22 @@ const newGroup = (index, menuItem, depth = 0) => {
   if (menuItem.children && menuItem.children.length) {
     groupItems = <div className="group-items-container">
       {
-        group.children?.map((item, itemIndex) =>
-          newGroup(itemIndex, item, pageStateHolder, depth + 1))
+        menuItem.children?.map((item, itemIndex) =>
+          newGroup(itemIndex, item, depth + 1))
       }
     </div>
   }
+
+  const Content = menuItem._component;
 
   return (
     <ol key={index} className="group-container">
       <li>
         <Title className="group-title" level={getTitleLevel(depth)}>
-          {getTitleNumbering(depth, index)}. {group.title}
+          {menuItem.title}
         </Title>
-        {
-          group.content ? group.content({pageStateHolder}) : ''
-        }
-        {
-          (group.children && group.children.length) &&
-          (
-            <div className="group-items-container">
-              {
-                group.children?.map((item, itemIndex) =>
-                  newGroup(itemIndex, item, pageStateHolder, depth + 1))
-              }
-            </div>
-          )
-        }
+        <Content/>
+        {groupItems}
       </li>
     </ol>
   );
@@ -1812,11 +1802,17 @@ const UiPreview = (props) => {
     // }
   }, []);
 
+  const handleItemExpandChange = useCallback((menuItem, isSelected, itemKey) => {
+    console.log('STATE 2', isSelected)
+    console.log('ITEM KEY 2', itemKey)
+  }, []);
+
   return (
     <AppContainer className="ui-preview-page wh-full">
       <AppMenuSider logoSrc={images.img_react_logo} title="UI Preview"
                     collapsed={siderCollapsed} onCollapse={setSiderCollapsed}>
-        <AppMenu themeMode="dark" items={uiMenu} allowMultiSelect={true} onItemSelectChanged={handleItemSelectChange}/>
+        <AppMenu themeMode="dark" items={uiMenu} allowMultiSelect={true}
+                 onItemSelectChanged={handleItemSelectChange} onItemExpandChanged={handleItemExpandChange}/>
       </AppMenuSider>
       <AppContainer>
         <AppHeader>
@@ -1824,11 +1820,11 @@ const UiPreview = (props) => {
                      onClick={() => setSiderCollapsed(!siderCollapsed)}/>
         </AppHeader>
         <AppContent className="page-padding">
-          {/*<React.Suspense fallback={<AppLoading/>}>*/}
-          {/*  {*/}
-          {/*    sections.map((section, groupIndex) => newGroup(groupIndex, group, pageStateHolder))*/}
-          {/*  }*/}
-          {/*</React.Suspense>*/}
+          <React.Suspense fallback={<AppLoading/>}>
+            {
+              sections.map((section, groupIndex) => newGroup(groupIndex, section))
+            }
+          </React.Suspense>
         </AppContent>
       </AppContainer>
     </AppContainer>

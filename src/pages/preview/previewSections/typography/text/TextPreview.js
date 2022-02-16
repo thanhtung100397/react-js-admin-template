@@ -96,4 +96,4 @@ const TextPreview = (props) => {
   );
 };
 
-export default TextPreview;
+export default React.memo(TextPreview);
