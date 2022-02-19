@@ -18,7 +18,7 @@ const DUMMY_TEXT_4 = "React makes it painless to create interactive UIs. Design 
 const LinkPreview = (props) => {
   return (
     <Row gutter={ROW_GUTTER} vStretch={true}>
-      <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+      <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
         <UiPreviewCard name="Type" description="All component type">
           <>
             <Link href="https://reactjs.org" target="_blank">
@@ -39,7 +39,7 @@ const LinkPreview = (props) => {
           </>
         </UiPreviewCard>
       </Col>
-      <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+      <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
         <UiPreviewCard name="Text Style" description="All supported component text style">
           <>
             <Link href="https://reactjs.org" target="_blank" level={5} bold={true}>
@@ -57,7 +57,7 @@ const LinkPreview = (props) => {
           </>
         </UiPreviewCard>
       </Col>
-      <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+      <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
         <UiPreviewCard name="Other Options" description="All other options of this component">
           <>
             <Link href="https://reactjs.org" target="_blank" firstCap={true}>

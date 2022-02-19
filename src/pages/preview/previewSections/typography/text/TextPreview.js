@@ -17,7 +17,7 @@ const DUMMY_TEXT_4 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, s
 const TextPreview = (props) => {
   return (
     <Row gutter={ROW_GUTTER} vStretch={true}>
-      <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+      <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
         <UiPreviewCard name="Type" description="All component type">
           <>
             <Text>
@@ -38,7 +38,7 @@ const TextPreview = (props) => {
           </>
         </UiPreviewCard>
       </Col>
-      <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+      <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
         <UiPreviewCard name="Text Style" description="All supported component text style">
           <>
             <Text bold={true}>
@@ -56,7 +56,7 @@ const TextPreview = (props) => {
           </>
         </UiPreviewCard>
       </Col>
-      <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={8}>
+      <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
         <UiPreviewCard name="Other Options" description="All other options of this component">
           <>
             <Text firstCap={true}>
