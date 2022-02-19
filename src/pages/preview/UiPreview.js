@@ -17,7 +17,7 @@ import AppButton from '../../components/button/AppButton';
 import AppImage from '../../components/image/AppImage';
 import AppAlert from '../../components/alert/AppAlert';
 import AppColorPicker from '../../components/color-picker/AppColorPicker';
-import AppMenu, { MenuItemType } from '../../components/menu/AppMenu';
+import AppMenu, { MenuItemType, generateMenuItemKey } from '../../components/menu/AppMenu';
 import { Icons } from './assets/icons';
 import { images } from './assets/images';
 import { ValidationRule } from '../../constants/validationRules';
@@ -175,38 +175,51 @@ const getTitleLevel = (depth = 0) => {
   return level;
 };
 
-const getTitleNumbering = (depth, index) => {
-  if (depth === 0) {
-    return toRomanNumber(index + 1);
+function newSection(index, menuItem, selectedKeys, parentKey, depth = 0) {
+  const key = generateMenuItemKey(index, parentKey);
+
+  let selectionList = newSectionList(menuItem.children, key, selectedKeys, depth + 1);
+
+  // console.log(key)
+  // console.log(selectionList)
+  // console.log(selectedKeys)
+  // console.log("=========")
+
+  if (!selectionList && !selectedKeys[key]) {
+    // console.log("NO REN" + key)
+    return;
   }
-  return index + 1;
-};
 
-const newSection = (index, menuItem, depth = 0) => {
-  const SectionContent = menuItem._component;
+  const SectionContent = menuItem._component || React.Fragment;
+
   return (
-    <ol key={index} className="section-container">
-      <li>
-        <Title className="section-title" level={getTitleLevel(depth)}>
-          {menuItem.title}
-        </Title>
-        <SectionContent/>
-        {
-          (menuItem.children && menuItem.children.length) &&
-          (
-            menuItem.children.map((item, itemIndex) => newSection(itemIndex, item, depth + 1))
-          )
-        }
-      </li>
-    </ol>
-  );
-};
+    <li key={key} className="section-container">
+      <Title className="section-title" level={getTitleLevel(depth)}>
+        {menuItem.title}
+      </Title>
+      <SectionContent/>
+      {selectionList}
+    </li>
+  )
+}
 
-const newSections = (pageSections, selectedSections) => {
-  return pageSections.map((menuItem, index) => {
-
-    return newSection(index, menuItem);
-  })
+function newSectionList(menuItems, parentKey, selectedKeys = {}, depth = 0) {
+  if (menuItems && menuItems.length) {
+    let items = menuItems.reduce((results, menuItem, index) => {
+      let section = newSection(index, menuItem, selectedKeys, parentKey, depth);
+      if (section) {
+        results.push(section)
+      }
+      return results;
+    }, []);
+    if (items.length) {
+      return (
+        <ol className="section-list">
+          {items}
+        </ol>
+      )
+    }
+  }
 }
 
 // const groups = [
@@ -1770,15 +1783,12 @@ const UiPreview = (props) => {
   const handleItemSelectChange = useCallback((menuItem, isSelected, itemKey) => {
     setSelectedSections((selectedSections) => ({
       ...selectedSections,
-      itemKey: isSelected
+      [itemKey]: isSelected
     }))
   }, []);
 
   const appSections = useMemo(() => {
-    return uiMenu.map((menuItem, index) => {
-
-      return newSection(index, menuItem);
-    })
+    return newSectionList(uiMenu, null, selectedSections)
   }, [selectedSections])
 
   return (
@@ -1793,7 +1803,7 @@ const UiPreview = (props) => {
           <AppButton type="text" icon={siderCollapsed? <Icons.MenuUnfoldOutlined/> : <Icons.MenuFoldOutlined/>}
                      onClick={() => setSiderCollapsed(!siderCollapsed)}/>
         </AppHeader>
-        <AppContent className="page-padding">
+        <AppContent className="content-padding">
           <React.Suspense fallback={<AppLoading/>}>
             {appSections}
           </React.Suspense>

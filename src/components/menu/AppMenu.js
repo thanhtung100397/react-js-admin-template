@@ -105,7 +105,7 @@ const menuItemLink = (path, content) => {
   )
 };
 
-function generateMenuItemKey(index, parentKey) {
+export function generateMenuItemKey(index, parentKey) {
   return stringJoin('.', parentKey, index + 1);
 }
 
