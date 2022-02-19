@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import AppSider, { propTypes as appSiderPropTypes } from '../../containers/sider/AppSider';
 import AppImage from '../image/AppImage';
 import AppTypography from '../typography/AppTypography';
-import AppMenu from '../menu/AppMenu';
 import { getThemeStylesFromProps } from '../../utils/themeHelpers';
 import { delay } from '../../utils/helpers';
 import { isEmpty } from '../../utils/stringHelpers';
@@ -22,7 +21,7 @@ const propTypes = {
   title: PropTypes.string,
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.number]),
   collapsedWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.number]),
-  children: PropTypes.instanceOf(AppMenu)
+  children: PropTypes.node
 };
 
 const defaultProps = {
