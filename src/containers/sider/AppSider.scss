@@ -1,16 +1,25 @@
+@import '../../colors.module';
 
 .app-sider {
+  display: flex;
+  flex-direction: column;
 
   .ant-layout-sider-children {
-    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar-track {
+      background: none;
+    }
 
     &::-webkit-scrollbar-thumb {
-      background: red;
-      border-radius: 6px;
+      background: #{$app-scrollbar-thumb-color + '67'};
     }
   }
 
   .ant-layout-sider-trigger {
-    position: sticky;
+    padding-bottom: 0
   }
 }

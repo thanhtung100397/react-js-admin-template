@@ -65,7 +65,9 @@ const AppMenuSider = (props) => {
           (!hideTitle && !isEmpty(title)) && <Title level={4}>{title}</Title>
         }
       </HeadContainer>
-      {children}
+      <div className="body-container">
+        {children}
+      </div>
     </Root>
   );
 };

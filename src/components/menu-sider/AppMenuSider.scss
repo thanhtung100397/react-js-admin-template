@@ -1,4 +1,9 @@
+@import '../../colors.module';
+
 .app-menu-sider {
+  display: flex;
+  flex-direction: column;
+
   .head-container {
     height: 64px;
     padding: 10px;
@@ -14,6 +19,21 @@
       margin-bottom: 0;
       margin-left: 10px;
       flex: 1;
+    }
+  }
+
+  .body-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar-track {
+      background: none;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #{$app-scrollbar-thumb-color + '67'};
     }
   }
 }
