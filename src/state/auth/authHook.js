@@ -6,15 +6,15 @@ import { AuthActions } from './authAction';
 
 export const useAppAuth = () => {
   const authInfo = useAppSelector(authInfoReducer);
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
 
   const isAuth = useMemo(() => {
     return authInfo.isAuth === true;
   }, [authInfo]);
 
   const authActions = useMemo(() => ({
-    signIn: (authInfo) => dispath(AuthActions.USER_SIGN_IN_ACTION(authInfo)),
-    signOut: () => dispath(AuthActions.USER_SIGN_OUT_ACTION())
-  }), [dispath]);
+    signIn: (authInfo) => dispatch(AuthActions.USER_SIGN_IN_ACTION(authInfo)),
+    signOut: () => dispatch(AuthActions.USER_SIGN_OUT_ACTION())
+  }), [dispatch]);
   return [isAuth, authActions, authInfo];
 };
