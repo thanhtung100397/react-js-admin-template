@@ -1,8 +1,6 @@
 import colors from '../colors.module.scss';
 
-export const DEFAULT_THEME = 'default';
-
-const STARTED_THEME = {
+const theme = {
   pages: {
 
   },
@@ -53,9 +51,7 @@ const STARTED_THEME = {
         background: 'unset',
       },
 
-      light: {
-
-      },
+      light: {},
 
       dark: {
         sub_menu: {
@@ -216,12 +212,6 @@ const STARTED_THEME = {
       }
     }
   }
-}
-
-const AppThemes = {
-  default: STARTED_THEME
 };
 
-export const getAppTheme = (themeId = DEFAULT_THEME) => {
-  return AppThemes[themeId];
-};
+export default theme;

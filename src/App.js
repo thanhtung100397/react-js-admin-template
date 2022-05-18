@@ -1,8 +1,7 @@
 import React from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
-import { useAppTheme } from './state/ui/theme/themeHook';
+import AppThemeProvider from "./themes/provider/AppThemeProvider";
 import AppRoutes from './AppRoutes';
 import TranslationProvider from './translations/provider/TranslationsProvider';
 import { Provider } from 'react-redux';
@@ -29,9 +28,8 @@ const appMeta = (
 );
 
 const App = (props) => {
-  const theme = useAppTheme();
   return (
-    <ThemeProvider theme={theme}>
+    <AppThemeProvider>
       <div className="app">
         <BrowserRouter>
           <React.Suspense fallback={<AppLoading/>}>
@@ -39,7 +37,7 @@ const App = (props) => {
           </React.Suspense>
         </BrowserRouter>
       </div>
-    </ThemeProvider>
+    </AppThemeProvider>
   )
 };
 

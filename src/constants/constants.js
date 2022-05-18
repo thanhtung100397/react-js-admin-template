@@ -1,6 +1,8 @@
 import Vi from '../translations/vi.json';
 import En from '../translations/en.json';
 
+import defaultTheme from '../themes/default';
+
 export const DEFAULT_LOCALE = 'vi';
 export const Translations = {
   vi: {
@@ -10,6 +12,14 @@ export const Translations = {
   en: {
     name: 'English',
     src: En
+  }
+};
+
+export const DEFAULT_THEME = 'default';
+export const Themes = {
+  default: {
+    name: 'Default',
+    src: defaultTheme
   }
 };
 

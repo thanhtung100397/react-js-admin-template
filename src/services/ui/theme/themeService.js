@@ -1,5 +1,5 @@
 import { LocalStorage } from '../../../utils/storageHelpers';
-import { DEFAULT_THEME } from '../../../constants/themes';
+import { DEFAULT_THEME } from '../../../constants/constants';
 
 const STORAGE_UI_THEME_KEY = 'ui.theme';
 
