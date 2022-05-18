@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useRef } from 'react';
 import { useLocation } from "react-router-dom";
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -109,12 +109,13 @@ export function generateMenuItemKey(index, parentKey) {
   return stringJoin('.', parentKey, index + 1);
 }
 
-function isMenuItemExpandable(menuItem, itemType, itemLevel, props) {
+function isMenuItemExpandable(menuItem, itemType, itemLevel,
+                              isMenuExpandAll, menuExpandAllLevel) {
   if (itemType === MenuItemType.SUB_MENU) {
     if (menuItem.expanded) {
       return true;
     }
-    if (props.expandAll && (!props.expandAllLevel || props.expandAllLevel >= itemLevel)) {
+    if (isMenuExpandAll && (!menuExpandAllLevel || menuExpandAllLevel >= itemLevel)) {
       return true;
     }
   }
@@ -168,6 +169,7 @@ const AppMenu = (props) => {
   const [menuItemKeyPathMap, setMenuItemKeyPathMap] = useState();
   const [expandedMenuKeys, setExpandedMenuKeys] = useState();
   const [selectedMenuKeys, setSelectedMenuKeys] = useState();
+  const onMenuItemSelectedRef = useRef();
 
   const location = useLocation();
 
@@ -181,7 +183,7 @@ const AppMenu = (props) => {
         if (menuItem.path) {
           menuItemKeyPathMap[menuItem.path] = itemKey;
         }
-        if (isMenuItemExpandable(menuItem, itemType, itemLevel, props)) {
+        if (isMenuItemExpandable(menuItem, itemType, itemLevel, props.expandAll, props.expandAllLevel)) {
           expandedMenuKeys.push(itemKey);
         }
       });
@@ -189,7 +191,7 @@ const AppMenu = (props) => {
       setMenuItemKeyPathMap(menuItemKeyPathMap);
       setExpandedMenuKeys(expandedMenuKeys);
     }
-  }, [props.items, props.expandAll]);
+  }, [props.items, props.expandAll, props.expandAllLevel]);
 
   const menuMode = useMemo(() => {
     if (props.expandDirection === ExpandDirection.VERTICAL &&
@@ -260,7 +262,7 @@ const AppMenu = (props) => {
     }
   };
 
-  const onMenuItemSelected = createMenuItemSelectChangedHandler(true);
+  onMenuItemSelectedRef.current = createMenuItemSelectChangedHandler(true);
 
   const onMenuItemDeselected = createMenuItemSelectChangedHandler(false);
 
@@ -268,12 +270,12 @@ const AppMenu = (props) => {
     if (menuItemKeyPathMap) {
       const selectedKey = menuItemKeyPathMap[location.pathname];
       if (selectedKey) {
-        onMenuItemSelected({
+        onMenuItemSelectedRef.current({
           key: selectedKey
         });
       }
     }
-  }, [location, menuItemKeyPathMap]);
+  }, [location.pathname, menuItemKeyPathMap]);
 
   const appMenuClassNames = classNames('app-menu', {
     'app-menu-light-mode': props.themeMode === ThemeMode.LIGHT,
@@ -287,7 +289,7 @@ const AppMenu = (props) => {
       <Root {...fromBaseProps({ className: appMenuClassNames }, props)}
             mode={menuMode} multiple={props.allowMultiSelect}
             openKeys={expandedMenuKeys} onOpenChange={onMenuExpandedChanged}
-            selectedKeys={selectedMenuKeys} onSelect={onMenuItemSelected} onDeselect={onMenuItemDeselected}>
+            selectedKeys={selectedMenuKeys} onSelect={onMenuItemSelectedRef.current} onDeselect={onMenuItemDeselected}>
         {menuItemsNode}
       </Root>
     </>
