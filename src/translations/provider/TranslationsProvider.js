@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useAppLanguage } from "../../state/ui/language/languageHook";
 import PropTypes from 'prop-types';
 import { IntlProvider, createIntl, createIntlCache } from 'react-intl';
 import { DEFAULT_LOCALE, Translations } from '../../constants/constants';
@@ -31,13 +31,33 @@ const propTypes = {
 };
 
 const defaultProps = {
-  locale: DEFAULT_LOCALE
 };
 
+const findTranslation = (locale, appLocale) => {
+  if (Translations[locale]?.src) {
+    return {
+      locale: locale,
+      src: Translations[locale].src
+    }
+  }
+  if (Translations[appLocale]?.src) {
+    return {
+      locale: appLocale,
+      src: Translations[appLocale].src
+    }
+  }
+  locale = DEFAULT_LOCALE;
+  return {
+    locale: locale,
+    src: Translations[locale]?.src
+  }
+}
+
 const TranslationProvider = (props) => {
-  const currentLanguageId = useSelector((state) => state.ui?.language?.languageId);
+  const appLocale = useAppLanguage();
+  const translation = findTranslation(props.locale, appLocale);
   return (
-    <IntlProvider locale={currentLanguageId} messages={Translations[currentLanguageId]?.src}>
+    <IntlProvider locale={translation.locale} messages={translation.src}>
       {props.children}
     </IntlProvider>
   )

@@ -1,6 +1,6 @@
 import themeReducer from './themeReducer';
 import { useAppSelector } from '../../_base/appHook';
-import { getAppTheme } from '../../../constants/themes';
+import { Themes, DEFAULT_THEME } from '../../../constants/constants';
 
 export const useAppThemeId = () => {
   return useAppSelector(themeReducer, 'themeId');
@@ -8,5 +8,5 @@ export const useAppThemeId = () => {
 
 export const useAppTheme = () => {
   const themeId = useAppThemeId();
-  return getAppTheme(themeId);
+  return Themes[themeId] || Themes[DEFAULT_THEME];
 };
