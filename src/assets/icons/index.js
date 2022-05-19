@@ -22,7 +22,8 @@ import {
   MdBubbleChart,
   MdGroups,
   MdList,
-  MdPersonAdd
+  MdPersonAdd,
+  MdOutlineColorLens
 } from 'react-icons/md';
 
 // font awesome icons import
@@ -54,6 +55,7 @@ export const Icons = {
   GlobalOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  ColorOutlined: MdOutlineColorLens,
 };
 
 // color editable icons

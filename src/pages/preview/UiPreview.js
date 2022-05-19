@@ -6,6 +6,7 @@ import AppHeader from "../../containers/header/AppHeader";
 import AppContent from "../../containers/content/AppContent";
 import AppLoading from '../../components/loading/AppLoading';
 import AppGrid from '../../containers/grid/AppGrid';
+import AppThemeSelect from "../../themes/components/AppThemeSelect";
 import AppSpace from '../../containers/space/AppSpace';
 import AppCard from '../../components/card/AppCard';
 import AppTypography from '../../components/typography/AppTypography';
@@ -1802,6 +1803,7 @@ const UiPreview = (props) => {
         <AppHeader>
           <AppButton type="text" icon={siderCollapsed? <Icons.MenuUnfoldOutlined/> : <Icons.MenuFoldOutlined/>}
                      onClick={() => setSiderCollapsed(!siderCollapsed)}/>
+          <AppThemeSelect icon={<Icons.ColorOutlined/>}/>
         </AppHeader>
         <AppContent className="content-padding">
           <React.Suspense fallback={<AppLoading/>}>

@@ -24,7 +24,18 @@
   .app-container {
 
     .app-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       padding: 0 10px;
+
+      .app-button {
+        margin-right: 10px;
+      }
+
+      .app-theme-select {
+        margin-left: auto;
+      }
     }
 
     .app-content {
