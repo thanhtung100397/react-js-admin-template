@@ -13,16 +13,16 @@ import './App.scss';
 
 const appMeta = (
   <Helmet>
-    <meta name="description" content="React JS Admin Template Description"/>
-    <title>React JS Admin Template</title>
-    <link rel="icon" href={icons.favicon} />
-    <link rel="apple-touch-icon" href={icons.ic_app_logo} />
+    <meta name="description" content={process.env.REACT_APP_APP_DESCRIPTION || 'ReactJS Admin Dashboard'}/>
+    <title>{process.env.REACT_APP_APP_NAME || 'ReactJS Admin Dashboard'}</title>
+    <link rel="icon" href={icons[process.env.REACT_APP_APP_BROWSER_TAB_ICON] || icons.favicon} />
+    <link rel="apple-touch-icon" href={icons[process.env.REACT_APP_APP_LOGO] || icons.ic_app_logo} />
 
-    <meta property="og:url" content="https://www.react-js-admin-template.com" />
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="React JS Admin Template OG Title" />
-    <meta property="og:description" content="React JS Admin Template OG Description" />
-    <meta property="og:image" content={images.img_og_image} />
+    <meta property="og:url" content={process.env.REACT_APP_APP_OG_URL} />
+    <meta property="og:type" content={process.env.REACT_APP_APP_OG_TYPE || 'article'} />
+    <meta property="og:title" content={process.env.REACT_APP_APP_OG_TITLE || process.env.REACT_APP_APP_NAME || 'ReactJS Admin Dashboard'} />
+    <meta property="og:description" content={process.env.REACT_APP_APP_OG_DESCRIPTION || process.env.REACT_APP_APP_DESCRIPTION || 'ReactJS Admin Dashboard'} />
+    <meta property="og:image" content={images[process.env.REACT_APP_APP_OG_IMAGE] || images.img_og_image} />
 
   </Helmet>
 );
