@@ -12,6 +12,7 @@ import {
   GlobalOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  Loading3QuartersOutlined,
 } from '@ant-design/icons';
 
 // material design icons import
@@ -32,6 +33,7 @@ import {
   MdOutlineErrorOutline,
   MdOutlineColorLens,
   MdOutlineMenu,
+  MdOutlineHourglassEmpty
 } from 'react-icons/md';
 
 // font awesome icons import
@@ -56,6 +58,7 @@ export const Icons = {
   GlobalOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  Loading3QuartersOutlined,
 
   TypographyOutlined: MdOutlineTextFields,
   TitleOutlined: MdOutlineTitle,
@@ -73,6 +76,7 @@ export const Icons = {
   AlertOutlined: MdOutlineErrorOutline,
   ColorOutlined: MdOutlineColorLens,
   MenuOutlined: MdOutlineMenu,
+  HourglassEmptyOutlined: MdOutlineHourglassEmpty,
 };
 
 // color editable icons

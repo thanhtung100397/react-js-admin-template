@@ -14,8 +14,6 @@ const propTypes = {
 };
 
 const defaultProps = {
-  width: 64,
-  height: 64
 };
 
 let defaultIndicator = <Loading3QuartersOutlined/>;

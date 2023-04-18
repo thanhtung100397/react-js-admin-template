@@ -1,6 +1,7 @@
 import React from 'react';
 import { MenuItemType } from '../../components/menu/AppMenu';
 import { Icons } from './assets/icons';
+import {Loading3QuartersOutlined} from "@ant-design/icons";
 
 export const uiMenu = [
   {
@@ -75,5 +76,17 @@ export const uiMenu = [
   {
     title: 'App Menu',
     icon: <Icons.MenuOutlined/>,
+  },
+  {
+    title: 'App Loading',
+    icon: <Icons.HourglassEmptyOutlined/>,
+    type: MenuItemType.SUB_MENU,
+    children: [
+      {
+        title: 'App Spinner',
+        icon: <Icons.Loading3QuartersOutlined/>,
+        _component: React.lazy(() => import('./previewSections/loading/Spinner'))
+      },
+    ]
   },
 ];
